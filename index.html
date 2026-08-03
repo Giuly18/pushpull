@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Push / Pull Routine</title>
-<meta name="theme-color" content="#17181A">
+<meta name="theme-color" content="#161A1F">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Push / Pull">
@@ -12,442 +12,931 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  /* ============================================================
+     Palette: blued steel and chalk, with Olympic plate colours
+     used as signals rather than decoration.
+     ============================================================ */
   :root{
-    --bg:#17181A;
-    --surface:#1F2022;
-    --surface2:#25272A;
-    --line:#34363A;
-    --text:#EDEAE2;
-    --muted:#9A968D;
-    --accent:#B5502F;
-    --prep:#5D7A8C;
-    --next:#C89B4A;
+    --iron:#161A1F;
+    --plate:#1D2229;
+    --plate-2:#242B33;
+    --hairline:#2F3841;
+    --chalk:#E6E8EA;
+    --steel:#8B949E;
+    --steel-dim:#6E7883;
+
+    --yellow:#F0B429;   /* 15 kg plate — primary signal */
+    --blue:#4B8CB8;     /* 20 kg plate — prep / mobility */
+    --red:#C4433A;      /* 25 kg plate — heavy work */
+    --green:#5FA777;    /* progress made */
+
+    --r:12px;
+    --pad:18px;
   }
   *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
   body{
-    margin:0;background:var(--bg);color:var(--text);
-    font-family:'Inter',sans-serif;padding:28px 16px 60px;
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 50% -200px, #1E242B 0%, transparent 70%),
+      var(--iron);
+    color:var(--chalk);
+    font-family:'IBM Plex Sans',system-ui,sans-serif;
+    padding:24px 13px calc(64px + env(safe-area-inset-bottom));
+    line-height:1.5;
   }
-  .wrap{max-width:880px;margin:0 auto;}
+  .wrap{max-width:820px;margin:0 auto;}
+
+  /* ---------------- masthead ---------------- */
+  .masthead{
+    border-bottom:1px solid var(--hairline);
+    padding-bottom:18px;margin-bottom:20px;
+  }
   .eyebrow{
-    font-family:'JetBrains Mono',monospace;font-size:11px;
-    letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:0.2em;text-transform:uppercase;color:var(--steel-dim);
+    margin:0 0 8px;
   }
   h1{
-    font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,8vw,58px);
-    letter-spacing:0.02em;line-height:0.95;margin:0 0 8px;
+    font-family:'Anton',sans-serif;font-weight:400;
+    font-size:clamp(42px,12vw,76px);
+    letter-spacing:0.005em;line-height:0.86;
+    margin:0;text-transform:uppercase;
   }
-  .hint{color:var(--muted);font-size:13px;margin:0 0 20px;line-height:1.55;}
+  h1 .slash{color:var(--yellow);}
+  .standfirst{
+    color:var(--steel);font-size:13.5px;margin:12px 0 0;max-width:54ch;
+  }
+  .standfirst b{color:var(--chalk);font-weight:600;}
 
+  /* ---------------- up next ---------------- */
   .upnext{
-    background:var(--surface);border:1px solid var(--line);
-    border-left:3px solid var(--next);border-radius:10px;
-    padding:14px 18px;margin-bottom:22px;
+    display:flex;align-items:center;gap:16px;
+    background:var(--plate);border:1px solid var(--hairline);
+    border-radius:var(--r);padding:16px var(--pad);margin-bottom:26px;
+    position:relative;overflow:hidden;
   }
+  .upnext::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--yellow);
+  }
+  .upnext-body{flex:1;min-width:0;}
   .upnext .lbl{
-    font-family:'JetBrains Mono',monospace;font-size:10px;
-    letter-spacing:0.14em;text-transform:uppercase;color:var(--next);
-    display:block;margin-bottom:4px;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;
+    letter-spacing:0.18em;text-transform:uppercase;color:var(--yellow);
+    display:block;margin-bottom:3px;
   }
-  .upnext .val{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.03em;}
-  .upnext .sub{font-size:12.5px;color:var(--muted);margin-top:3px;}
+  .upnext .val{
+    font-family:'Anton',sans-serif;font-size:28px;letter-spacing:0.01em;
+    text-transform:uppercase;line-height:1;
+  }
+  .upnext .sub{font-size:12.5px;color:var(--steel);margin-top:5px;}
 
+  /* ---------------- day cards ---------------- */
   .day{
-    background:var(--surface);border:1px solid var(--line);
-    border-radius:14px;margin-bottom:14px;overflow:hidden;
+    background:var(--plate);border:1px solid var(--hairline);
+    border-radius:var(--r);margin-bottom:12px;overflow:hidden;
+    transition:border-color .18s ease;
   }
-  .day.is-next{border-color:rgba(200,155,74,0.5);}
+  .day.is-next{border-color:rgba(240,180,41,0.45);}
   .day-head{
-    width:100%;background:none;border:none;color:inherit;
-    padding:16px 20px;display:flex;justify-content:space-between;
-    align-items:center;gap:12px;cursor:pointer;text-align:left;font-family:inherit;
+    width:100%;background:none;border:0;color:inherit;font-family:inherit;
+    padding:15px var(--pad);display:flex;align-items:center;gap:13px;
+    cursor:pointer;text-align:left;
   }
-  .day-head:hover{background:var(--surface2);}
-  .day-head:focus-visible{outline:2px solid var(--accent);outline-offset:-3px;}
-  .head-left{display:flex;flex-direction:column;gap:3px;}
+  .day-head:hover{background:var(--plate-2);}
+  .day-head:focus-visible{outline:2px solid var(--yellow);outline-offset:-3px;}
+  .stripe{
+    width:3px;align-self:stretch;border-radius:2px;flex:none;background:var(--steel-dim);
+  }
+  .day[data-kind="push"] .stripe{background:var(--red);}
+  .day[data-kind="pull"] .stripe{background:var(--blue);}
+  .head-left{flex:1;min-width:0;}
   .head-left h2{
-    font-family:'Bebas Neue',sans-serif;font-size:25px;
-    letter-spacing:0.03em;margin:0;line-height:1;
+    font-family:'Anton',sans-serif;font-weight:400;font-size:23px;
+    letter-spacing:0.01em;margin:0;line-height:1.05;text-transform:uppercase;
   }
   .day-tag{
-    font-family:'JetBrains Mono',monospace;font-size:10.5px;
-    color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;
+    color:var(--steel-dim);text-transform:uppercase;letter-spacing:0.11em;
+    display:block;margin-top:3px;
   }
   .head-right{display:flex;align-items:center;gap:12px;flex:none;}
   .lastdone{
-    font-family:'JetBrains Mono',monospace;font-size:11px;
-    color:var(--muted);text-align:right;line-height:1.35;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    color:var(--steel-dim);text-align:right;line-height:1.4;
   }
-  .lastdone .ago{color:var(--next);display:block;}
+  .lastdone .ago{color:var(--yellow);display:block;}
   .chev{
-    flex:none;width:11px;height:11px;border-right:2px solid var(--muted);
-    border-bottom:2px solid var(--muted);transform:rotate(45deg);
-    transition:transform .22s ease;
+    width:10px;height:10px;flex:none;
+    border-right:2px solid var(--steel);border-bottom:2px solid var(--steel);
+    transform:rotate(45deg);transition:transform .2s ease;
   }
   .day.open .chev{transform:rotate(-135deg);}
-  .day-body{display:none;border-top:1px solid var(--line);}
+  .day-body{display:none;border-top:1px solid var(--hairline);}
   .day.open .day-body{display:block;}
 
-  .datebar{
-    display:flex;flex-wrap:wrap;align-items:center;gap:9px;
-    padding:13px 20px;background:var(--surface2);
-    border-bottom:1px solid var(--line);
+  /* ---------------- session bar ---------------- */
+  .sessionbar{
+    padding:14px var(--pad);background:var(--plate-2);
+    border-bottom:1px solid var(--hairline);
   }
-  .datebar label{
-    font-family:'JetBrains Mono',monospace;font-size:10px;
-    text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);
+  .sb-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px;}
+  .sb-row + .sb-row{margin-top:10px;}
+  .sb-label{
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;
+    text-transform:uppercase;letter-spacing:0.13em;color:var(--steel-dim);
   }
-  .datebar input{
-    background:var(--bg);border:1px solid var(--line);color:var(--text);
-    border-radius:6px;padding:6px 9px;
-    font-family:'JetBrains Mono',monospace;font-size:12.5px;color-scheme:dark;
+  .sessionbar input[type="date"]{
+    background:var(--iron);border:1px solid var(--hairline);color:var(--chalk);
+    border-radius:8px;padding:8px 10px;color-scheme:dark;
+    font-family:'IBM Plex Mono',monospace;font-size:12.5px;
   }
-  .datebar input:focus{outline:1.5px solid var(--accent);}
-  .datebar button{
-    border:none;border-radius:6px;padding:7px 12px;cursor:pointer;
-    font-family:'JetBrains Mono',monospace;font-size:10.5px;
-    letter-spacing:0.06em;text-transform:uppercase;
+  .sessionbar input[type="date"]:focus{outline:2px solid var(--yellow);outline-offset:-1px;}
+  .btn{
+    border:0;border-radius:8px;padding:9px 14px;cursor:pointer;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:500;
+    letter-spacing:0.08em;text-transform:uppercase;
   }
-  .btn-today{background:var(--accent);color:#fff;}
-  .btn-save{background:var(--surface);color:var(--text);border:1px solid var(--line);}
-  .datebar button:hover{filter:brightness(1.15);}
-  .datebar button:focus-visible{outline:2px solid var(--text);outline-offset:2px;}
-  .msg{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);width:100%;}
+  .btn-ghost{background:var(--iron);color:var(--chalk);border:1px solid var(--hairline);}
+  .btn-ghost:hover{border-color:var(--steel);}
+  .btn-primary{background:var(--yellow);color:#1A1206;font-weight:600;}
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn:focus-visible{outline:2px solid var(--chalk);outline-offset:2px;}
+  .msg{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--steel);
+    width:100%;min-height:0;
+  }
+  .msg.ok{color:var(--green);}
 
+  .progress{
+    display:flex;align-items:center;gap:9px;width:100%;
+  }
+  .track{
+    flex:1;height:3px;background:var(--hairline);border-radius:2px;overflow:hidden;
+  }
+  .fill{height:100%;width:0;background:var(--yellow);transition:width .3s ease;}
+  .ptext{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--steel-dim);
+    white-space:nowrap;
+  }
+
+  /* ---------------- blocks & exercises ---------------- */
   .block-label{
-    font-family:'JetBrains Mono',monospace;font-size:10px;
-    letter-spacing:0.14em;text-transform:uppercase;
-    padding:13px 20px 4px;color:var(--prep);
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;
+    letter-spacing:0.16em;text-transform:uppercase;
+    padding:16px var(--pad) 2px;color:var(--blue);
+    display:flex;align-items:center;gap:9px;
   }
-  .block-label.main{color:var(--accent);}
-  .block-sub{
-    font-family:'Inter',sans-serif;font-size:12px;color:var(--muted);
-    padding:0 20px 6px;letter-spacing:0;text-transform:none;line-height:1.5;
-  }
+  .block-label::after{content:"";flex:1;height:1px;background:var(--hairline);}
+  .block-label.main{color:var(--yellow);}
+  .block-sub{font-size:12px;color:var(--steel);padding:6px var(--pad) 0;margin:0;}
 
-  .ex{padding:12px 20px 14px;border-bottom:1px solid var(--line);}
-  .ex:last-of-type{border-bottom:none;}
-  .ex.prep{background:rgba(93,122,140,0.07);}
-  .ex-top{
-    display:flex;justify-content:space-between;align-items:baseline;
-    gap:12px;margin-bottom:5px;
-  }
-  .ex-name{font-size:15px;font-weight:600;}
+  .ex{padding:13px var(--pad) 15px;border-bottom:1px solid var(--hairline);}
+  .ex:last-of-type{border-bottom:0;}
+  .ex.prep{background:rgba(75,140,184,0.055);}
+  .ex-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px;}
+  .ex-name{font-size:15px;font-weight:600;letter-spacing:-0.005em;}
   .ex-meta{
-    font-family:'JetBrains Mono',monospace;font-size:12.5px;
-    color:var(--accent);white-space:nowrap;flex:none;text-align:right;
+    font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+    color:var(--yellow);white-space:nowrap;flex:none;text-align:right;
   }
-  .ex-meta .rir{display:block;font-size:10.5px;color:var(--muted);margin-top:2px;}
-  .ex.prep .ex-meta{color:var(--prep);}
-  .ex-desc{font-size:13px;line-height:1.55;color:var(--muted);margin:0;}
-  .ex-desc b{color:var(--text);font-weight:600;}
+  .ex.prep .ex-meta{color:var(--blue);}
+  .ex-meta .rir{
+    display:block;font-size:10px;font-weight:400;color:var(--steel-dim);margin-top:2px;
+  }
+  .ex-desc{font-size:13px;line-height:1.6;color:var(--steel);margin:0;}
+  .ex-desc b{color:var(--chalk);font-weight:600;}
+
+  /* ---------------- set logger ---------------- */
+  .sets{
+    margin-top:12px;background:var(--iron);
+    border:1px solid var(--hairline);border-radius:10px;padding:10px 11px 11px;
+  }
+  .prevline{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    color:var(--steel-dim);margin-bottom:9px;line-height:1.55;
+  }
+  .prevline b{color:var(--chalk);font-weight:500;}
+  .set-row{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+  .set-n{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--steel-dim);
+    width:16px;flex:none;text-align:center;
+  }
+  .set-row input{
+    background:var(--plate);border:1px solid var(--hairline);color:var(--chalk);
+    border-radius:8px;padding:10px 9px;width:100%;min-width:0;
+    font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:500;
+  }
+  .set-row input::placeholder{color:var(--steel-dim);font-weight:400;}
+  .set-row input:focus{outline:2px solid var(--yellow);outline-offset:-1px;}
+  .unit{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--steel-dim);flex:none;}
+  /* signature: the delta chip — tells you if you beat last time, set by set */
+  .delta{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;
+    flex:none;width:34px;text-align:center;padding:3px 0;border-radius:5px;
+    opacity:0;transition:opacity .18s ease;
+  }
+  .delta.up{opacity:1;color:var(--green);background:rgba(95,167,119,0.13);}
+  .delta.down{opacity:1;color:var(--steel-dim);background:rgba(139,148,158,0.1);}
+  .delta.same{opacity:1;color:var(--steel-dim);}
+  .rm{
+    background:none;border:1px solid var(--hairline);color:var(--steel-dim);
+    border-radius:8px;width:32px;height:38px;flex:none;cursor:pointer;
+    font-size:16px;line-height:1;
+  }
+  .rm:hover{border-color:var(--red);color:var(--red);}
+  .rm:focus-visible{outline:2px solid var(--chalk);outline-offset:1px;}
+  .set-actions{display:flex;gap:9px;margin-top:9px;align-items:center;}
+  .addset{
+    background:var(--plate);border:1px solid var(--hairline);color:var(--chalk);
+    border-radius:8px;padding:8px 13px;cursor:pointer;
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    letter-spacing:0.08em;text-transform:uppercase;
+  }
+  .addset:hover{border-color:var(--yellow);}
+  .addset:focus-visible{outline:2px solid var(--yellow);outline-offset:1px;}
+  .saved-tick{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--green);
+    opacity:0;transition:opacity .2s;
+  }
+  .saved-tick.show{opacity:1;}
 
   .finisher{
-    padding:13px 20px 17px;border-top:1px solid var(--line);
-    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);
+    padding:14px var(--pad) 18px;border-top:1px solid var(--hairline);
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--steel-dim);
   }
-  .finisher b{color:var(--text);font-weight:600;}
+  .finisher b{color:var(--chalk);font-weight:500;}
 
-  .note{
-    background:var(--surface);border:1px solid var(--line);
-    border-left:3px solid var(--prep);border-radius:10px;
-    padding:16px 18px;margin-top:24px;
+  /* ---------------- reference accordion ---------------- */
+  .ref{margin-top:34px;}
+  .ref-head{
+    font-family:'Anton',sans-serif;font-size:26px;text-transform:uppercase;
+    letter-spacing:0.01em;margin:0 0 4px;
   }
-  .note h3{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:0.03em;margin:0 0 7px;}
-  .note p{font-size:13px;line-height:1.6;color:var(--muted);margin:0 0 8px;}
-  .note p:last-child{margin-bottom:0;}
-  @media (max-width:520px){ .lastdone{font-size:10px;} }
-  @media (prefers-reduced-motion:reduce){.chev{transition:none;}}
+  .ref-intro{color:var(--steel);font-size:13px;margin:0 0 16px;}
+  .card{
+    background:var(--plate);border:1px solid var(--hairline);
+    border-radius:var(--r);margin-bottom:10px;overflow:hidden;
+  }
+  .card-head{
+    width:100%;background:none;border:0;color:inherit;font-family:inherit;
+    padding:15px var(--pad);display:flex;align-items:center;gap:12px;
+    cursor:pointer;text-align:left;
+  }
+  .card-head:hover{background:var(--plate-2);}
+  .card-head:focus-visible{outline:2px solid var(--yellow);outline-offset:-3px;}
+  .card-n{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--steel-dim);
+    flex:none;letter-spacing:0.1em;
+  }
+  .card-title{flex:1;font-size:14.5px;font-weight:600;}
+  .card-body{display:none;padding:2px var(--pad) 18px;}
+  .card.open .card-body{display:block;}
+  .card-body p{font-size:13px;line-height:1.65;color:var(--steel);margin:0 0 11px;}
+  .card-body p:last-child{margin-bottom:0;}
+  .card-body b{color:var(--chalk);font-weight:600;}
+  .card-body ul{margin:0 0 11px;padding-left:18px;}
+  .card-body li{font-size:13px;line-height:1.65;color:var(--steel);margin-bottom:5px;}
+  .card-body li b{color:var(--chalk);}
+  .kv{
+    display:grid;grid-template-columns:auto 1fr;gap:6px 14px;
+    font-family:'IBM Plex Mono',monospace;font-size:12px;
+    margin:0 0 12px;
+  }
+  .kv dt{color:var(--yellow);white-space:nowrap;}
+  .kv dd{margin:0;color:var(--steel);}
+
+  .footnote{
+    margin-top:26px;padding-top:16px;border-top:1px solid var(--hairline);
+    font-size:12px;color:var(--steel-dim);line-height:1.6;
+  }
+
+  @media (max-width:430px){
+    .upnext{gap:12px;padding:14px 15px;}
+    .set-row{gap:5px;}
+    .delta{width:30px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .chev,.fill,.delta,.saved-tick{transition:none;}
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <p class="eyebrow">Training Split — 4 Day Rotation</p>
-  <h1>Push / Pull</h1>
-  <p class="hint">Tap a day to open it. Set the date you last did each one — whichever has gone longest shows up as next.</p>
+  <header class="masthead">
+    <p class="eyebrow">Four-day rotation · shoulders, traps, posture</p>
+    <h1>Push <span class="slash">/</span> Pull</h1>
+    <p class="standfirst">Open the day you're training. Log each set as you finish it — everything saves on its own. Tap <b>Log session</b> at the end to set the numbers you'll be chasing next time.</p>
+  </header>
 
   <div class="upnext">
-    <span class="lbl">Up Next</span>
-    <div class="val" id="next-val">—</div>
-    <div class="sub" id="next-sub">Set your last-done dates to get a suggestion.</div>
+    <div class="upnext-body">
+      <span class="lbl">Up next</span>
+      <div class="val" id="next-val">&mdash;</div>
+      <div class="sub" id="next-sub">Log a session to get a suggestion.</div>
+    </div>
   </div>
 
   <div id="days"></div>
 
-  <div class="note">
-    <h3>Reading the RIR numbers</h3>
-    <p><b>RIR = reps in reserve</b> — how many more reps you could have done when you racked the weight. <b>2 RIR</b> means you stopped with two clean reps left in the tank. <b>0 RIR</b> means you went to the point where another rep wasn't happening with good form.</p>
-    <p>Heavy compounds sit at 2 RIR: going to failure on overhead press or leg press costs a lot of recovery and adds injury risk for little extra growth. Isolation work — lateral raises, rear delt flyes, curls, calves — can safely run at 0–1 RIR, and that's where you should feel like you emptied the tank.</p>
-    <p>If you're consistently hitting the top of the rep range at your target RIR, add weight. If you're missing the bottom of the range, the weight's too heavy.</p>
-  </div>
+  <section class="ref">
+    <h2 class="ref-head">Reference</h2>
+    <p class="ref-intro">Everything that isn't the workout itself. Open what you need.</p>
+    <div id="cards"></div>
+  </section>
 
-  <div class="note">
-    <h3>Progression</h3>
-    <p><b>Double progression:</b> stay at the same weight until you hit the top of the rep range on every set at target RIR, then add weight and start back at the bottom. Leg press might jump 10–20 lb; lateral raises will be 2.5–5 lb, and that's normal.</p>
-    <p><b>Deload every 6–8 weeks:</b> one week at roughly 60% of your usual weights. Joints and connective tissue recover slower than muscle.</p>
-    <p><b>Do the hip flexor stretch daily, not just on gym days.</b> Highest-leverage thing here for the tilt — twice a week won't outpace sitting the rest of the time.</p>
-  </div>
+  <p class="footnote">Your sets and dates are stored on this device only — no account, nothing uploaded. Clearing browser data for this site erases them.</p>
 </div>
 
 <script>
-const ROUTINE = [
+/* ============================================================
+   ROUTINE DATA — edit here to change the workout.
+   Each exercise needs a unique `key`: that is what its logged
+   sets are stored under. Changing a key resets that exercise's
+   history, so leave keys alone when you are only editing
+   wording, sets or reps. Add `nolog:true` to hide the logger.
+   ============================================================ */
+var ROUTINE = [
   {
-    id:"push1", name:"Push 1", tag:"Chest / Shoulders / Quads", finisher:"Sled Push",
+    id:"push1", kind:"push", name:"Push 1", tag:"Chest / Shoulders / Quads", finisher:"Sled push",
     prep:[
-      {name:"Band Pull-Aparts", sets:"2×20",
+      {name:"Band pull-aparts", sets:"2\u00d720",
        desc:"Band at chest height, arms straight, pull it apart until your hands are wide and your shoulder blades pinch. <b>Why:</b> wakes up the rear delts and mid-traps before pressing, countering the forward-rounded position."},
-      {name:"Doorway Pec Stretch", sets:"2×30 sec/side",
+      {name:"Doorway pec stretch", sets:"2\u00d730 sec/side",
        desc:"Forearm on a doorframe at shoulder height, step through gently until you feel a stretch across the front of the chest. <b>Why:</b> tight pecs pull the shoulders forward."},
-      {name:"Kneeling Hip Flexor Stretch", sets:"2×30 sec/side",
+      {name:"Kneeling hip flexor stretch", sets:"2\u00d730 sec/side",
        desc:"Half-kneeling, squeeze the back-leg glute and tuck your pelvis under before leaning forward. The glute squeeze is what makes it work. <b>Why:</b> tight hip flexors pull the pelvis into the forward tilt."}
     ],
     ex:[
-      {name:"Incline Barbell or Dumbbell Press", sets:"4×6–8", rir:"2 RIR",
-       desc:"Bench at 30–45°. Lower under control to upper chest, elbows around 45° from your torso, press back up. <b>Builds:</b> upper chest and front delt."},
-      {name:"Seated Dumbbell Shoulder Press", sets:"3×8–10", rir:"2 RIR",
-       desc:"Press dumbbells overhead from shoulder height, back flat against the pad so you're not arching to move the weight. <b>Builds:</b> front and side delts — second overhead exposure of the week."},
-      {name:"Lateral Raises", sets:"4×12–15", rir:"0–1 RIR",
-       desc:"Raise arms out to shoulder height leading with the elbows, slight bend held throughout, lower slowly rather than dropping. Take the last set to the point where form starts breaking. <b>Builds:</b> lateral delt — shoulder width and cap."},
-      {name:"Cable Fly", sets:"3×12–15", rir:"0–1 RIR",
-       desc:"Slight elbow bend locked in place, sweep hands together in an arc and squeeze at the center. <b>Builds:</b> chest isolation."},
-      {name:"Leg Press — quad setup", sets:"4×8–12", rir:"2 RIR",
-       desc:"Feet mid-platform, shoulder width. Lower until your knees reach roughly 90°, stopping before your hips curl off the seat. Drive through mid-foot, don't slam the knees straight at the top. Leave 2 reps in the tank — leg press to true failure is where people get pinned or round their back. <b>Builds:</b> quads primarily. This is the heavy day."},
-      {name:"Standing Calf Raise", sets:"3×12–15", rir:"0–1 RIR",
+      {key:"p1-incline", name:"Incline barbell or dumbbell press", sets:"4\u00d76\u20138", rir:"2 RIR",
+       desc:"Bench at 30\u201345\u00b0. Lower under control to upper chest, elbows around 45\u00b0 from your torso, press back up. <b>Builds:</b> upper chest and front delt."},
+      {key:"p1-dbohp", name:"Seated dumbbell shoulder press", sets:"3\u00d78\u201310", rir:"2 RIR",
+       desc:"Press dumbbells overhead from shoulder height, back flat against the pad so you're not arching to move the weight. <b>Builds:</b> front and side delts \u2014 second overhead exposure of the week."},
+      {key:"p1-lat", name:"Lateral raises", sets:"4\u00d712\u201315", rir:"0\u20131 RIR",
+       desc:"Raise arms out to shoulder height leading with the elbows, slight bend held throughout, lower slowly rather than dropping. <b>Builds:</b> lateral delt \u2014 shoulder width and cap."},
+      {key:"p1-fly", name:"Cable fly", sets:"3\u00d712\u201315", rir:"0\u20131 RIR",
+       desc:"Slight elbow bend locked in place, sweep hands together in an arc and squeeze at the centre. <b>Builds:</b> chest isolation."},
+      {key:"p1-legpress", name:"Leg press \u2014 quad setup", sets:"4\u00d78\u201312", rir:"2 RIR",
+       desc:"Feet mid-platform, shoulder width. Lower until your knees reach roughly 90\u00b0, stopping before your hips curl off the seat. Drive through mid-foot, don't slam the knees straight at the top. Leave 2 reps in the tank \u2014 leg press to true failure is where people get pinned or round their back. <b>Builds:</b> quads primarily. This is the heavy day."},
+      {key:"p1-calf", name:"Standing calf raise", sets:"3\u00d712\u201315", rir:"0\u20131 RIR",
        desc:"Full stretch at the bottom, pause a beat at the top rather than bouncing. <b>Builds:</b> calves."},
-      {name:"Rope Pushdown", sets:"3×12–15", rir:"0–1 RIR",
+      {key:"p1-pushdown", name:"Rope pushdown", sets:"3\u00d712\u201315", rir:"0\u20131 RIR",
        desc:"Elbows pinned to your sides the whole set, push down and let the rope split slightly at the bottom. <b>Builds:</b> triceps."},
-      {name:"Dead Bug", sets:"3×10/side", rir:"quality over reps",
-       desc:"On your back, lower back pressed flat into the floor, extend opposite arm and leg slowly without letting your back arch off the ground. Stop the set when your back lifts — that's the real endpoint, not a rep count. <b>Builds:</b> deep core control for a neutral pelvis."}
+      {key:"p1-deadbug", name:"Dead bug", sets:"3\u00d710/side", rir:"quality over reps", nolog:true,
+       desc:"On your back, lower back pressed flat into the floor, extend opposite arm and leg slowly without letting your back arch off the ground. Stop the set when your back lifts \u2014 that's the real endpoint, not a rep count. <b>Builds:</b> deep core control for a neutral pelvis."}
     ]
   },
   {
-    id:"push2", name:"Push 2", tag:"Shoulders / Traps / Glutes", finisher:"Sled Push",
-    priority:"Delts lead today. Lateral raises and rear delt flyes come first so your target muscles get your freshest effort — overhead press will feel lighter than usual as a result, and that's the intended trade.",
+    id:"push2", kind:"push", name:"Push 2", tag:"Shoulders / Traps / Glutes", finisher:"Sled push",
+    priority:"Delts lead today. Lateral raises and rear delt flyes come first so your target muscles get your freshest effort \u2014 overhead press will feel lighter than usual as a result, and that's the intended trade.",
     prep:[
-      {name:"Band Pull-Aparts", sets:"2×20",
+      {name:"Band pull-aparts", sets:"2\u00d720",
        desc:"Arms straight, pull the band apart until your shoulder blades pinch. <b>Why:</b> primes the rear delts and mid-traps before shoulder work."},
-      {name:"Thoracic Extension over Foam Roller", sets:"2×8 reps",
+      {name:"Thoracic extension over foam roller", sets:"2\u00d78 reps",
        desc:"Roller across your upper back, hands supporting your head, extend backward over it and hold briefly. Keep your ribs from flaring. <b>Why:</b> restores upper-back extension, usually stiff with rounded shoulders."},
-      {name:"Glute Bridge", sets:"2×15",
+      {name:"Glute bridge", sets:"2\u00d715",
        desc:"On your back, feet flat, drive through your heels and squeeze your glutes at the top without arching your lower back. <b>Why:</b> gets the glutes firing so they contribute during the session."}
     ],
     ex:[
-      {name:"Lateral Raises", sets:"4×12–15", rir:"0–1 RIR",
-       desc:"Lead with elbows, control the negative, stop at shoulder height. First movement of the day — this is where you should feel the most burn of the week. <b>Builds:</b> lateral delt — width and cap."},
-      {name:"Rear Delt Flyes", sets:"4×15", rir:"0–1 RIR",
-       desc:"Hinge forward at the hips or lie chest-down on an incline bench, raise dumbbells out to the sides and squeeze your shoulder blades at the top. <b>Builds:</b> rear delt — fills the groove behind the shoulder cap and pulls the shoulders back into line."},
-      {name:"Overhead Press", sets:"4×6–8", rir:"2 RIR",
-       desc:"Bar at collarbone height, press straight overhead without excessively arching your back — brace your abs and tuck your ribs down. Expect to use less weight than on a fresh day; match the rep range, not your old numbers. <b>Builds:</b> front and side delts."},
-      {name:"Dumbbell Shrugs", sets:"4×12", rir:"1 RIR",
-       desc:"Shrug straight up toward your ears (don't roll your shoulders), pause at the top, lower slowly. <b>Builds:</b> upper traps — neck-to-shoulder mass."},
-      {name:"Leg Press — glute setup", sets:"3×10–15", rir:"2 RIR",
-       desc:"Same machine, feet placed <b>high on the platform and slightly wider</b>, toes turned out a touch. Go as deep as you can without your hips curling off the seat, drive through your heels. Lighter than Push 1 — the point is the stretch and glute contraction, not maximum load. <b>Builds:</b> glutes and hamstrings."},
-      {name:"Close-Grip Bench or Dips", sets:"3×8–10", rir:"1–2 RIR",
+      {key:"p2-lat", name:"Lateral raises", sets:"4\u00d712\u201315", rir:"0\u20131 RIR",
+       desc:"Lead with elbows, control the negative, stop at shoulder height. First movement of the day \u2014 this is where you should feel the most burn of the week. <b>Builds:</b> lateral delt \u2014 width and cap."},
+      {key:"p2-reardelt", name:"Rear delt flyes", sets:"4\u00d715", rir:"0\u20131 RIR",
+       desc:"Hinge forward at the hips or lie chest-down on an incline bench, raise dumbbells out to the sides and squeeze your shoulder blades at the top. <b>Builds:</b> rear delt \u2014 fills the groove behind the shoulder cap and pulls the shoulders back into line."},
+      {key:"p2-ohp", name:"Overhead press", sets:"4\u00d76\u20138", rir:"2 RIR",
+       desc:"Bar at collarbone height, press straight overhead without excessively arching your back \u2014 brace your abs and tuck your ribs down. Expect to use less weight than on a fresh day; match the rep range, not your old numbers. <b>Builds:</b> front and side delts."},
+      {key:"p2-shrug", name:"Dumbbell shrugs", sets:"4\u00d712", rir:"1 RIR",
+       desc:"Shrug straight up toward your ears (don't roll your shoulders), pause at the top, lower slowly. <b>Builds:</b> upper traps \u2014 neck-to-shoulder mass."},
+      {key:"p2-legpress", name:"Leg press \u2014 glute setup", sets:"3\u00d710\u201315", rir:"2 RIR",
+       desc:"Same machine, feet placed <b>high on the platform and slightly wider</b>, toes turned out a touch. Go as deep as you can without your hips curling off the seat, drive through your heels. Lighter than Push 1 \u2014 the point is the stretch and glute contraction, not maximum load. <b>Builds:</b> glutes and hamstrings."},
+      {key:"p2-cgbench", name:"Close-grip bench or dips", sets:"3\u00d78\u201310", rir:"1\u20132 RIR",
        desc:"Elbows tucked close to your torso throughout. <b>Builds:</b> triceps, secondary chest and front delt."},
-      {name:"Plank", sets:"3×30–45 sec", rir:"quality over time",
+      {key:"p2-plank", name:"Plank", sets:"3\u00d730\u201345 sec", rir:"quality over time", nolog:true,
        desc:"Forearms down, pelvis tucked slightly under so your lower back is flat, glutes squeezed. End the set when your hips start to sag, not at the clock. <b>Builds:</b> anti-extension core strength."}
     ]
   },
   {
-    id:"pull1", name:"Pull 1", tag:"Back / Biceps / Hamstrings", finisher:"Rowing Machine",
+    id:"pull1", kind:"pull", name:"Pull 1", tag:"Back / Biceps / Hamstrings", finisher:"Rowing machine",
     prep:[
-      {name:"Band Pull-Aparts", sets:"2×20",
+      {name:"Band pull-aparts", sets:"2\u00d720",
        desc:"Pull apart until your shoulder blades pinch. <b>Why:</b> primes the rear delts and mid-traps."},
-      {name:"90/90 Hip Stretch", sets:"2×30 sec/side",
-       desc:"Seated with one leg bent in front at 90° and one behind at 90°, lean gently over the front leg. <b>Why:</b> opens the hips that pull the pelvis forward."},
-      {name:"Prone Y-Raise", sets:"2×12",
+      {name:"90/90 hip stretch", sets:"2\u00d730 sec/side",
+       desc:"Seated with one leg bent in front at 90\u00b0 and one behind at 90\u00b0, lean gently over the front leg. <b>Why:</b> opens the hips that pull the pelvis forward."},
+      {name:"Prone Y-raise", sets:"2\u00d712",
        desc:"Face-down on a bench or the floor, arms overhead in a Y, lift them a few inches using only your upper back. Light or no weight. <b>Why:</b> strengthens lower traps, typically weak with rounded shoulders."}
     ],
     ex:[
-      {name:"Romanian Deadlift", sets:"4×8–10", rir:"2–3 RIR",
-       desc:"Bar close to your legs, push your hips back with a flat back until you feel a hamstring stretch, then drive your hips forward to stand and squeeze the glutes. Stop well short of failure — form degrades fast here and it's your lower back that pays. <b>Builds:</b> hamstrings and glutes; your main glute builder now, so don't skip it."},
-      {name:"Lat Pulldown", sets:"3×10–12", rir:"1–2 RIR",
-       desc:"Pull the bar to your upper chest leading with elbows down and back, don't lean back excessively to cheat the weight. <b>Builds:</b> lats — back width."},
-      {name:"Face Pulls", sets:"3×15–20", rir:"0–1 RIR",
-       desc:"Rope at upper chest or head height, pull toward your face flaring your elbows out wide, squeeze your shoulder blades at the end. <b>Builds:</b> rear delt and upper/mid traps — best single exercise for both the shoulder groove and rounded posture."},
-      {name:"Seated Cable Row", sets:"3×10–12", rir:"1–2 RIR",
-       desc:"Back upright and straight, pull the handle to your torso, squeeze your shoulder blades, control the return. <b>Builds:</b> mid-back thickness — directly opposes the forward-rounded position."},
-      {name:"Leg Curl", sets:"3×12", rir:"0–1 RIR",
+      {key:"l1-rdl", name:"Romanian deadlift", sets:"4\u00d78\u201310", rir:"2\u20133 RIR",
+       desc:"Bar close to your legs, push your hips back with a flat back until you feel a hamstring stretch, then drive your hips forward to stand and squeeze the glutes. Stop well short of failure \u2014 form degrades fast here and it's your lower back that pays. <b>Builds:</b> hamstrings and glutes; your main glute builder now, so don't skip it."},
+      {key:"l1-pulldown", name:"Lat pulldown", sets:"3\u00d710\u201312", rir:"1\u20132 RIR",
+       desc:"Pull the bar to your upper chest leading with elbows down and back, don't lean back excessively to cheat the weight. <b>Builds:</b> lats \u2014 back width."},
+      {key:"l1-facepull", name:"Face pulls", sets:"3\u00d715\u201320", rir:"0\u20131 RIR",
+       desc:"Rope at upper chest or head height, pull toward your face flaring your elbows out wide, squeeze your shoulder blades at the end. <b>Builds:</b> rear delt and upper/mid traps \u2014 best single exercise for both the shoulder groove and rounded posture."},
+      {key:"l1-cablerow", name:"Seated cable row", sets:"3\u00d710\u201312", rir:"1\u20132 RIR",
+       desc:"Back upright and straight, pull the handle to your torso, squeeze your shoulder blades, control the return. <b>Builds:</b> mid-back thickness \u2014 directly opposes the forward-rounded position."},
+      {key:"l1-legcurl", name:"Leg curl", sets:"3\u00d712", rir:"0\u20131 RIR",
        desc:"Controlled through the full range, no jerking at the bottom. <b>Builds:</b> hamstrings, isolated from the hips."},
-      {name:"Barbell or Dumbbell Curl", sets:"3×10–12", rir:"0–1 RIR",
+      {key:"l1-curl", name:"Barbell or dumbbell curl", sets:"3\u00d710\u201312", rir:"0\u20131 RIR",
        desc:"Elbows pinned to your sides, no torso swing, control the lowering. <b>Builds:</b> biceps."}
     ]
   },
   {
-    id:"pull2", name:"Pull 2", tag:"Back / Traps / Posterior Chain", finisher:"Rowing Machine (swap in Ski Erg anytime)",
-    priority:"Rear delts move up today too — flyes come before shrugs and rows so they're not always last in line.",
+    id:"pull2", kind:"pull", name:"Pull 2", tag:"Back / Traps / Posterior chain", finisher:"Rowing machine (swap in ski erg anytime)",
+    priority:"Rear delts move up today too \u2014 flyes come before shrugs and rows so they're not always last in line.",
     prep:[
-      {name:"Band Pull-Aparts", sets:"2×20",
+      {name:"Band pull-aparts", sets:"2\u00d720",
        desc:"Pull apart until your shoulder blades pinch. <b>Why:</b> primes the rear delts and mid-traps."},
-      {name:"Thoracic Extension over Foam Roller", sets:"2×8 reps",
+      {name:"Thoracic extension over foam roller", sets:"2\u00d78 reps",
        desc:"Extend backward over the roller placed across your upper back, ribs kept down. <b>Why:</b> restores upper-back mobility for the rounded shoulders."},
-      {name:"Kneeling Hip Flexor Stretch", sets:"2×30 sec/side",
+      {name:"Kneeling hip flexor stretch", sets:"2\u00d730 sec/side",
        desc:"Half-kneeling, squeeze the back-leg glute and tuck your pelvis before leaning forward. <b>Why:</b> lengthens the hip flexors pulling your pelvis into the tilt."}
     ],
     ex:[
-      {name:"Pull-ups (weighted if possible)", sets:"4×6–10", rir:"1–2 RIR",
-       desc:"Pull until your chin clears the bar, lower under control to a full stretch. <b>Builds:</b> lat width and overall back strength."},
-      {name:"Rear Delt Flyes or Reverse Pec-Deck", sets:"3×15", rir:"0–1 RIR",
-       desc:"Slight elbow bend held throughout, squeeze at the end of the range rather than swinging the weight up. Moved up the order so it gets real effort. <b>Builds:</b> rear delt — second dedicated exposure of the week."},
-      {name:"Chest-Supported Row", sets:"3×10–12", rir:"1–2 RIR",
+      {key:"l2-pullup", name:"Pull-ups (weighted if possible)", sets:"4\u00d76\u201310", rir:"1\u20132 RIR",
+       desc:"Pull until your chin clears the bar, lower under control to a full stretch. Log added weight only \u2014 leave it at 0 for bodyweight. <b>Builds:</b> lat width and overall back strength."},
+      {key:"l2-reardelt", name:"Rear delt flyes or reverse pec-deck", sets:"3\u00d715", rir:"0\u20131 RIR",
+       desc:"Slight elbow bend held throughout, squeeze at the end of the range rather than swinging the weight up. Moved up the order so it gets real effort. <b>Builds:</b> rear delt \u2014 second dedicated exposure of the week."},
+      {key:"l2-csrow", name:"Chest-supported row", sets:"3\u00d710\u201312", rir:"1\u20132 RIR",
        desc:"Chest braced against an incline bench or pad, row your elbows back and squeeze the shoulder blades, no torso momentum. <b>Builds:</b> back thickness with no lower-back strain, and the support forces good scapular position."},
-      {name:"Behind-the-Back Barbell Shrugs", sets:"4×12", rir:"1 RIR",
+      {key:"l2-shrug", name:"Behind-the-back barbell shrugs", sets:"4\u00d712", rir:"1 RIR",
        desc:"Bar behind you at arm's length, shrug straight up, pause, lower slowly. <b>Builds:</b> upper traps from a different angle than standard shrugs."},
-      {name:"Back Extension (glute-focused)", sets:"3×12–15", rir:"2 RIR",
-       desc:"Round your upper back slightly and tuck your chin, then extend using your glutes rather than arching your lower back. Stop at a straight line — don't hyperextend. <b>Builds:</b> glutes and hamstrings without reinforcing the arch."},
-      {name:"Seated Calf Raise", sets:"3×15", rir:"0–1 RIR",
+      {key:"l2-backext", name:"Back extension (glute-focused)", sets:"3\u00d712\u201315", rir:"2 RIR",
+       desc:"Round your upper back slightly and tuck your chin, then extend using your glutes rather than arching your lower back. Stop at a straight line \u2014 don't hyperextend. <b>Builds:</b> glutes and hamstrings without reinforcing the arch."},
+      {key:"l2-calf", name:"Seated calf raise", sets:"3\u00d715", rir:"0\u20131 RIR",
        desc:"Full stretch at the bottom, pause at the top. Seated hits the soleus, which the standing version on Push 1 mostly misses. <b>Builds:</b> calves."},
-      {name:"Hammer Curls", sets:"3×10–12", rir:"0–1 RIR",
+      {key:"l2-hammer", name:"Hammer curls", sets:"3\u00d710\u201312", rir:"0\u20131 RIR",
        desc:"Palms face each other throughout, elbows fixed at your sides. <b>Builds:</b> biceps and brachialis."}
     ]
   }
 ];
 
-const KEY = "pushpull-dates";
-let dates = {};
+/* ============================================================
+   REFERENCE CARDS — collapsible notes below the workout.
+   ============================================================ */
+var REFERENCE = [
+  {
+    title:"How to log a session",
+    body:
+      "<p>Each exercise starts with the number of sets in its target, but <b>add or remove sets freely</b> — the plan is a starting point, not a rule.</p>" +
+      "<p>Type weight and reps as you finish each set. It saves the moment you tap out of the field, so there's nothing to remember at the end.</p>" +
+      "<p>When a weight beats what you did last time, a green chip appears next to it showing the jump. That chip is the whole point of the app: it answers \"am I actually progressing?\" without you doing arithmetic between sets.</p>" +
+      "<p>Tap <b>Log session</b> when you're done. That stamps today's date and files your numbers as the baseline you'll see next time.</p>"
+  },
+  {
+    title:"Reps in reserve (RIR)",
+    body:
+      "<p><b>RIR is how many more reps you had left</b> when you stopped. 2 RIR means you could have done two more with clean form. 0 RIR means another rep wasn't happening.</p>" +
+      "<dl class='kv'>" +
+        "<dt>2 RIR</dt><dd>Heavy compounds — overhead press, incline press, leg press, RDL. Going to failure here costs recovery and adds risk for little extra growth.</dd>" +
+        "<dt>1 RIR</dt><dd>Shrugs, rows, pull-ups. Hard, but not grinding.</dd>" +
+        "<dt>0–1 RIR</dt><dd>Isolation — lateral raises, rear delt flyes, curls, calves, face pulls. This is where you empty the tank.</dd>" +
+      "</dl>" +
+      "<p>Most sets should land within 1–3 reps of failure. Sets easier than that mostly buy you fatigue without growth.</p>"
+  },
+  {
+    title:"Adding weight over time",
+    body:
+      "<p><b>Double progression.</b> Stay at the same weight until you hit the top of the rep range on every set at your target RIR. Then add weight and drop back to the bottom of the range.</p>" +
+      "<p>Example: leg press at 4×8–12. Once all four sets reach 12 clean reps, add weight and expect to be back near 8. That's progress, not regression.</p>" +
+      "<p>Jump sizes differ by lift. Leg press might move 10–20 lb at a time; lateral raises and rear delt flyes move 2.5–5 lb, and often it's an extra rep rather than more weight. Small increments on the small lifts is normal — those are the ones fixing the shoulder shape, and chasing weight there costs you the form that makes them work.</p>" +
+      "<p><b>Deload every 6–8 weeks:</b> one week at roughly 60% of your usual loads. Connective tissue recovers slower than muscle, and this is the difference between progressing for years and stalling out injured.</p>"
+  },
+  {
+    title:"Warm-ups and rest",
+    body:
+      "<p><b>Warm-up sets</b> only for the first heavy movement of each day, and only on the compounds. Two or three ramping sets — roughly 50%, 70%, 85% of your working weight for a few reps each — then start counting. Don't log these.</p>" +
+      "<p>Isolation work doesn't need dedicated warm-ups; the compounds before it already did the job.</p>" +
+      "<dl class='kv'>" +
+        "<dt>2–3 min</dt><dd>Heavy compounds: overhead press, incline press, leg press, RDL, pull-ups</dd>" +
+        "<dt>60–90 s</dt><dd>Rows, shrugs, close-grip bench, back extensions</dd>" +
+        "<dt>45–60 s</dt><dd>Lateral raises, rear delt flyes, face pulls, curls, calves</dd>" +
+      "</dl>" +
+      "<p>Resting less than this to save time mostly costs you reps on the next set, which is the thing you're trying to increase. If you're short on time, cut an exercise rather than the rest.</p>"
+  },
+  {
+    title:"Eating for this",
+    body:
+      "<p>You're lean, and the shoulders and traps you want are built from added muscle — which needs material to build from. A <b>slight surplus</b>, roughly 200–300 calories above maintenance, is enough. Bigger surpluses mostly add fat, not speed.</p>" +
+      "<p><b>Protein: roughly 0.7–1 g per pound of bodyweight per day.</b> This is the single dietary variable that matters most for muscle gain, and the one most people under-hit.</p>" +
+      "<p>Rough expectations for someone past their first year of training: <b>0.25–0.5 lb of bodyweight per week</b>. Faster than that is mostly fat. If the scale hasn't moved in three weeks, add ~150 calories a day and reassess.</p>" +
+      "<p>You're already tracking calories, so this is a target change rather than a habit change.</p>"
+  },
+  {
+    title:"Recovery, soccer and sleep",
+    body:
+      "<p>Four lifting days plus soccer plus warehouse work is real cumulative load. Muscle is built during recovery, not during the session.</p>" +
+      "<p><b>Sleep is the highest-leverage recovery variable</b> — 7–9 hours. Chronically short sleep blunts muscle gain and makes every session feel harder.</p>" +
+      "<p><b>If your legs are beat up</b>, the Push 2 leg press is the first thing to cut. It's the least essential lift in the plan and the one most redundant with soccer.</p>" +
+      "<p>Signs you're under-recovering rather than just tired: weights going backward for two sessions running, joints aching before you start, sleep getting worse, motivation dropping off a cliff. The answer is a deload week, not pushing harder.</p>"
+  },
+  {
+    title:"Posture outside the gym",
+    body:
+      "<p>The rounded shoulders and pelvic tilt are mostly built by the other 23 hours. Six minutes of prep work twice a week can't outrun a full day of the position that caused it.</p>" +
+      "<p><b>The hip flexor stretch is worth doing daily</b>, not just on gym days. It's the highest-return two minutes in the whole plan for the tilt.</p>" +
+      "<ul>" +
+        "<li><b>Standing:</b> if you rest with your hips pushed forward and lower back arched, that's the tilt position — stack your ribs over your pelvis instead.</li>" +
+        "<li><b>Phone:</b> bring it to eye level rather than dropping your head to it.</li>" +
+        "<li><b>Sitting:</b> get up every 30–45 minutes. Duration matters more than the perfect chair.</li>" +
+        "<li><b>Warehouse lifting:</b> hinge at the hips with a flat back rather than rounding — same pattern as your RDLs.</li>" +
+      "</ul>"
+  },
+  {
+    title:"Tracking whether it's working",
+    body:
+      "<p><b>Progress photos monthly.</b> Same lighting, same angles, same time of day. Shoulder and trap changes happen too slowly to see in the mirror day to day, and the photos are the only honest record.</p>" +
+      "<p><b>The logged numbers are your other signal.</b> If lateral raise weight and reps are climbing over a couple of months, the muscle is being built whether or not you can see it yet.</p>" +
+      "<p><b>Realistic timeline:</b> noticeable change in the shoulder and trap area takes 3–6 months of consistent work with the eating handled. Posture changes are slower still, and partial — some separation between the trap and delt is normal anatomy on a lean frame, not a flaw to be erased.</p>"
+  },
+  {
+    title:"Changing exercises",
+    body:
+      "<p><b>Rotate variations every 8–12 weeks</b> — dumbbell to cable lateral raises, barbell to trap-bar shrugs, incline press to a different angle. Keeps progress moving when a lift stalls, and gives joints a break from the same groove.</p>" +
+      "<p><b>Swap sooner if a movement causes joint pain</b> — not muscle burn, but sharp or lingering pain in a joint. There's always another exercise for the same muscle.</p>" +
+      "<p>To edit the plan itself, open <code>index.html</code> and find the <code>ROUTINE</code> array near the top of the script. Each exercise is one object; change the name, sets, RIR or description and commit. Leave the <code>key</code> field alone or that exercise loses its logged history.</p>"
+  },
+  {
+    title:"When to see a professional",
+    body:
+      "<p>This plan is general training guidance, not a medical assessment, and posture is one of those areas where a hands-on evaluation beats guessing from photos.</p>" +
+      "<p>Worth seeing a physical therapist or sports physician if you get:</p>" +
+      "<ul>" +
+        "<li>Pain, numbness or tingling rather than ordinary muscle soreness</li>" +
+        "<li>Lower back pain that shows up during or after the hinge and leg work</li>" +
+        "<li>Shoulder pain when pressing overhead, particularly a pinch at the top</li>" +
+        "<li>No change in the tilt after a few months of consistent work</li>" +
+      "</ul>" +
+      "<p>A PT can tell you which structures are actually tight or weak in your case, which is something no general program can do.</p>"
+  }
+];
 
+/* ============================ STORAGE ============================ */
+var DATE_KEY = "pushpull-dates";
+var LOG_KEY  = "pushpull-log";
+var dates = {};
+var log   = {};
+
+function readJSON(key){
+  try{
+    var raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){ return {}; }
+}
+function writeJSON(key, val){
+  try{ localStorage.setItem(key, JSON.stringify(val)); return true; }
+  catch(e){ return false; }
+}
+
+/* ============================ DATES ============================ */
 function todayISO(){
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  var d = new Date();
+  return d.getFullYear() + "-" +
+    String(d.getMonth()+1).padStart(2,"0") + "-" +
+    String(d.getDate()).padStart(2,"0");
 }
 function parseLocal(iso){
-  const [y,m,d] = iso.split("-").map(Number);
-  return new Date(y, m-1, d);
+  var p = iso.split("-").map(Number);
+  return new Date(p[0], p[1]-1, p[2]);
 }
 function daysAgo(iso){
   return Math.round((parseLocal(todayISO()) - parseLocal(iso))/86400000);
 }
 function agoText(iso){
-  const n = daysAgo(iso);
+  var n = daysAgo(iso);
   if(n === 0) return "today";
   if(n === 1) return "yesterday";
-  if(n < 0) return "scheduled";
-  return `${n} days ago`;
+  if(n < 0)   return "scheduled";
+  return n + " days ago";
 }
 function prettyDate(iso){
   return parseLocal(iso).toLocaleDateString(undefined,{month:"short",day:"numeric"});
 }
 
-function load(){
-  try{
-    const raw = localStorage.getItem(KEY);
-    dates = raw ? JSON.parse(raw) : {};
-  }catch(e){ dates = {}; }
-  render();
+/* ============================ SETS ============================ */
+function defaultSetCount(setsStr){
+  var m = String(setsStr).match(/^\s*(\d+)/);
+  return m ? Math.min(parseInt(m[1],10), 10) : 3;
 }
-function save(){
-  try{ localStorage.setItem(KEY, JSON.stringify(dates)); return true; }
-  catch(e){ return false; }
+function getEntry(ex){
+  if(!log[ex.key]) log[ex.key] = { sets:[], prev:[], prevDate:null };
+  var e = log[ex.key];
+  if(!Array.isArray(e.sets)) e.sets = [];
+  if(!Array.isArray(e.prev)) e.prev = [];
+  if(e.sets.length === 0){
+    var n = defaultSetCount(ex.sets);
+    for(var i=0;i<n;i++) e.sets.push({w:"",r:""});
+  }
+  return e;
+}
+function hasLoggedSets(key){
+  var e = log[key];
+  if(!e || !e.sets) return false;
+  return e.sets.some(function(s){ return s.w !== "" || s.r !== ""; });
+}
+function prevText(ex){
+  var e = log[ex.key];
+  if(!e || !e.prev || !e.prev.length) return "No previous session yet \u2014 today sets the baseline.";
+  var filled = e.prev.filter(function(s){ return s.w !== "" || s.r !== ""; });
+  if(!filled.length) return "No previous session yet \u2014 today sets the baseline.";
+  var parts = filled.map(function(s){
+    return (s.w === "" ? "\u2014" : s.w) + "\u00d7" + (s.r === "" ? "\u2014" : s.r);
+  });
+  var when = e.prevDate ? "  \u00b7  " + prettyDate(e.prevDate) : "";
+  return "Last time <b>" + parts.join("&nbsp;&nbsp;") + "</b>" + when;
+}
+/* signature interaction: compare this set against the same set last time */
+function deltaFor(ex, i){
+  var e = log[ex.key];
+  if(!e || !e.prev || !e.prev[i]) return null;
+  var now  = parseFloat(e.sets[i] ? e.sets[i].w : "");
+  var then = parseFloat(e.prev[i].w);
+  if(isNaN(now) || isNaN(then)) return null;
+  var d = Math.round((now - then) * 10) / 10;
+  if(d > 0)  return { cls:"up",   text:"+" + d };
+  if(d < 0)  return { cls:"down", text:String(d) };
+  return { cls:"same", text:"=" };
+}
+
+/* ============================ RENDER ============================ */
+function lastDoneHTML(id){
+  if(!dates[id]) return '<span class="lastdone">never</span>';
+  return '<span class="lastdone">' + prettyDate(dates[id]) +
+         '<span class="ago">' + agoText(dates[id]) + '</span></span>';
 }
 
 function updateNext(){
-  const done = ROUTINE.filter(d => dates[d.id]);
-  const valEl = document.getElementById("next-val");
-  const subEl = document.getElementById("next-sub");
-  document.querySelectorAll(".day").forEach(el => el.classList.remove("is-next"));
+  var valEl = document.getElementById("next-val");
+  var subEl = document.getElementById("next-sub");
+  var all = document.querySelectorAll(".day");
+  for(var i=0;i<all.length;i++) all[i].classList.remove("is-next");
 
-  const never = ROUTINE.filter(d => !dates[d.id]);
-  let pick;
+  var never = ROUTINE.filter(function(d){ return !dates[d.id]; });
+  var done  = ROUTINE.filter(function(d){ return dates[d.id]; });
+  var pick;
+
   if(never.length){
     pick = never[0];
     valEl.textContent = pick.name;
-    subEl.textContent = "Not logged yet — start here.";
+    subEl.textContent = "Never logged \u2014 start here.";
   }else if(done.length){
-    pick = done.reduce((a,b) => daysAgo(dates[a.id]) >= daysAgo(dates[b.id]) ? a : b);
+    pick = done.reduce(function(a,b){
+      return daysAgo(dates[a.id]) >= daysAgo(dates[b.id]) ? a : b;
+    });
     valEl.textContent = pick.name;
-    subEl.textContent = `Last done ${agoText(dates[pick.id])} — longest since your last session.`;
+    subEl.textContent = "Longest since you trained it \u2014 last done " + agoText(dates[pick.id]) + ".";
   }else{
-    valEl.textContent = "—";
-    subEl.textContent = "Set your last-done dates to get a suggestion.";
+    valEl.innerHTML = "&mdash;";
+    subEl.textContent = "Log a session to get a suggestion.";
     return;
   }
-  const el = document.querySelector(`.day[data-id="${pick.id}"]`);
+  var el = document.querySelector('.day[data-id="' + pick.id + '"]');
   if(el) el.classList.add("is-next");
 }
 
-function lastDoneHTML(id){
-  if(!dates[id]) return `<span class="lastdone">not logged</span>`;
-  return `<span class="lastdone">${prettyDate(dates[id])}<span class="ago">${agoText(dates[id])}</span></span>`;
+function updateProgress(day, el){
+  var loggable = day.ex.filter(function(x){ return !x.nolog; });
+  var done = loggable.filter(function(x){ return hasLoggedSets(x.key); }).length;
+  var pct = loggable.length ? Math.round(done / loggable.length * 100) : 0;
+  var fill = el.querySelector(".fill");
+  var text = el.querySelector(".ptext");
+  if(fill) fill.style.width = pct + "%";
+  if(text) text.textContent = done + " of " + loggable.length + " logged";
 }
 
-function render(){
-  const root = document.getElementById("days");
-  root.innerHTML = "";
-  ROUTINE.forEach(day=>{
-    const el = document.createElement("section");
-    el.className = "day";
-    el.dataset.id = day.id;
-    const exHtml = (arr, isPrep) => arr.map(x=>`
-      <div class="ex${isPrep?" prep":""}">
-        <div class="ex-top">
-          <span class="ex-name">${x.name}</span>
-          <span class="ex-meta">${x.sets}${x.rir?`<span class="rir">${x.rir}</span>`:""}</span>
-        </div>
-        <p class="ex-desc">${x.desc}</p>
-      </div>`).join("");
+function buildSetBlock(ex, container, onChange){
+  var entry = getEntry(ex);
 
-    el.innerHTML = `
-      <button class="day-head" aria-expanded="false">
-        <span class="head-left">
-          <h2>${day.name}</h2>
-          <span class="day-tag">${day.tag}</span>
-        </span>
-        <span class="head-right">
-          ${lastDoneHTML(day.id)}
-          <span class="chev"></span>
-        </span>
-      </button>
-      <div class="day-body">
-        <div class="datebar">
-          <label for="d-${day.id}">Last done</label>
-          <input id="d-${day.id}" type="date" value="${dates[day.id]||""}">
-          <button class="btn-save">Save</button>
-          <button class="btn-today">Did it today</button>
-          <span class="msg"></span>
-        </div>
-        <div class="block-label">Prep — Posture &amp; Hips · 6–8 min</div>
-        ${exHtml(day.prep, true)}
-        <div class="block-label main">Main Work</div>
-        ${day.priority?`<p class="block-sub">${day.priority}</p>`:""}
-        ${exHtml(day.ex, false)}
-        <div class="finisher">Finisher — <b>${day.finisher}</b></div>
-      </div>`;
+  function flash(){
+    var tick = container.querySelector(".saved-tick");
+    if(!tick) return;
+    tick.classList.add("show");
+    setTimeout(function(){ tick.classList.remove("show"); }, 900);
+  }
 
-    const head = el.querySelector(".day-head");
-    head.addEventListener("click",()=>{
-      const open = el.classList.toggle("open");
-      head.setAttribute("aria-expanded", open);
-    });
+  function paintDelta(i){
+    var chip = container.querySelector('.set-row[data-i="' + i + '"] .delta');
+    if(!chip) return;
+    chip.className = "delta";
+    chip.textContent = "";
+    var d = deltaFor(ex, i);
+    if(d){ chip.classList.add(d.cls); chip.textContent = d.text; }
+  }
 
-    const input = el.querySelector("input[type=date]");
-    const msg = el.querySelector(".msg");
+  function draw(){
+    var rows = entry.sets.map(function(s,i){
+      return '<div class="set-row" data-i="' + i + '">' +
+        '<span class="set-n">' + (i+1) + '</span>' +
+        '<input class="w" type="number" inputmode="decimal" step="any" placeholder="weight" ' +
+          'aria-label="Set ' + (i+1) + ' weight in pounds" value="' + (s.w == null ? "" : s.w) + '">' +
+        '<span class="unit">lb</span>' +
+        '<input class="r" type="number" inputmode="numeric" placeholder="reps" ' +
+          'aria-label="Set ' + (i+1) + ' reps" value="' + (s.r == null ? "" : s.r) + '">' +
+        '<span class="delta" aria-hidden="true"></span>' +
+        '<button class="rm" type="button" aria-label="Remove set ' + (i+1) + '">\u00d7</button>' +
+      '</div>';
+    }).join("");
 
-    function commit(iso){
-      if(!iso){ msg.textContent = "Pick a date first."; return; }
-      dates[day.id] = iso;
-      const ok = save();
-      msg.textContent = ok ? "Saved." : "Could not save - check browser storage settings.";
-      el.querySelector(".lastdone").outerHTML = lastDoneHTML(day.id);
-      updateNext();
-      setTimeout(()=>{ msg.textContent = ""; }, 1600);
+    container.innerHTML =
+      '<div class="prevline">' + prevText(ex) + '</div>' + rows +
+      '<div class="set-actions">' +
+        '<button class="addset" type="button">+ Add set</button>' +
+        '<span class="saved-tick">saved</span>' +
+      '</div>';
+
+    var rowEls = container.querySelectorAll(".set-row");
+    for(var k=0;k<rowEls.length;k++){
+      (function(row){
+        var i = parseInt(row.getAttribute("data-i"), 10);
+        row.querySelector(".w").addEventListener("change", function(e){
+          entry.sets[i].w = e.target.value.trim();
+          writeJSON(LOG_KEY, log); flash(); paintDelta(i);
+          if(onChange) onChange();
+        });
+        row.querySelector(".r").addEventListener("change", function(e){
+          entry.sets[i].r = e.target.value.trim();
+          writeJSON(LOG_KEY, log); flash();
+          if(onChange) onChange();
+        });
+        row.querySelector(".rm").addEventListener("click", function(){
+          if(entry.sets.length <= 1) return;
+          entry.sets.splice(i,1);
+          writeJSON(LOG_KEY, log);
+          draw();
+          if(onChange) onChange();
+        });
+      })(rowEls[k]);
+      paintDelta(k);
     }
 
-    el.querySelector(".btn-save").addEventListener("click", e=>{
-      e.stopPropagation(); commit(input.value);
+    container.querySelector(".addset").addEventListener("click", function(){
+      var last = entry.sets[entry.sets.length-1];
+      entry.sets.push({ w: last ? last.w : "", r:"" });
+      writeJSON(LOG_KEY, log);
+      draw();
     });
-    el.querySelector(".btn-today").addEventListener("click", e=>{
-      e.stopPropagation(); input.value = todayISO(); commit(input.value);
+  }
+
+  draw();
+}
+
+function renderDays(){
+  var root = document.getElementById("days");
+  root.innerHTML = "";
+
+  ROUTINE.forEach(function(day){
+    var el = document.createElement("section");
+    el.className = "day";
+    el.setAttribute("data-id", day.id);
+    el.setAttribute("data-kind", day.kind);
+
+    var prepHTML = day.prep.map(function(x){
+      return '<div class="ex prep">' +
+        '<div class="ex-top"><span class="ex-name">' + x.name + '</span>' +
+        '<span class="ex-meta">' + x.sets + '</span></div>' +
+        '<p class="ex-desc">' + x.desc + '</p></div>';
+    }).join("");
+
+    var mainHTML = day.ex.map(function(x){
+      return '<div class="ex" data-key="' + x.key + '">' +
+        '<div class="ex-top"><span class="ex-name">' + x.name + '</span>' +
+        '<span class="ex-meta">' + x.sets +
+          (x.rir ? '<span class="rir">' + x.rir + '</span>' : '') +
+        '</span></div>' +
+        '<p class="ex-desc">' + x.desc + '</p>' +
+        (x.nolog ? '' : '<div class="sets"></div>') +
+      '</div>';
+    }).join("");
+
+    el.innerHTML =
+      '<button class="day-head" type="button" aria-expanded="false">' +
+        '<span class="stripe" aria-hidden="true"></span>' +
+        '<span class="head-left"><h2>' + day.name + '</h2>' +
+          '<span class="day-tag">' + day.tag + '</span></span>' +
+        '<span class="head-right">' + lastDoneHTML(day.id) + '<span class="chev"></span></span>' +
+      '</button>' +
+      '<div class="day-body">' +
+        '<div class="sessionbar">' +
+          '<div class="sb-row">' +
+            '<span class="sb-label">Last done</span>' +
+            '<input id="d-' + day.id + '" type="date" aria-label="Date last trained" value="' + (dates[day.id] || "") + '">' +
+            '<button class="btn btn-ghost" type="button" data-act="date">Save date</button>' +
+            '<button class="btn btn-primary" type="button" data-act="finish">Log session</button>' +
+          '</div>' +
+          '<div class="sb-row"><span class="progress">' +
+            '<span class="track"><span class="fill"></span></span>' +
+            '<span class="ptext"></span>' +
+          '</span></div>' +
+          '<div class="sb-row"><span class="msg" role="status"></span></div>' +
+        '</div>' +
+        '<div class="block-label">Prep \u00b7 posture and hips \u00b7 6\u20138 min</div>' +
+        prepHTML +
+        '<div class="block-label main">Main work</div>' +
+        (day.priority ? '<p class="block-sub">' + day.priority + '</p>' : '') +
+        mainHTML +
+        '<div class="finisher">Finisher \u2014 <b>' + day.finisher + '</b></div>' +
+      '</div>';
+
+    var head = el.querySelector(".day-head");
+    head.addEventListener("click", function(){
+      var open = el.classList.toggle("open");
+      head.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    function refreshProgress(){ updateProgress(day, el); }
+
+    day.ex.forEach(function(x){
+      if(x.nolog) return;
+      var holder = el.querySelector('.ex[data-key="' + x.key + '"] .sets');
+      if(holder) buildSetBlock(x, holder, refreshProgress);
+    });
+    refreshProgress();
+
+    var input = el.querySelector('input[type="date"]');
+    var msg   = el.querySelector(".msg");
+
+    function setMsg(text, ok){
+      msg.textContent = text;
+      if(ok) msg.classList.add("ok"); else msg.classList.remove("ok");
+      setTimeout(function(){ msg.textContent = ""; msg.classList.remove("ok"); }, 2400);
+    }
+    function refreshHead(){
+      el.querySelector(".lastdone").outerHTML = lastDoneHTML(day.id);
+    }
+
+    function saveDateOnly(iso){
+      if(!iso){ setMsg("Pick a date first."); return; }
+      dates[day.id] = iso;
+      var ok = writeJSON(DATE_KEY, dates);
+      refreshHead(); updateNext();
+      setMsg(ok ? "Date saved." : "Storage is blocked in this browser — nothing was saved.", ok);
+    }
+
+    function finishToday(){
+      var iso = todayISO();
+      dates[day.id] = iso;
+      day.ex.forEach(function(x){
+        if(x.nolog) return;
+        var e = log[x.key];
+        if(!e) return;
+        if(!e.sets.some(function(s){ return s.w !== "" || s.r !== ""; })) return;
+        e.prev = e.sets.map(function(s){ return { w:s.w, r:s.r }; });
+        e.prevDate = iso;
+      });
+      var ok = writeJSON(DATE_KEY, dates) && writeJSON(LOG_KEY, log);
+      input.value = iso;
+      refreshHead();
+      day.ex.forEach(function(x){
+        if(x.nolog) return;
+        var holder = el.querySelector('.ex[data-key="' + x.key + '"] .sets');
+        if(holder) buildSetBlock(x, holder, refreshProgress);
+      });
+      refreshProgress(); updateNext();
+      setMsg(ok ? "Session logged \u2014 these are the numbers to beat." :
+                  "Storage is blocked in this browser \u2014 nothing was saved.", ok);
+    }
+
+    el.querySelector('[data-act="date"]').addEventListener("click", function(e){
+      e.stopPropagation(); saveDateOnly(input.value);
+    });
+    el.querySelector('[data-act="finish"]').addEventListener("click", function(e){
+      e.stopPropagation(); finishToday();
     });
 
     root.appendChild(el);
   });
+
   updateNext();
 }
 
-load();
+function renderReference(){
+  var root = document.getElementById("cards");
+  root.innerHTML = "";
+  REFERENCE.forEach(function(item, i){
+    var el = document.createElement("section");
+    el.className = "card";
+    el.innerHTML =
+      '<button class="card-head" type="button" aria-expanded="false">' +
+        '<span class="card-n">' + String(i+1).padStart(2,"0") + '</span>' +
+        '<span class="card-title">' + item.title + '</span>' +
+        '<span class="chev" aria-hidden="true"></span>' +
+      '</button>' +
+      '<div class="card-body">' + item.body + '</div>';
+    var head = el.querySelector(".card-head");
+    head.addEventListener("click", function(){
+      var open = el.classList.toggle("open");
+      head.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+    root.appendChild(el);
+  });
+}
+
+/* ============================ BOOT ============================ */
+dates = readJSON(DATE_KEY);
+log   = readJSON(LOG_KEY);
+renderDays();
+renderReference();
 
 if("serviceWorker" in navigator){
   window.addEventListener("load", function(){

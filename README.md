@@ -35,20 +35,44 @@ The workout data is the `ROUTINE` array near the top of the `<script>` block in 
 
 ```js
 {
-  id:"push1",
+  id:"push1",                    // do not change - keys your saved dates
   name:"Push 1",
   tag:"Chest / Shoulders / Quads",
   finisher:"Sled Push",
   priority:"optional note shown above the main work",
   prep:[ {name, sets, desc}, ... ],
-  ex:[ {name, sets, rir, desc}, ... ]
+  ex:[ {key, name, sets, rir, desc}, ... ]
 }
 ```
+
+Every exercise needs a unique `key` — that's what its logged sets are stored under. Changing a key orphans that exercise's history, so leave keys alone when you're only editing wording, sets or reps. Add `nolog:true` to an exercise to hide its logging box (used for planks and dead bugs).
 
 Edit, commit, push. The page updates on your next visit with signal.
 
 If you change `sw.js` or want to force a refresh for cached visitors, bump the `CACHE` version string (`pushpull-v1` → `pushpull-v2`).
 
-## Your logged dates
+## What's on the page
 
-Dates are stored in the browser's `localStorage` under the key `pushpull-dates`. They live on that specific device and browser — they are not synced across devices, and clearing site data will erase them. Nothing is uploaded anywhere.
+- **Up next** — the day you've gone longest without training.
+- **Day cards** — tap to expand. Red stripe for push days, blue for pull.
+- **Prep block** — posture and hip work, 6–8 minutes before the main lifts.
+- **Set logger** — weight and reps per set, with a green chip when you beat last session on that set.
+- **Session progress** — how many exercises you've logged so far today.
+- **Reference** — collapsible notes at the bottom: RIR, progression, rest times, nutrition, recovery, posture, and when to see a professional.
+
+## Logging sets
+
+Each exercise has a set-by-set logger: weight and reps per set, with buttons to add or remove sets. Values save automatically when you tap out of a field.
+
+Hitting **Log session** on a day does two things: stamps today's date, and snapshots everything you logged as that exercise's "last session" — the line shown above each logger, so you always know the numbers to beat.
+
+Your typed values stay in the boxes between visits, so next session you just bump the weight up from where you were.
+
+## Where your data lives
+
+Two `localStorage` keys in your browser:
+
+- `pushpull-dates` — when you last did each day
+- `pushpull-log` — your sets, weights and reps
+
+This is per-device and per-browser: it does not sync between your phone and laptop, and clearing site data for the domain erases it. Nothing is uploaded anywhere — no account, no server.
