@@ -354,6 +354,19 @@
     .bl-name{flex:none;}
   }
 
+  /* ---------------- warm-up ---------------- */
+  .warmup{display:none;margin-bottom:9px;align-items:center;gap:7px;flex-wrap:wrap;}
+  .warmup.show{display:flex;}
+  .warmup{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--steel);
+  }
+  .wu-tag{
+    font-size:9px;letter-spacing:0.13em;text-transform:uppercase;
+    color:var(--blue);border:1px solid rgba(75,140,184,0.35);
+    padding:2px 7px;border-radius:100px;
+  }
+  .wu-sep{color:var(--steel-dim);margin:0 6px;}
+
   /* ---------------- coach ---------------- */
   .coach{
     margin-top:9px;padding:9px 11px;border-radius:8px;
@@ -418,6 +431,50 @@
     font-size:12.5px;line-height:1.55;color:var(--steel);
   }
   .cue b{color:var(--chalk);font-weight:600;}
+
+  /* ---------------- bodyweight ---------------- */
+  .bw-entry{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:13px;}
+  .bw-entry input{
+    background:var(--iron);border:1px solid var(--hairline);color:var(--chalk);
+    border-radius:8px;padding:9px 10px;color-scheme:dark;
+    font-family:'IBM Plex Mono',monospace;font-size:13px;
+  }
+  #bw-val{width:88px;}
+  .bw-entry input:focus{outline:2px solid var(--yellow);outline-offset:-1px;}
+  .bw-report{
+    font-size:13px;line-height:1.6;color:var(--steel);
+    padding:11px 13px;border-radius:9px;background:var(--iron);
+    border-left:2px solid var(--steel-dim);
+  }
+  .bw-report b{color:var(--chalk);font-weight:600;}
+  .bw-report.good{border-left-color:var(--green);background:rgba(95,167,119,0.08);}
+  .bw-report.good b{color:var(--green);}
+  .bw-report.warn{border-left-color:var(--yellow);background:rgba(240,180,41,0.07);}
+  .bw-report.warn b{color:var(--yellow);}
+  .bw-list{margin-top:13px;border-top:1px solid var(--hairline);padding-top:9px;}
+  .bw-row{
+    display:flex;align-items:center;gap:10px;padding:5px 0;
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--steel-dim);
+    border-bottom:1px solid rgba(47,56,65,0.5);
+  }
+  .bw-row:last-child{border-bottom:0;}
+  .bw-row span:first-child{flex:1;}
+  .bw-w{color:var(--chalk);}
+  .bw-rm{
+    background:none;border:0;color:var(--steel-dim);cursor:pointer;
+    font-size:15px;line-height:1;padding:2px 6px;
+  }
+  .bw-rm:hover{color:var(--red);}
+
+  /* ---------------- backup ---------------- */
+  .backup{
+    margin-top:30px;background:var(--plate);border:1px solid var(--hairline);
+    border-left:3px solid var(--red);border-radius:var(--r);padding:16px 18px;
+  }
+  .backup-text{font-size:13px;line-height:1.6;color:var(--steel);margin-bottom:12px;}
+  .backup-text b{color:var(--chalk);font-weight:600;}
+  .backup-actions{display:flex;flex-wrap:wrap;align-items:center;gap:9px;}
+  .backup-actions label{cursor:pointer;}
 
   /* ---------------- reference wrapper ---------------- */
   .ref-toggle{
@@ -519,6 +576,14 @@
     <div id="mobility"></div>
   </section>
 
+  <section class="daily">
+    <h2 class="ref-head">Bodyweight</h2>
+    <p class="ref-intro">Same time each morning. The weekly average is what you act on &mdash; daily readings swing pounds on water alone.</p>
+    <div class="card" style="padding:0">
+      <div id="bodyweight" style="padding:16px 18px"></div>
+    </div>
+  </section>
+
   <section class="ref">
     <button class="ref-toggle" id="ref-toggle" type="button" aria-expanded="false" aria-controls="ref-body">
       <span class="tri" aria-hidden="true"></span>
@@ -531,6 +596,18 @@
       <div id="cards"></div>
     </div>
   </section>
+
+  <div class="backup">
+    <div class="backup-text">
+      <b>Back up your data.</b> Everything is stored in this browser only. Clearing site data, switching phones, or the OS reclaiming storage will erase it with no recovery.
+    </div>
+    <div class="backup-actions">
+      <button class="btn btn-primary" type="button" id="btn-export">Export backup</button>
+      <label class="btn btn-ghost" for="file-import" style="display:inline-block">Restore</label>
+      <input type="file" id="file-import" accept="application/json,.json" style="display:none">
+      <span class="msg" id="backup-msg" role="status"></span>
+    </div>
+  </div>
 
   <p class="footnote">Your sets, dates and mobility ticks are stored on this device only — no account, nothing uploaded. Clearing browser data for this site erases them.</p>
 </div>
@@ -802,6 +879,20 @@ var REFERENCE = [
       "<p>Tap <b>Log session</b> when you're done. That stamps today's date and files your numbers as the baseline you'll see next time.</p>"
   },
   {
+    title:"Backing up, and how the day order works",
+    body:
+      "<h4 style='margin:0 0 7px;font-size:13px;color:#E6E8EA;'>Back this up</h4>" +
+      "<p>Everything \u2014 sets, dates, mobility ticks, bodyweight \u2014 lives in this browser's storage on this one device. <b>Clearing site data, switching phones, or iOS reclaiming storage will erase all of it with no recovery.</b> Over a year that's a lot to lose.</p>" +
+      "<p><b>Export a backup every month or so</b> and keep the file somewhere else \u2014 email it to yourself, drop it in cloud storage, whatever you'll still have in six months. Restore reads it back in and replaces what's currently stored.</p>" +
+      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>Which day comes next</h4>" +
+      "<p>The suggestion alternates push and pull rather than just picking whatever you've gone longest without. Push 1 \u2192 Pull 1 \u2192 Push 2 \u2192 Pull 2. Two push days back to back would hit the same muscles before they've recovered, which costs you the second session.</p>" +
+      "<p>If you train out of order or skip a day, it still picks the opposite kind to whatever you did last, and within that, whichever you've gone longest without.</p>" +
+      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>Fixing mistakes</h4>" +
+      "<p><b>Clear</b> wipes that day's date if you saved one by accident. <b>Undo log</b> appears after you tap Log session and puts the previous baseline back \u2014 useful if you banked a half-finished session.</p>" +
+      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>Warm-up numbers</h4>" +
+      "<p>On the heavy lifts, a ramp appears once you enter a working weight: roughly 50%, 70% and 85% for 5, 3 and 2 reps. <b>Don't log these</b> \u2014 they're not working sets. Lighter loads and all isolation work don't show one, because the prep block and the compounds before them already did that job.</p>"
+  },
+  {
     title:"What the coaching messages mean",
     body:
       "<p>The box under each exercise reads your logged sets against the target rep range and against the same exercise last session, then says one thing. It runs on your phone with no internet and no guesswork \u2014 the same numbers always produce the same advice.</p>" +
@@ -961,9 +1052,13 @@ var REFERENCE = [
 var DATE_KEY = "pushpull-dates";
 var LOG_KEY  = "pushpull-log";
 var MOB_KEY  = "pushpull-mobility";
+var UNDO_KEY = "pushpull-undo";
+var BW_KEY   = "pushpull-bodyweight";
 var dates = {};
 var log   = {};
 var mobility = {};
+var undoState = {};
+var bodyweight = {};
 
 function readJSON(key){
   try{
@@ -1217,6 +1312,35 @@ function sessionSummary(day){
   return "Session volume is <b>level</b> with last time.";
 }
 
+
+/* ============================================================
+   WARM-UP — ramp to the working weight on the heavy lifts.
+   ============================================================ */
+function warmupFor(ex, workWeight){
+  if(ex.nolog) return null;
+  if(["barbell","machine","mid"].indexOf(ex.cls) === -1) return null;
+  var w = parseFloat(workWeight);
+  if(isNaN(w) || w <= 0) return null;
+  /* below these loads a ramp is pointless — the prep block covered it */
+  var floor = (ex.cls === "machine") ? 120 : 95;
+  if(w < floor) return null;
+  var step = (ex.cls === "machine") ? 10 : 5;
+  function rnd(n){ return Math.max(step, Math.round(n/step)*step); }
+  var sets = [
+    { w: rnd(w*0.5),  r:5 },
+    { w: rnd(w*0.7),  r:3 },
+    { w: rnd(w*0.85), r:2 }
+  ];
+  /* drop any rung that isn't meaningfully lighter than the next */
+  var out = [];
+  for(var i=0;i<sets.length;i++){
+    if(i && sets[i].w <= out[out.length-1].w) continue;
+    if(sets[i].w >= w) continue;
+    out.push(sets[i]);
+  }
+  return out.length ? out : null;
+}
+
 /* ============================================================
    BRIEFING — what to do today, read from last session.
    Same rules as the in-set coach, run before you start.
@@ -1338,23 +1462,42 @@ function updateNext(){
 
   var never = ROUTINE.filter(function(d){ return !dates[d.id]; });
   var done  = ROUTINE.filter(function(d){ return dates[d.id]; });
-  var pick;
+  var pick, why;
 
-  if(never.length){
-    pick = never[0];
-    valEl.textContent = pick.name;
-    subEl.textContent = "Never logged \u2014 start here.";
-  }else if(done.length){
-    pick = done.reduce(function(a,b){
+  /* what did we train most recently? we want the opposite kind next, so
+     push and pull alternate instead of stacking two push days together */
+  var lastTrained = done.length ? done.reduce(function(a,b){
+    return daysAgo(dates[a.id]) <= daysAgo(dates[b.id]) ? a : b;
+  }) : null;
+  var wantKind = lastTrained ? (lastTrained.kind === "push" ? "pull" : "push") : null;
+
+  function longestSince(list){
+    return list.reduce(function(a,b){
       return daysAgo(dates[a.id]) >= daysAgo(dates[b.id]) ? a : b;
     });
-    valEl.textContent = pick.name;
-    subEl.textContent = "Longest since you trained it \u2014 last done " + agoText(dates[pick.id]) + ".";
+  }
+
+  if(never.length){
+    /* prefer an unlogged day of the opposite kind, else any unlogged day */
+    var neverOpp = wantKind ? never.filter(function(d){ return d.kind === wantKind; }) : [];
+    pick = neverOpp.length ? neverOpp[0] : never[0];
+    why  = "Never logged \u2014 start here.";
+  }else if(done.length){
+    var opp = wantKind ? done.filter(function(d){ return d.kind === wantKind; }) : [];
+    if(opp.length){
+      pick = longestSince(opp);
+      why  = "Alternating off " + lastTrained.name + " \u2014 last did this " + agoText(dates[pick.id]) + ".";
+    }else{
+      pick = longestSince(done);
+      why  = "Longest since you trained it \u2014 last done " + agoText(dates[pick.id]) + ".";
+    }
   }else{
     valEl.innerHTML = "&mdash;";
     subEl.textContent = "Log a session to get a suggestion.";
     return;
   }
+  valEl.textContent = pick.name;
+  subEl.textContent = why;
   var el = document.querySelector('.day[data-id="' + pick.id + '"]');
   if(el) el.classList.add("is-next");
 }
@@ -1377,6 +1520,17 @@ function buildSetBlock(ex, container, onChange){
     if(!tick) return;
     tick.classList.add("show");
     setTimeout(function(){ tick.classList.remove("show"); }, 900);
+  }
+
+  function paintWarmup(){
+    var box = container.querySelector(".warmup");
+    if(!box) return;
+    var target = (entry.sets[0] && entry.sets[0].w) || topWeight(filledSets(entry.prev));
+    var wu = warmupFor(ex, target);
+    if(!wu){ box.className = "warmup"; box.innerHTML = ""; return; }
+    box.className = "warmup show";
+    box.innerHTML = '<span class="wu-tag">warm-up</span>' +
+      wu.map(function(s){ return s.w + '&thinsp;\u00d7&thinsp;' + s.r; }).join('<span class="wu-sep">\u2192</span>');
   }
 
   function paintCoach(){
@@ -1412,7 +1566,8 @@ function buildSetBlock(ex, container, onChange){
     }).join("");
 
     container.innerHTML =
-      '<div class="prevline">' + prevText(ex) + '</div>' + rows +
+      '<div class="prevline">' + prevText(ex) + '</div>' +
+      '<div class="warmup"></div>' + rows +
       '<div class="set-actions">' +
         '<button class="addset" type="button">+ Add set</button>' +
         '<span class="saved-tick">saved</span>' +
@@ -1425,7 +1580,7 @@ function buildSetBlock(ex, container, onChange){
         var i = parseInt(row.getAttribute("data-i"), 10);
         row.querySelector(".w").addEventListener("change", function(e){
           entry.sets[i].w = e.target.value.trim();
-          writeJSON(LOG_KEY, log); flash(); paintDelta(i); paintCoach();
+          writeJSON(LOG_KEY, log); flash(); paintDelta(i); paintCoach(); paintWarmup();
           if(onChange) onChange();
         });
         row.querySelector(".r").addEventListener("change", function(e){
@@ -1444,6 +1599,7 @@ function buildSetBlock(ex, container, onChange){
       paintDelta(k);
     }
     paintCoach();
+    paintWarmup();
 
     container.querySelector(".addset").addEventListener("click", function(){
       var last = entry.sets[entry.sets.length-1];
@@ -1508,7 +1664,9 @@ function renderDays(){
             '<span class="sb-label">Last done</span>' +
             '<input id="d-' + day.id + '" type="date" aria-label="Date last trained" value="' + (dates[day.id] || "") + '">' +
             '<button class="btn btn-ghost" type="button" data-act="date">Save date</button>' +
+            '<button class="btn btn-ghost" type="button" data-act="clear">Clear</button>' +
             '<button class="btn btn-primary" type="button" data-act="finish">Log session</button>' +
+            '<button class="btn btn-ghost" type="button" data-act="undo" style="display:none">Undo log</button>' +
           '</div>' +
           '<div class="sb-row"><span class="progress">' +
             '<span class="track"><span class="fill"></span></span>' +
@@ -1536,6 +1694,13 @@ function renderDays(){
       head.setAttribute("aria-expanded", open ? "true" : "false");
     });
 
+    function redrawSets(){
+      day.ex.forEach(function(x){
+        if(x.nolog) return;
+        var holder = el.querySelector('.ex[data-key="' + x.key + '"] .sets');
+        if(holder) buildSetBlock(x, holder, refreshProgress);
+      });
+    }
     function refreshSummary(){
       var box = el.querySelector(".summary");
       if(!box) return;
@@ -1599,6 +1764,19 @@ function renderDays(){
 
     function finishToday(){
       var iso = todayISO();
+      /* snapshot so "Undo log" can put everything back exactly */
+      undoState[day.id] = {
+        date: dates[day.id] || null,
+        ex: day.ex.filter(function(x){ return !x.nolog; }).map(function(x){
+          var e = log[x.key] || {};
+          return {
+            key:  x.key,
+            prev: (e.prev || []).map(function(s){ return { w:s.w, r:s.r }; }),
+            prevDate: e.prevDate || null,
+            stall: e.stall || 0
+          };
+        })
+      };
       dates[day.id] = iso;
       day.ex.forEach(function(x){
         if(x.nolog) return;
@@ -1617,23 +1795,60 @@ function renderDays(){
         e.prevDate = iso;
       });
       var ok = writeJSON(DATE_KEY, dates) && writeJSON(LOG_KEY, log);
+      writeJSON(UNDO_KEY, undoState);
       input.value = iso;
       refreshHead();
-      day.ex.forEach(function(x){
-        if(x.nolog) return;
-        var holder = el.querySelector('.ex[data-key="' + x.key + '"] .sets');
-        if(holder) buildSetBlock(x, holder, refreshProgress);
-      });
+      redrawSets();
       refreshProgress(); refreshBrief(); updateNext();
       setMsg(ok ? "Session logged \u2014 these are the numbers to beat." :
                   "Storage is blocked in this browser \u2014 nothing was saved.", ok);
     }
 
+    var undoBtn = el.querySelector('[data-act="undo"]');
+    function showUndo(){
+      if(undoBtn) undoBtn.style.display = undoState[day.id] ? "" : "none";
+    }
+    showUndo();
+
+    function clearDate(){
+      delete dates[day.id];
+      var ok = writeJSON(DATE_KEY, dates);
+      input.value = "";
+      refreshHead(); refreshBrief(); updateNext();
+      setMsg(ok ? "Date cleared." : "Storage is blocked in this browser.", ok);
+    }
+
+    function undoLog(){
+      var snap = undoState[day.id];
+      if(!snap) return;
+      if(snap.date) dates[day.id] = snap.date; else delete dates[day.id];
+      snap.ex.forEach(function(rec){
+        var e = log[rec.key];
+        if(!e) return;
+        e.prev     = rec.prev;
+        e.prevDate = rec.prevDate;
+        e.stall    = rec.stall;
+      });
+      delete undoState[day.id];
+      writeJSON(DATE_KEY, dates);
+      writeJSON(LOG_KEY, log);
+      writeJSON(UNDO_KEY, undoState);
+      input.value = dates[day.id] || "";
+      refreshHead(); refreshBrief(); redrawSets(); refreshProgress(); updateNext(); showUndo();
+      setMsg("Log undone \u2014 previous baseline restored.", true);
+    }
+
     el.querySelector('[data-act="date"]').addEventListener("click", function(e){
       e.stopPropagation(); saveDateOnly(input.value);
     });
+    el.querySelector('[data-act="clear"]').addEventListener("click", function(e){
+      e.stopPropagation(); clearDate();
+    });
     el.querySelector('[data-act="finish"]').addEventListener("click", function(e){
-      e.stopPropagation(); finishToday();
+      e.stopPropagation(); finishToday(); showUndo();
+    });
+    if(undoBtn) undoBtn.addEventListener("click", function(e){
+      e.stopPropagation(); undoLog();
     });
 
     root.appendChild(el);
@@ -1804,13 +2019,218 @@ function renderMobility(){
   });
 }
 
+/* ============================================================
+   BODYWEIGHT — daily entries, 7-day rolling average.
+   The average is the number that matters; daily readings swing
+   several pounds on water alone.
+   ============================================================ */
+function bwDates(){
+  return Object.keys(bodyweight).sort();
+}
+function isoOffset(iso, days){
+  var d = parseLocal(iso);
+  d.setDate(d.getDate() + days);
+  return d.getFullYear() + "-" +
+    String(d.getMonth()+1).padStart(2,"0") + "-" +
+    String(d.getDate()).padStart(2,"0");
+}
+/* average of everything in the window ending at `endIso`, inclusive */
+function bwAverage(endIso, days){
+  var start = isoOffset(endIso, -(days-1));
+  var vals = [];
+  bwDates().forEach(function(k){
+    if(k >= start && k <= endIso){
+      var v = parseFloat(bodyweight[k]);
+      if(!isNaN(v)) vals.push(v);
+    }
+  });
+  if(!vals.length) return null;
+  var sum = vals.reduce(function(a,b){ return a+b; }, 0);
+  return { avg: sum/vals.length, n: vals.length };
+}
+
+function bwReport(){
+  var keys = bwDates();
+  if(!keys.length){
+    return { tone:"", text:"No weigh-ins yet. Weigh yourself at the same time each morning \u2014 the weekly average is what you act on, not any single number." };
+  }
+  var last = keys[keys.length-1];
+  var thisWk = bwAverage(last, 7);
+  var prevWk = bwAverage(isoOffset(last, -7), 7);
+
+  if(!thisWk){
+    return { tone:"", text:"Not enough recent entries to average." };
+  }
+  if(thisWk.n < 3){
+    return { tone:"", text:"7-day average <b>" + thisWk.avg.toFixed(1) + " lb</b> from only " +
+      thisWk.n + " weigh-in" + (thisWk.n===1?"":"s") + ". Aim for at least four a week before reading anything into it." };
+  }
+  if(!prevWk || prevWk.n < 3){
+    return { tone:"", text:"7-day average <b>" + thisWk.avg.toFixed(1) +
+      " lb</b>. Another week of entries and this will start showing a trend." };
+  }
+
+  var delta = thisWk.avg - prevWk.avg;
+  var d = (delta >= 0 ? "+" : "") + delta.toFixed(2);
+  var head = "7-day average <b>" + thisWk.avg.toFixed(1) + " lb</b> \u00b7 <b>" + d + " lb</b> on the week before. ";
+
+  /* target is roughly +0.25 lb/week; 0.1–0.5 is close enough to leave alone */
+  if(delta >= 0.1 && delta <= 0.5){
+    return { tone:"good", text:head + "That's the target range \u2014 <b>change nothing</b>." };
+  }
+  if(delta > 0.5){
+    return { tone:"warn", text:head + "Faster than target, so more of it is fat. <b>Take about 150 calories back off</b> and hold for three weeks." };
+  }
+  if(delta < -0.1){
+    return { tone:"warn", text:head + "You're losing, not gaining. <b>Add roughly 250 calories a day</b> and reassess in three weeks." };
+  }
+  return { tone:"warn", text:head + "Essentially flat. <b>Add about 150 calories a day</b> and hold for three weeks before changing anything else." };
+}
+
+function renderBodyweight(){
+  var root = document.getElementById("bodyweight");
+  if(!root) return;
+
+  var keys = bwDates();
+  var recent = keys.slice(-10).reverse();
+  var today = todayISO();
+  var rep = bwReport();
+
+  root.innerHTML =
+    '<div class="bw-entry">' +
+      '<span class="sb-label">Weigh-in</span>' +
+      '<input id="bw-date" type="date" value="' + today + '" aria-label="Weigh-in date">' +
+      '<input id="bw-val" type="number" inputmode="decimal" step="0.1" placeholder="lb" ' +
+        'value="' + (bodyweight[today] || "") + '" aria-label="Bodyweight in pounds">' +
+      '<button class="btn btn-primary" type="button" id="bw-save">Save</button>' +
+      '<span class="msg" id="bw-msg" role="status"></span>' +
+    '</div>' +
+    '<div class="bw-report' + (rep.tone ? " " + rep.tone : "") + '">' + rep.text + '</div>' +
+    (recent.length ?
+      '<div class="bw-list">' + recent.map(function(k){
+        return '<div class="bw-row"><span>' + prettyDate(k) + '</span>' +
+               '<span class="bw-w">' + bodyweight[k] + ' lb</span>' +
+               '<button class="bw-rm" type="button" data-d="' + k + '" aria-label="Remove entry">\u00d7</button></div>';
+      }).join("") + '</div>' : "");
+
+  var dEl = document.getElementById("bw-date");
+  var vEl = document.getElementById("bw-val");
+  var mEl = document.getElementById("bw-msg");
+
+  dEl.addEventListener("change", function(){
+    vEl.value = bodyweight[dEl.value] || "";
+  });
+
+  document.getElementById("bw-save").addEventListener("click", function(){
+    var d = dEl.value, v = vEl.value.trim();
+    if(!d || !v){ mEl.textContent = "Need a date and a weight."; return; }
+    bodyweight[d] = v;
+    var ok = writeJSON(BW_KEY, bodyweight);
+    renderBodyweight();
+    var m = document.getElementById("bw-msg");
+    if(m){
+      m.textContent = ok ? "Saved." : "Storage is blocked in this browser.";
+      if(ok) m.classList.add("ok");
+      setTimeout(function(){ var x=document.getElementById("bw-msg"); if(x){x.textContent="";x.classList.remove("ok");} }, 2000);
+    }
+  });
+
+  var rms = root.querySelectorAll(".bw-rm");
+  for(var i=0;i<rms.length;i++){
+    (function(btn){
+      btn.addEventListener("click", function(){
+        delete bodyweight[btn.getAttribute("data-d")];
+        writeJSON(BW_KEY, bodyweight);
+        renderBodyweight();
+      });
+    })(rms[i]);
+  }
+}
+
+/* ============================================================
+   BACKUP — everything lives in this browser, so give it a door out.
+   ============================================================ */
+function exportData(){
+  var payload = {
+    format: "pushpull-backup",
+    version: 1,
+    exported: new Date().toISOString(),
+    dates: dates,
+    log: log,
+    mobility: mobility,
+    bodyweight: bodyweight
+  };
+  var blob = new Blob([JSON.stringify(payload, null, 2)], { type:"application/json" });
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement("a");
+  a.href = url;
+  a.download = "pushpull-backup-" + todayISO() + ".json";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+}
+
+function importData(file, done){
+  var reader = new FileReader();
+  reader.onload = function(){
+    try{
+      var p = JSON.parse(reader.result);
+      if(p.format !== "pushpull-backup") throw new Error("not a backup file");
+      if(p.dates)      dates      = p.dates;
+      if(p.log)        log        = p.log;
+      if(p.mobility)   mobility   = p.mobility;
+      if(p.bodyweight) bodyweight = p.bodyweight;
+      writeJSON(DATE_KEY, dates);
+      writeJSON(LOG_KEY, log);
+      writeJSON(MOB_KEY, mobility);
+      writeJSON(BW_KEY, bodyweight);
+      done(null, p.exported ? prettyDate(p.exported.slice(0,10)) : null);
+    }catch(err){
+      done(err);
+    }
+  };
+  reader.onerror = function(){ done(new Error("couldn't read the file")); };
+  reader.readAsText(file);
+}
+
 /* ============================ BOOT ============================ */
 dates    = readJSON(DATE_KEY);
 log      = readJSON(LOG_KEY);
-mobility = readJSON(MOB_KEY);
+mobility   = readJSON(MOB_KEY);
+undoState  = readJSON(UNDO_KEY);
+bodyweight = readJSON(BW_KEY);
 renderDays();
 renderMobility();
 renderReference();
+
+renderBodyweight();
+
+(function(){
+  var exp = document.getElementById("btn-export");
+  var imp = document.getElementById("file-import");
+  var msg = document.getElementById("backup-msg");
+  function say(t, ok){
+    if(!msg) return;
+    msg.textContent = t;
+    if(ok) msg.classList.add("ok"); else msg.classList.remove("ok");
+    setTimeout(function(){ msg.textContent=""; msg.classList.remove("ok"); }, 4000);
+  }
+  if(exp) exp.addEventListener("click", function(){
+    exportData();
+    say("Backup downloaded \u2014 keep it somewhere off this phone.", true);
+  });
+  if(imp) imp.addEventListener("change", function(){
+    var f = imp.files && imp.files[0];
+    if(!f) return;
+    importData(f, function(err, when){
+      imp.value = "";
+      if(err){ say("Couldn't restore: " + err.message); return; }
+      renderDays(); renderMobility(); renderBodyweight();
+      say("Restored" + (when ? " from " + when : "") + ".", true);
+    });
+  });
+})();
 
 (function(){
   var btn  = document.getElementById("ref-toggle");

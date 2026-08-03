@@ -65,6 +65,8 @@ If you change `sw.js` or want to force a refresh for cached visitors, bump the `
 - **Coaching** — a rule-based read under each exercise as you log: add weight, too heavy, rest longer, stalled, progress. Runs offline; no AI, no network.
 - **Session progress** — how many exercises you've logged so far today.
 - **Daily mobility** — separate morning and evening blocks with a done-today tick and a running streak.
+- **Bodyweight** — daily weigh-ins with a 7-day rolling average and a calorie adjustment call.
+- **Backup** — export everything to a JSON file, restore it later or on another device.
 - **Reference & tips** — the whole section sits behind one toggle; open it for 15 collapsible topics: RIR, progression, rest times, nutrition, recovery, posture, and when to see a professional.
 
 ## Logging sets
@@ -82,5 +84,9 @@ Two `localStorage` keys in your browser:
 - `pushpull-dates` — when you last did each day
 - `pushpull-log` — your sets, weights and reps
 - `pushpull-mobility` — which days you completed the morning and evening mobility blocks
+- `pushpull-bodyweight` — daily weigh-ins
+- `pushpull-undo` — the snapshot behind the "Undo log" button
+
+Use the Export button to write all of these to a single JSON file. Restore replaces what's stored, so export before restoring if you're unsure.
 
 This is per-device and per-browser: it does not sync between your phone and laptop, and clearing site data for the domain erases it. Nothing is uploaded anywhere — no account, no server.
