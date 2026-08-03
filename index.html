@@ -432,8 +432,8 @@ var ROUTINE = [
        desc:"Rope at upper chest or head height, pull toward your face flaring your elbows out wide, squeeze your shoulder blades at the end. <b>Builds:</b> rear delt and upper/mid traps \u2014 best single exercise for both the shoulder groove and the rounded posture."},
       {key:"l1-cablerow", name:"Seated cable row", sets:"3\u00d710\u201312", rir:"1\u20132 RIR",
        desc:"Back upright and straight, pull the handle to your torso, squeeze your shoulder blades, control the return. <b>Builds:</b> mid-back thickness \u2014 directly opposes the forward-rounded position."},
-      {key:"l1-curl", name:"Barbell or dumbbell curl", sets:"3\u00d710\u201312", rir:"0\u20131 RIR",
-       desc:"Elbows pinned to your sides, no torso swing, control the lowering. <b>Builds:</b> biceps."},
+      {key:"l1-curl", name:"Dumbbell curl", sets:"3\u00d710\u201312", rir:"0\u20131 RIR",
+       desc:"Elbows pinned to your sides, no torso swing, control the lowering. Dumbbells rather than a barbell here \u2014 your left arm carries a little more lean mass than your right, and a bar lets the stronger side quietly take over. <b>Builds:</b> biceps."},
       {key:"l1-revcurl", name:"Reverse curl", sets:"3\u00d712\u201315", rir:"0\u20131 RIR",
        desc:"EZ bar or dumbbells, <b>palms facing down</b>, elbows at your sides, curl up without swinging. Use far less weight than a normal curl \u2014 that's expected, not a sign of weak arms. <b>Builds:</b> brachioradialis and forearm extensors \u2014 the muscle that thickens the top of the forearm and pushes the bicep up from underneath."},
       {key:"l1-kneeraise", name:"Hanging knee raise", sets:"3\u00d710\u201312", rir:"0\u20131 RIR", nolog:true,
@@ -514,22 +514,32 @@ var REFERENCE = [
       "<p>Resting less than this to save time mostly costs you reps on the next set, which is the thing you're trying to increase. If you're short on time, cut an exercise rather than the rest.</p><p><b>Sizing for an hour:</b> each day is 6–7 exercises, roughly 21–22 working sets, plus 6–8 minutes of prep. The forearm work costs very little — wrist curls, reverse curls and carries all run on short rests and take about four minutes each. The finisher is the buffer: do it when you have the time, drop it when you don't.</p>"
   },
   {
-    title:"Eating to build the size you want",
+    title:"Eating \u2014 your actual numbers",
     body:
-      "<p><b>This is the lever that matters most</b>, and it is not close. The programme is good now; without a surplus it will still produce very little. Muscle is built from material you have to supply.</p>" +
-      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>The numbers</h4>" +
+      "<p><b>Baseline from your InBody scan:</b> 184 lb, 164 lb lean mass, 94 lb skeletal muscle, 11% body fat (InBody reads low \u2014 true figure is likely 13\u201315%), BMR 1978 kcal.</p>" +
+      "<p>That puts your fat-free mass index around <b>23.5</b>, which is toward the upper end of what's typical without pharmaceutical help. Every segment on the scan reads above ideal. <b>You are not undermuscled</b> \u2014 the bone showing through is a consequence of being lean, not of lacking mass.</p>" +
+      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>Targets</h4>" +
       "<dl class='kv'>" +
-        "<dt>+250\u2013350 kcal</dt><dd>Above maintenance, daily. Bigger surpluses add fat, not speed.</dd>" +
-        "<dt>0.7\u20131 g/lb</dt><dd>Protein per pound of bodyweight, daily. The most commonly under-hit target.</dd>" +
-        "<dt>0.25\u20130.5 lb</dt><dd>Bodyweight gain per week. Faster than 0.75/week is mostly fat.</dd>" +
-        "<dt>6\u20139 months</dt><dd>How long to hold it before judging the result.</dd>" +
+        "<dt>2900\u20133300</dt><dd>Estimated maintenance, accounting for warehouse work, soccer and four lifting days. Start at the middle and adjust from the scale.</dd>" +
+        "<dt>+200\u2013300</dt><dd>Daily surplus for slow lean gain. At your FFMI, more than this is mostly fat.</dd>" +
+        "<dt>0.25 lb</dt><dd>Weekly gain target. Half that is fine. Faster than 0.5 is too fast for where you are.</dd>" +
+        "<dt>130\u2013185 g</dt><dd>Protein per day (0.7\u20131 g per pound).</dd>" +
       "</dl>" +
-      "<p><b>Adjusting:</b> if the scale hasn't moved in three weeks, add 150 kcal a day. If it's climbing faster than 0.75 lb a week, take 150 back off. Weigh yourself the same time each morning and use the weekly average \u2014 daily readings swing several pounds on water alone and will make you chase noise.</p>" +
-      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>On gaining fat to cover the bone</h4>" +
-      "<p>It doesn't work the way it sounds like it should. Men store fat abdominally first, then lower back and chest. <b>The area over the collarbone and the trap\u2013delt junction is among the last places fat goes and the first it leaves</b> \u2014 you'd add an inch to your waist before a millimetre lands there.</p>" +
-      "<p>What covers that area is muscle: the delt and upper trap sit directly on top of it. Some fat gain will come along with the surplus and will soften the overall look a little, which is fine and normal. But it's a side effect of eating to grow, not the mechanism.</p>" +
-      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>If eating more is the hard part</h4>" +
-      "<p>Lean people who struggle to gain almost always eat less than they think they do. Calorie density beats volume: olive oil on cooked food, whole milk instead of skim, nuts and nut butter, rice over lower-calorie sides, a shake with oats and peanut butter on days you're short. You have to eat past comfortable, at least at first.</p>"
+      "<p><b>Adjusting:</b> weigh in the same time each morning, use the weekly average, and change nothing for three weeks at a time. Flat average after three weeks, add 150 a day. Climbing faster than 0.5 lb a week, take 150 off.</p>" +
+      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>Rate of gain, honestly</h4>" +
+      "<p>At an FFMI of 23.5 with several years of training behind you, realistic muscle gain is <b>a couple of pounds a year</b>, not a quarter. The delt and trap project is measured in years. That is not the programme failing \u2014 it's what being close to your ceiling looks like, and it's the reason consistency beats optimisation from here.</p>" +
+      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>On carrying a bit more fat</h4>" +
+      "<p>At 13\u201315% every surface structure shows. Sitting at <b>16\u201318%</b> instead \u2014 roughly 10\u201312 lb heavier \u2014 adds a thin layer over the whole body and softens how sharply bone reads. It won't fill the trap\u2013delt groove specifically, since fat doesn't deposit there preferentially, but it does change the overall impression. It's a real lever, just a modest one, and it's a preference rather than a correction.</p>"
+  },
+  {
+    title:"Your baseline and the left/right gap",
+    body:
+      "<p><b>Scan, 7 June 2026:</b> 184.3 lb \u00b7 164.0 lb lean \u00b7 93.9 lb skeletal muscle \u00b7 11% body fat \u00b7 BMR 1978 \u00b7 visceral fat level 3 \u00b7 ECW/TBW 0.375. Segmental lean: right arm 9.88 lb, left arm 10.43 lb, trunk 72.9 lb, right leg 24.96 lb, left leg 24.05 lb.</p>" +
+      "<p>Visceral fat and water balance both sit in healthy ranges. Every segment reads above the machine's ideal. Rescan on the same machine every three or four months, same time of day, similar hydration \u2014 the trend is what's useful, not any single reading.</p>" +
+      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>The arm difference</h4>" +
+      "<p>Left arm is about <b>5.5% heavier in lean mass</b> than right, and the legs tilt slightly the other way. That size of gap is common and usually just handedness \u2014 it isn't something to fix directly.</p>" +
+      "<p>What it does argue for: <b>favour dumbbells over barbells</b> on presses and curls where you have the choice. A barbell lets the stronger side quietly take more of the load; dumbbells force each side to do its own work. Start each set with the weaker side and match its reps on the stronger one rather than pushing the strong side to failure.</p>" +
+      "<p>Worth a professional look only if the gap grows over successive scans, or if it comes with pain or noticeably different range of motion between sides.</p>"
   },
   {
     title:"Recovery, soccer and sleep",
@@ -556,7 +566,7 @@ var REFERENCE = [
     body:
       "<p><b>Progress photos monthly.</b> Same lighting, same angles, same time of day. Shoulder and trap changes happen too slowly to see in the mirror day to day, and the photos are the only honest record.</p>" +
       "<p><b>The logged numbers are your other signal.</b> If lateral raise weight and reps are climbing over a couple of months, the muscle is being built whether or not you can see it yet.</p>" +
-      "<p><b>Realistic timeline:</b> noticeable change in the shoulder and trap area takes 3–6 months of consistent work with the eating handled. Posture changes are slower still, and partial — some separation between the trap and delt is normal anatomy on a lean frame, not a flaw to be erased.</p>"
+      "<p><b>Realistic timeline:</b> given where your scan puts you, noticeable change in the shoulder and trap area is a <b>12-month project, not a 3-month one</b>. Close to your ceiling, muscle arrives slowly and the mirror is a poor instrument for spotting it — the logged numbers and the monthly photos will show it before your eye does.</p><p>Some separation between the trap and delt is normal anatomy on a lean frame, not a flaw to be erased. Filling it in is realistic; erasing it isn't, at any bodyweight.</p>"
   },
   {
     title:"What this plan prioritises \u2014 and what it costs",
