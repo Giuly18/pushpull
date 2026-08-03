@@ -41,11 +41,13 @@ The workout data is the `ROUTINE` array near the top of the `<script>` block in 
   finisher:"Sled Push",
   priority:"optional note shown above the main work",
   prep:[ {name, sets, desc}, ... ],
-  ex:[ {key, name, sets, rir, desc}, ... ]
+  ex:[ {key, name, sets, rir, rest, cls, desc, setup:{set,run,miss}}, ... ]
 }
 ```
 
-Every exercise needs a unique `key` — that's what its logged sets are stored under. Changing a key orphans that exercise's history, so leave keys alone when you're only editing wording, sets or reps. Add `nolog:true` to an exercise to hide its logging box (used for planks and dead bugs).
+Every exercise needs a unique `key` — that's what its logged sets are stored under. Changing a key orphans that exercise's history, so leave keys alone when you're only editing wording, sets or reps. Add `nolog:true` to an exercise to hide its logging box (used for planks, dead bugs and other unloaded work).
+
+`cls` sets the weight-increment the coach suggests: `barbell` and `mid` → 5–10 lb, `machine` → 10–20 lb, `iso` → 2.5–5 lb, `bodyweight` → 2.5–5 lb added. `rest` is display text only. The coach parses the rep range straight out of `sets`, so `4×8–12` gives it a 8–12 target automatically.
 
 Edit, commit, push. The page updates on your next visit with signal.
 
@@ -56,10 +58,14 @@ If you change `sw.js` or want to force a refresh for cached visitors, bump the `
 - **Up next** — the day you've gone longest without training.
 - **Day cards** — tap to expand. Red stripe for push days, blue for pull.
 - **Prep block** — posture and hip work, 6–8 minutes before the main lifts.
+- **Setup cues** — tap "How to set it up" on any exercise for setup, execution and the common mistake.
+- **Rest suggestion** — shown on every exercise. No timer, just the number.
 - **Set logger** — weight and reps per set, with a green chip when you beat last session on that set.
+- **Pre-session briefing** — collapsed panel at the top of each day: one short line per exercise telling you what weight to use today, based on last session.
+- **Coaching** — a rule-based read under each exercise as you log: add weight, too heavy, rest longer, stalled, progress. Runs offline; no AI, no network.
 - **Session progress** — how many exercises you've logged so far today.
 - **Daily mobility** — separate morning and evening blocks with a done-today tick and a running streak.
-- **Reference** — collapsible notes at the bottom: RIR, progression, rest times, nutrition, recovery, posture, and when to see a professional.
+- **Reference & tips** — the whole section sits behind one toggle; open it for 15 collapsible topics: RIR, progression, rest times, nutrition, recovery, posture, and when to see a professional.
 
 ## Logging sets
 

@@ -269,6 +269,124 @@
   }
   .finisher b{color:var(--chalk);font-weight:500;}
 
+  /* ---------------- setup panel ---------------- */
+  .howto{
+    background:none;border:1px solid var(--hairline);color:var(--steel);
+    border-radius:7px;padding:6px 11px;margin-top:9px;cursor:pointer;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;
+    letter-spacing:0.1em;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:7px;
+  }
+  .howto:hover{border-color:var(--yellow);color:var(--chalk);}
+  .howto:focus-visible{outline:2px solid var(--yellow);outline-offset:1px;}
+  .howto .tri{
+    width:0;height:0;border-left:5px solid currentColor;
+    border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;
+    transition:transform .18s ease;
+  }
+  .howto[aria-expanded="true"] .tri{transform:rotate(90deg);}
+  .howto-body{display:none;margin-top:10px;}
+  .howto-body.open{display:block;}
+  .ht{
+    padding:10px 12px;border-radius:8px;background:var(--iron);
+    border-left:2px solid var(--hairline);margin-bottom:7px;
+  }
+  .ht:last-child{margin-bottom:0;}
+  .ht.s{border-left-color:var(--blue);}
+  .ht.r{border-left-color:var(--yellow);}
+  .ht.m{border-left-color:var(--red);}
+  .ht h5{
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;
+    letter-spacing:0.14em;text-transform:uppercase;margin:0 0 5px;color:var(--steel-dim);
+  }
+  .ht.s h5{color:var(--blue);}
+  .ht.r h5{color:var(--yellow);}
+  .ht.m h5{color:var(--red);}
+  .ht p{margin:0;font-size:12.5px;line-height:1.6;color:var(--steel);}
+  .ht p b{color:var(--chalk);font-weight:600;}
+
+  /* ---------------- pre-session briefing ---------------- */
+  .brief-toggle{
+    width:100%;background:none;border:0;border-bottom:1px solid var(--hairline);
+    color:inherit;font-family:inherit;padding:13px var(--pad);
+    display:flex;align-items:center;gap:10px;cursor:pointer;text-align:left;
+  }
+  .brief-toggle:hover{background:var(--plate-2);}
+  .brief-toggle:focus-visible{outline:2px solid var(--yellow);outline-offset:-3px;}
+  .brief-toggle .lbl{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;
+    letter-spacing:0.14em;text-transform:uppercase;color:var(--yellow);flex:1;
+  }
+  .brief-toggle .tri{
+    width:0;height:0;border-left:5px solid var(--steel);
+    border-top:3.5px solid transparent;border-bottom:3.5px solid transparent;
+    transition:transform .18s ease;flex:none;
+  }
+  .brief-toggle[aria-expanded="true"] .tri{transform:rotate(90deg);}
+  .brief-body{display:none;padding:2px var(--pad) 15px;border-bottom:1px solid var(--hairline);}
+  .brief-body.open{display:block;}
+  .brief-head{
+    font-size:12.5px;line-height:1.6;color:var(--steel);
+    margin:10px 0 12px;padding-bottom:11px;border-bottom:1px solid var(--hairline);
+  }
+  .brief-head b{color:var(--chalk);font-weight:600;}
+  .bl{
+    display:flex;gap:10px;align-items:baseline;padding:6px 0 6px 9px;
+    border-left:2px solid var(--hairline);margin-bottom:3px;
+  }
+  .bl.good{border-left-color:var(--green);}
+  .bl.warn{border-left-color:var(--yellow);}
+  .bl.back{border-left-color:var(--red);}
+  .bl-name{
+    font-size:12.5px;font-weight:600;color:var(--chalk);
+    flex:0 0 40%;line-height:1.4;
+  }
+  .bl-text{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;
+    color:var(--steel-dim);flex:1;line-height:1.5;
+  }
+  .bl-text b{color:var(--chalk);font-weight:600;}
+  .bl.good .bl-text b{color:var(--green);}
+  .bl.warn .bl-text b{color:var(--yellow);}
+  .bl.back .bl-text b{color:var(--red);}
+  @media (max-width:430px){
+    .bl{flex-direction:column;gap:2px;}
+    .bl-name{flex:none;}
+  }
+
+  /* ---------------- coach ---------------- */
+  .coach{
+    margin-top:9px;padding:9px 11px;border-radius:8px;
+    font-size:12.5px;line-height:1.55;display:none;
+    border-left:2px solid var(--steel-dim);background:rgba(139,148,158,0.07);
+    color:var(--steel);
+  }
+  .coach.show{display:block;}
+  .coach b{color:var(--chalk);font-weight:600;}
+  .coach.good{border-left-color:var(--green);background:rgba(95,167,119,0.09);}
+  .coach.good b{color:var(--green);}
+  .coach.warn{border-left-color:var(--yellow);background:rgba(240,180,41,0.08);}
+  .coach.warn b{color:var(--yellow);}
+  .coach.back{border-left-color:var(--red);background:rgba(196,67,58,0.09);}
+  .coach.back b{color:var(--red);}
+  .coach-tag{
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;
+    letter-spacing:0.13em;text-transform:uppercase;display:block;margin-bottom:4px;
+    color:inherit;opacity:.75;
+  }
+  .rest-chip{
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;
+    color:var(--steel-dim);border:1px solid var(--hairline);
+    padding:3px 8px;border-radius:100px;white-space:nowrap;
+  }
+  .summary{
+    padding:11px var(--pad);border-bottom:1px solid var(--hairline);
+    background:rgba(240,180,41,0.05);
+    font-size:12.5px;color:var(--steel);line-height:1.55;display:none;
+  }
+  .summary.show{display:block;}
+  .summary b{color:var(--chalk);font-weight:600;}
+
   /* ---------------- daily mobility ---------------- */
   .daily{margin-top:34px;}
   .day[data-kind="am"] .stripe{background:var(--yellow);}
@@ -300,6 +418,27 @@
     font-size:12.5px;line-height:1.55;color:var(--steel);
   }
   .cue b{color:var(--chalk);font-weight:600;}
+
+  /* ---------------- reference wrapper ---------------- */
+  .ref-toggle{
+    width:100%;background:var(--plate);border:1px solid var(--hairline);
+    border-radius:var(--r);color:inherit;font-family:inherit;
+    padding:17px var(--pad);display:flex;align-items:center;gap:13px;
+    cursor:pointer;text-align:left;
+  }
+  .ref-toggle:hover{background:var(--plate-2);}
+  .ref-toggle:focus-visible{outline:2px solid var(--yellow);outline-offset:-3px;}
+  .ref-toggle .tri{
+    width:0;height:0;flex:none;border-left:6px solid var(--steel);
+    border-top:4px solid transparent;border-bottom:4px solid transparent;
+    transition:transform .18s ease;
+  }
+  .ref-toggle[aria-expanded="true"] .tri{transform:rotate(90deg);}
+  .ref-toggle-text{display:flex;flex-direction:column;gap:3px;}
+  .ref-toggle .ref-head{margin:0;font-size:24px;line-height:1;}
+  .ref-toggle .ref-intro{margin:0;font-size:12.5px;}
+  .ref-body{display:none;margin-top:12px;}
+  .ref-body.open{display:block;}
 
   /* ---------------- reference accordion ---------------- */
   .ref{margin-top:34px;}
@@ -361,7 +500,7 @@
   <header class="masthead">
     <p class="eyebrow">Four-day rotation · shoulders, traps, posture</p>
     <h1>Push <span class="slash">/</span> Pull</h1>
-    <p class="standfirst">Open the day you're training. Log each set as you finish it — everything saves on its own. Tap <b>Log session</b> at the end to set the numbers you'll be chasing next time.</p>
+    <p class="standfirst">Open the day you're training. Log each set as you finish it — everything saves on its own, and you'll get a read on where you stand as you go. Tap <b>Log session</b> at the end to bank the numbers you'll be chasing next time.</p>
   </header>
 
   <div class="upnext">
@@ -381,9 +520,16 @@
   </section>
 
   <section class="ref">
-    <h2 class="ref-head">Reference</h2>
-    <p class="ref-intro">Everything that isn't the workout itself. Open what you need.</p>
-    <div id="cards"></div>
+    <button class="ref-toggle" id="ref-toggle" type="button" aria-expanded="false" aria-controls="ref-body">
+      <span class="tri" aria-hidden="true"></span>
+      <span class="ref-toggle-text">
+        <span class="ref-head">Reference &amp; tips</span>
+        <span class="ref-intro">Everything that isn't the workout itself &mdash; 15 topics</span>
+      </span>
+    </button>
+    <div id="ref-body" class="ref-body">
+      <div id="cards"></div>
+    </div>
   </section>
 
   <p class="footnote">Your sets, dates and mobility ticks are stored on this device only — no account, nothing uploaded. Clearing browser data for this site erases them.</p>
@@ -406,23 +552,58 @@ var ROUTINE = [
       {name:"Doorway pec stretch", sets:"2\u00d730 sec/side",
        desc:"Forearm on a doorframe at shoulder height, step through gently until you feel a stretch across the front of the chest. <b>Why:</b> tight pecs pull the shoulders forward."},
       {name:"Kneeling hip flexor stretch", sets:"2\u00d730 sec/side",
-       desc:"Half-kneeling, squeeze the back-leg glute and tuck your pelvis under before leaning forward. The glute squeeze is what makes it work. <b>Why:</b> tight hip flexors pull the pelvis into the forward tilt \u2014 with legs on maintenance now, this stretch is doing more of that job than any lift."}
+       desc:"Half-kneeling, squeeze the back-leg glute and tuck your pelvis under before leaning forward. The glute squeeze is what makes it work. <b>Why:</b> tight hip flexors pull the pelvis into the forward tilt \u2014 with legs on maintenance, this stretch does more of that job than any lift."}
     ],
     ex:[
-      {key:"p1-incline", name:"Incline barbell or dumbbell press", sets:"4\u00d76\u20138", rir:"2 RIR",
-       desc:"Bench at 30\u201345\u00b0. Lower under control to upper chest, elbows around 45\u00b0 from your torso, press back up. <b>Builds:</b> upper chest and front delt \u2014 your main chest movement."},
-      {key:"p1-lat", name:"Lateral raises", sets:"4\u00d712\u201315", rir:"0\u20131 RIR",
-       desc:"Raise arms out to shoulder height leading with the elbows, slight bend held throughout, lower slowly rather than dropping. <b>Builds:</b> lateral delt \u2014 shoulder width and cap."},
-      {key:"p1-fly", name:"Cable fly", sets:"3\u00d712\u201315", rir:"0\u20131 RIR",
-       desc:"Slight elbow bend locked in place, sweep hands together in an arc and squeeze at the centre. <b>Builds:</b> chest isolation \u2014 all tension on the chest, none stolen by the triceps."},
-      {key:"p1-pushdown", name:"Rope pushdown", sets:"3\u00d712\u201315", rir:"0\u20131 RIR",
-       desc:"Elbows pinned to your sides the whole set, push down and let the rope split slightly at the bottom. <b>Builds:</b> triceps."},
-      {key:"p2-ohtri", name:"Overhead triceps extension", sets:"3\u00d710\u201312", rir:"0\u20131 RIR",
-       desc:"Dumbbell or rope overhead, lower behind your head bending only at the elbow, upper arms still, then extend. <b>Builds:</b> the long head of the triceps \u2014 the part that adds visible arm size, and the head the pushdown mostly misses."},
-      {key:"p1-wrist", name:"Wrist curls + reverse wrist curls", sets:"2\u00d715\u201320 each", rir:"0\u20131 RIR",
-       desc:"Forearms resting on a bench or your thighs. Palms up, curl the bar with your wrists only, full stretch at the bottom. Then flip to palms down for the reverse version. Light weight, high reps, burn is the point \u2014 log the palms-up weight. <b>Builds:</b> the wrist flexors and extensors that add forearm thickness directly. Takes about four minutes."},
-      {key:"p1-deadbug", name:"Dead bug", sets:"3\u00d710/side", rir:"quality over reps", nolog:true,
-       desc:"On your back, lower back pressed flat into the floor, extend opposite arm and leg slowly without letting your back arch off the ground. Stop the set when your back lifts \u2014 that's the real endpoint, not a rep count. <b>Builds:</b> deep core control for a neutral pelvis."}
+      {key:"p1-incline", name:"Incline barbell or dumbbell press", sets:"4\u00d76\u20138", rir:"2 RIR", rest:"2\u20133 min", cls:"barbell",
+       desc:"Bench at 30\u201345\u00b0. Lower under control to upper chest, elbows around 45\u00b0 from your torso, press back up. <b>Builds:</b> upper chest and front delt \u2014 your main chest movement.",
+       setup:{
+         set:"Bench at <b>30\u201345\u00b0</b> \u2014 steeper than that and it turns into a shoulder press. Grip the bar so your forearms are vertical at the bottom, usually about 1.5\u00d7 shoulder width; index fingers on the rings is a good starting reference. Feet flat and planted, shoulder blades pulled back and down into the bench before you unrack, and keep them there the whole set.",
+         run:"Lower to the <b>upper chest, just below the collarbone</b> \u2014 not to the sternum like a flat bench. Elbows at roughly 45\u00b0 from your torso, not flared to 90\u00b0. Touch lightly, then press up and slightly back toward your face. Two seconds down, controlled up.",
+         miss:"Letting the shoulder blades unpack and roll forward as you press. That's what puts the load on the front of the shoulder joint instead of the chest. If your shoulders creep up toward your ears at the top, reset between reps."
+       }},
+      {key:"p1-lat", name:"Lateral raises", sets:"4\u00d712\u201315", rir:"0\u20131 RIR", rest:"45\u201360 sec", cls:"iso",
+       desc:"Raise arms out to shoulder height leading with the elbows, slight bend held throughout, lower slowly rather than dropping. <b>Builds:</b> lateral delt \u2014 shoulder width and cap.",
+       setup:{
+         set:"Standing, dumbbells at your sides, <b>slight forward lean of about 10\u201315\u00b0</b> from the hips \u2014 this puts the side delt in a better line of pull than standing perfectly upright. Elbows softly bent and locked at that angle. If using a cable, set the pulley at the <b>lowest position</b> and stand side-on, cable running behind your body.",
+         run:"<b>Lead with the elbows</b>, as if pouring from a jug \u2014 elbow always higher than the hand. Raise to shoulder height and no further; above that the traps take over. Pause a beat at the top, then take <b>two to three seconds to lower</b>. The lowering half is where most of the growth stimulus lives.",
+         miss:"Swinging the weight up with body English. If your knees are dipping or your torso is rocking, the weight is too heavy \u2014 this is a lift where 15 lb done strictly beats 30 lb thrown. Second most common: raising above shoulder height and turning it into a trap exercise."
+       }},
+      {key:"p1-fly", name:"Cable fly", sets:"3\u00d712\u201315", rir:"0\u20131 RIR", rest:"45\u201360 sec", cls:"iso",
+       desc:"Slight elbow bend locked in place, sweep hands together in an arc and squeeze at the centre. <b>Builds:</b> chest isolation \u2014 all tension on the chest, none stolen by the triceps.",
+       setup:{
+         set:"Pulleys set <b>slightly above shoulder height</b> for a mid-chest fly, or at the <b>bottom</b> if you want to bias the upper chest with an upward arc. Stand in the middle, one foot staggered forward for balance, <b>lean forward maybe 15\u00b0</b> so the cables line up with your chest rather than your face. Soft elbow bend, then lock it.",
+         run:"Sweep your hands together in a wide arc and <b>cross them slightly past each other</b> at the centre \u2014 the chest's job is bringing the arm across the body, so stopping when your hands touch leaves the best part unused. Squeeze for a beat, then let them travel back until you feel a stretch across the chest.",
+         miss:"Bending and straightening the elbows, which turns it into a press. The elbow angle should be fixed from start to finish. Also: going so heavy that your shoulders roll forward at the stretch \u2014 that's the position where pec tears happen."
+       }},
+      {key:"p1-pushdown", name:"Rope pushdown", sets:"3\u00d712\u201315", rir:"0\u20131 RIR", rest:"45\u201360 sec", cls:"iso",
+       desc:"Elbows pinned to your sides the whole set, push down and let the rope split slightly at the bottom. <b>Builds:</b> triceps.",
+       setup:{
+         set:"Rope attachment, pulley at the <b>top of the tower</b>. Stand about a foot back so the cable clears your body, slight forward lean, feet staggered. Grab the rope with a neutral grip, thumbs on top of the stoppers, and <b>bring your elbows to your sides before the first rep</b> \u2014 that's the start position, not something you find mid-set.",
+         run:"<b>Only the forearms move.</b> Upper arms stay glued to your ribs. Push down and, at the bottom, spread the rope apart and turn your knuckles slightly out \u2014 that extra rotation gets the last bit of contraction. Control the return until your forearms are just past parallel.",
+         miss:"Elbows drifting forward or flaring out as you fatigue, which recruits the shoulders and lats to help. If you find yourself leaning your bodyweight into it, drop the weight a plate."
+       }},
+      {key:"p2-ohtri", name:"Overhead triceps extension", sets:"3\u00d710\u201312", rir:"0\u20131 RIR", rest:"60 sec", cls:"iso",
+       desc:"Dumbbell or rope overhead, lower behind your head bending only at the elbow, upper arms still, then extend. <b>Builds:</b> the long head of the triceps \u2014 the part that adds visible arm size, and the head the pushdown mostly misses.",
+       setup:{
+         set:"Rope on a <b>low pulley</b> facing away, or a single dumbbell held with both hands, or seated on a bench with back support. Bring your hands overhead, upper arms beside your ears and as <b>vertical as your shoulder mobility allows</b>. Ribs down, abs braced \u2014 don't let your lower back arch to create the position.",
+         run:"Lower behind your head until you feel a <b>real stretch in the back of the arm</b>, then extend without letting the elbows drift wide. The stretch at the bottom is the entire point of this exercise \u2014 the long head only gets loaded in that lengthened position, which is why it needs to exist alongside pushdowns.",
+         miss:"Elbows flaring out to the sides, which shortens the range and takes the long head out of it. If you can't keep them in, the weight is too heavy or your overhead mobility needs the thoracic work in your prep block."
+       }},
+      {key:"p1-wrist", name:"Wrist curls + reverse wrist curls", sets:"2\u00d715\u201320 each", rir:"0\u20131 RIR", rest:"45 sec", cls:"iso",
+       desc:"Forearms resting on a bench or your thighs. Palms up, curl the bar with your wrists only, full stretch at the bottom. Then flip to palms down. Light weight, high reps \u2014 log the palms-up weight. <b>Builds:</b> the wrist flexors and extensors that add forearm thickness directly.",
+       setup:{
+         set:"Sit on a bench, <b>forearms flat on your thighs or the bench</b>, wrists hanging just past the edge so your hands can move freely. Light dumbbells or an EZ bar. Palms up for the first version, palms down for the reverse.",
+         run:"Palms up: let the weight roll down to your fingertips at the bottom, then curl it back and close your fist \u2014 that full roll is what makes it work. Palms down: much lighter, lift the back of the hand toward you and pause at the top. <b>Two sets of each, back to back, no rest between the two versions.</b>",
+         miss:"Using a weight that stops you getting full range. This is a burn exercise, not a strength one \u2014 if you can't roll the bar to your fingertips and back, halve it."
+       }},
+      {key:"p1-deadbug", name:"Dead bug", sets:"3\u00d710/side", rir:"quality over reps", rest:"45 sec", nolog:true,
+       desc:"On your back, lower back pressed flat into the floor, extend opposite arm and leg slowly without letting your back arch off the ground. Stop the set when your back lifts \u2014 that's the real endpoint, not a rep count. <b>Builds:</b> deep core control for a neutral pelvis.",
+       setup:{
+         set:"Lie on your back, knees and hips at 90\u00b0, arms straight up toward the ceiling. <b>Press your lower back flat into the floor</b> and hold it there \u2014 slide a hand underneath to check; there should be no gap. That flat position is the whole exercise.",
+         run:"Slowly extend the opposite arm and leg toward the floor, exhaling as you reach. Go only as far as you can <b>without the lower back peeling off the floor</b>. Return and switch sides. Five seconds per rep, not one.",
+         miss:"Rushing, and letting the back arch on the way out. If it arches at 70% of the range, that's your range \u2014 work there and it'll extend over weeks. Speed makes this exercise useless."
+       }}
     ]
   },
   {
@@ -437,18 +618,48 @@ var ROUTINE = [
        desc:"On your back, feet flat, drive through your heels and squeeze your glutes at the top without arching your lower back. <b>Why:</b> with leg volume cut back, this is now a real part of your glute work rather than just a warm-up."}
     ],
     ex:[
-      {key:"p2-lat", name:"Lateral raises", sets:"4\u00d712\u201315", rir:"0\u20131 RIR",
-       desc:"Lead with elbows, control the negative, stop at shoulder height. First movement of the day \u2014 this is where you should feel the most burn of the week. <b>Builds:</b> lateral delt \u2014 width and cap."},
-      {key:"p2-reardelt", name:"Rear delt flyes", sets:"4\u00d715", rir:"0\u20131 RIR",
-       desc:"Hinge forward at the hips or lie chest-down on an incline bench, raise dumbbells out to the sides and squeeze your shoulder blades at the top. <b>Builds:</b> rear delt \u2014 fills the groove behind the shoulder cap and pulls the shoulders back into line."},
-      {key:"p2-ohp", name:"Overhead press", sets:"4\u00d76\u20138", rir:"2 RIR",
-       desc:"Bar at collarbone height, press straight overhead without excessively arching your back \u2014 brace your abs and tuck your ribs down. Expect less weight than on a fresh day; match the rep range, not your old numbers. <b>Builds:</b> front and side delts."},
-      {key:"p2-shrug", name:"Dumbbell shrugs", sets:"4\u00d712", rir:"1 RIR",
-       desc:"Shrug straight up toward your ears (don't roll your shoulders), pause at the top, lower slowly. <b>Builds:</b> upper traps \u2014 the neck-to-shoulder mass you're after."},
-      {key:"p2-legpress", name:"Leg press", sets:"3\u00d710\u201315", rir:"2 RIR",
-       desc:"Feet mid-platform, shoulder width. Lower until your knees reach roughly 90\u00b0, stopping before your hips curl off the seat. This is your only leg press of the week \u2014 push it, but it sits last on purpose so nothing above it suffers. <b>Builds:</b> quads and glutes."},
-      {key:"p2-plank", name:"Plank", sets:"3\u00d730\u201345 sec", rir:"quality over time", nolog:true,
-       desc:"Forearms down, pelvis tucked slightly under so your lower back is flat, glutes squeezed. End the set when your hips start to sag, not at the clock. <b>Builds:</b> anti-extension core strength."}
+      {key:"p2-lat", name:"Lateral raises", sets:"4\u00d712\u201315", rir:"0\u20131 RIR", rest:"45\u201360 sec", cls:"iso",
+       desc:"Lead with elbows, control the negative, stop at shoulder height. First movement of the day \u2014 this is where you should feel the most burn of the week. <b>Builds:</b> lateral delt \u2014 width and cap.",
+       setup:{
+         set:"Same as Push 1, but you're fresh here, so <b>this is the version to be strictest on</b>. Slight forward lean, elbows soft and locked, dumbbells starting slightly in front of your thighs rather than touching your sides. Cable version: lowest pulley, side-on, cable behind you.",
+         run:"Lead with the elbow, stop at shoulder height, pause, lower over two to three seconds. Since it's your first movement, take the last set right up to the point where form would break \u2014 that's the 0\u20131 RIR target.",
+         miss:"Going too heavy because you're fresh. The weight should look unimpressive. Momentum here is the single most common reason people train delts for years without them growing."
+       }},
+      {key:"p2-reardelt", name:"Rear delt flyes", sets:"4\u00d715", rir:"0\u20131 RIR", rest:"45\u201360 sec", cls:"iso",
+       desc:"Hinge forward at the hips or lie chest-down on an incline bench, raise dumbbells out to the sides and squeeze your shoulder blades at the top. <b>Builds:</b> rear delt \u2014 fills the groove behind the shoulder cap and pulls the shoulders back into line.",
+       setup:{
+         set:"Best version: <b>chest-down on a bench set to about 30\u00b0</b>, which removes all momentum. Otherwise hinge at the hips until your torso is close to parallel with the floor, flat back, knees soft. Dumbbells hanging straight down, palms facing each other, small fixed bend in the elbows. Cable version: <b>both pulleys at shoulder height</b>, cables crossed, standing tall.",
+         run:"Raise out to the sides in a wide arc, <b>leading with the pinky side of the hand</b>, until your arms are level with your torso. Think about pulling your upper arms apart rather than lifting the weights. Pause at the top, lower slowly.",
+         miss:"Turning it into a row by pulling the elbows back and down toward your hips. If you feel it between your shoulder blades rather than on the back of the shoulder, the elbows are travelling backwards instead of outwards. Go lighter and think 'wide'."
+       }},
+      {key:"p2-ohp", name:"Overhead press", sets:"4\u00d76\u20138", rir:"2 RIR", rest:"2\u20133 min", cls:"barbell",
+       desc:"Bar at collarbone height, press straight overhead without excessively arching your back \u2014 brace your abs and tuck your ribs down. Expect less weight than on a fresh day; match the rep range, not your old numbers. <b>Builds:</b> front and side delts.",
+       setup:{
+         set:"Rack set so the bar sits at <b>upper-chest height</b> \u2014 you should barely have to dip to unrack it. Grip just outside shoulder width, forearms vertical when the bar is at your collarbone. Elbows slightly in front of the bar, not directly under it. Feet hip width, <b>glutes and abs squeezed hard</b>, ribs pulled down.",
+         run:"Press straight up, and <b>move your head back slightly out of the way</b> rather than pressing around your face. Once the bar passes your forehead, push your head back through so the bar finishes over the middle of your foot, not out in front. Lock out with the biceps near your ears.",
+         miss:"Arching the lower back to turn it into a standing incline press. That's the single biggest fault, and given the pelvic tilt you're working on, it's the one to be most careful with \u2014 squeeze your glutes before you press and it becomes very hard to do wrong."
+       }},
+      {key:"p2-shrug", name:"Dumbbell shrugs", sets:"4\u00d712", rir:"1 RIR", rest:"90 sec", cls:"mid",
+       desc:"Shrug straight up toward your ears (don't roll your shoulders), pause at the top, lower slowly. <b>Builds:</b> upper traps \u2014 the neck-to-shoulder mass you're after.",
+       setup:{
+         set:"Heavy dumbbells at your sides, arms straight, <b>chin tucked slightly and chest up</b>. Stand tall \u2014 don't lean forward. Arms are hooks; they don't bend at any point.",
+         run:"Shrug <b>straight up toward your ears</b> and hold the top for a full second \u2014 that pause is what separates a shrug that builds traps from one that just moves weight. Lower slowly and let the shoulders travel all the way down for a stretch before the next rep.",
+         miss:"Rolling the shoulders backward, which does nothing extra for the traps and grinds the shoulder joint. Second: bouncing with no pause at the top. Third: using straps by default \u2014 skip them unless grip is genuinely ending your sets early, since holding the weight is free forearm work."
+       }},
+      {key:"p2-legpress", name:"Leg press", sets:"3\u00d710\u201315", rir:"2 RIR", rest:"2\u20133 min", cls:"machine",
+       desc:"Feet mid-platform, shoulder width. Lower until your knees reach roughly 90\u00b0, stopping before your hips curl off the seat. This is your only leg press of the week \u2014 push it, but it sits last on purpose so nothing above it suffers. <b>Builds:</b> quads and glutes.",
+       setup:{
+         set:"Feet <b>mid-platform, shoulder width, toes turned out slightly</b>. Back and hips flat against the pad, hands on the handles. Adjust the seat so at the bottom your knees reach about 90\u00b0 without your hips lifting. Whole foot stays in contact \u2014 heels shouldn't rise.",
+         run:"Lower under control over two seconds, <b>stopping the moment your pelvis starts to curl up off the seat</b>. Drive back through mid-foot and heel. Don't slam into a locked knee at the top; stop just short.",
+         miss:"Chasing depth. Going deeper feels like more range but past a point it's your lower back rounding off the pad, and under a heavy leg press that's exactly where people get hurt. Depth stops where the pelvis moves \u2014 that's your bottom, regardless of what anyone else's looks like."
+       }},
+      {key:"p2-plank", name:"Plank", sets:"3\u00d730\u201345 sec", rir:"quality over time", rest:"45 sec", nolog:true,
+       desc:"Forearms down, pelvis tucked slightly under so your lower back is flat, glutes squeezed. End the set when your hips start to sag, not at the clock. <b>Builds:</b> anti-extension core strength.",
+       setup:{
+         set:"Forearms under your shoulders, elbows directly beneath, feet hip width. <b>Tuck your pelvis under</b> so your lower back flattens, then squeeze your glutes and brace your abs as if about to take a punch. Body in one line from head to heels.",
+         run:"Breathe normally \u2014 shallow, through the ribs. Hold the position, not the time. <b>Thirty hard seconds beats two soft minutes</b>; if you can hold three minutes comfortably, you're resting on your skeleton rather than bracing.",
+         miss:"Hips sagging and the lower back arching, which is the exact tilt position you're trying to train out of. End the set the moment that happens."
+       }}
     ]
   },
   {
@@ -462,20 +673,55 @@ var ROUTINE = [
        desc:"Face-down on a bench or the floor, arms overhead in a Y, lift them a few inches using only your upper back. Light or no weight. <b>Why:</b> strengthens lower traps, typically weak with rounded shoulders."}
     ],
     ex:[
-      {key:"l1-rdl", name:"Romanian deadlift", sets:"3\u00d78\u201310", rir:"2\u20133 RIR",
-       desc:"Bar close to your legs, push your hips back with a flat back until you feel a hamstring stretch, then drive your hips forward to stand and squeeze the glutes. <b>Keep this one.</b> It's the only glute and hamstring work left in the week, and those are the muscles that pull your pelvis out of the forward tilt \u2014 it's posture work that happens to be a leg exercise."},
-      {key:"l1-pulldown", name:"Lat pulldown", sets:"3\u00d710\u201312", rir:"1\u20132 RIR",
-       desc:"Pull the bar to your upper chest leading with elbows down and back, don't lean back excessively to cheat the weight. <b>Builds:</b> lats \u2014 back width, which makes the shoulders read wider too."},
-      {key:"l1-facepull", name:"Face pulls", sets:"3\u00d715\u201320", rir:"0\u20131 RIR",
-       desc:"Rope at upper chest or head height, pull toward your face flaring your elbows out wide, squeeze your shoulder blades at the end. <b>Builds:</b> rear delt and upper/mid traps \u2014 best single exercise for both the shoulder groove and the rounded posture."},
-      {key:"l1-cablerow", name:"Seated cable row", sets:"3\u00d710\u201312", rir:"1\u20132 RIR",
-       desc:"Back upright and straight, pull the handle to your torso, squeeze your shoulder blades, control the return. <b>Builds:</b> mid-back thickness \u2014 directly opposes the forward-rounded position."},
-      {key:"l1-curl", name:"Dumbbell curl", sets:"3\u00d710\u201312", rir:"0\u20131 RIR",
-       desc:"Elbows pinned to your sides, no torso swing, control the lowering. Dumbbells rather than a barbell here \u2014 your left arm carries a little more lean mass than your right, and a bar lets the stronger side quietly take over. <b>Builds:</b> biceps."},
-      {key:"l1-revcurl", name:"Reverse curl", sets:"3\u00d712\u201315", rir:"0\u20131 RIR",
-       desc:"EZ bar or dumbbells, <b>palms facing down</b>, elbows at your sides, curl up without swinging. Use far less weight than a normal curl \u2014 that's expected, not a sign of weak arms. <b>Builds:</b> brachioradialis and forearm extensors \u2014 the muscle that thickens the top of the forearm and pushes the bicep up from underneath."},
-      {key:"l1-kneeraise", name:"Hanging knee raise", sets:"3\u00d710\u201312", rir:"0\u20131 RIR", nolog:true,
-       desc:"Hang from the bar and raise your knees, <b>curling your pelvis up at the top</b> rather than just lifting your thighs. That pelvic tuck is what makes it work for the tilt \u2014 swinging your legs up with a flat pelvis mostly trains hip flexors, which are already the problem. <b>Builds:</b> lower abs."}
+      {key:"l1-rdl", name:"Romanian deadlift", sets:"3\u00d78\u201310", rir:"2\u20133 RIR", rest:"2\u20133 min", cls:"barbell",
+       desc:"<b>Keep this one.</b> It's the only glute and hamstring work left in the week, and those are the muscles that pull your pelvis out of the forward tilt \u2014 posture work that happens to be a leg exercise.",
+       setup:{
+         set:"Start <b>standing with the bar</b>, taken from a rack at hip height rather than off the floor. Double overhand grip just outside your hips, feet hip width, knees softly bent and staying at that same bend the whole set. Shoulders pulled back, bar touching your thighs.",
+         run:"<b>Push your hips backward</b>, not down \u2014 imagine reaching your backside toward a wall behind you. The bar slides down your thighs staying in contact with your legs. Go until you feel a strong hamstring stretch, usually just below the knee, then drive your hips forward and <b>squeeze your glutes hard at the top</b>. That glute squeeze is the part that matters for the tilt.",
+         miss:"Turning it into a squat by bending the knees more as you descend, or letting the bar drift away from your legs, which loads the lower back. Range is set by your hamstrings, not by touching the floor \u2014 stop the moment your back would round."
+       }},
+      {key:"l1-pulldown", name:"Lat pulldown", sets:"3\u00d710\u201312", rir:"1\u20132 RIR", rest:"90 sec", cls:"machine",
+       desc:"Pull the bar to your upper chest leading with elbows down and back. <b>Builds:</b> lats \u2014 back width, which makes the shoulders read wider too.",
+       setup:{
+         set:"Thigh pad snug enough that you don't lift off the seat. Grip <b>just outside shoulder width</b>, overhand \u2014 wider isn't better and mostly shortens the range. Sit tall, then <b>lean back about 15\u201320\u00b0 and hold that angle</b> for the whole set rather than rocking into it each rep.",
+         run:"Start by <b>pulling your shoulder blades down</b> before your arms do anything. Then drive the elbows down and back toward your ribs, bringing the bar to your upper chest. Pause a beat, then let it rise all the way until you feel the lats stretch and your shoulders lift slightly.",
+         miss:"Rowing it with the biceps and rocking backwards to move the weight. If your torso angle changes during a rep, it's too heavy. Also: pulling behind the neck \u2014 no benefit, and rough on the shoulder."
+       }},
+      {key:"l1-facepull", name:"Face pulls", sets:"3\u00d715\u201320", rir:"0\u20131 RIR", rest:"45\u201360 sec", cls:"iso",
+       desc:"<b>Builds:</b> rear delt and upper/mid traps \u2014 best single exercise for both the shoulder groove and the rounded posture.",
+       setup:{
+         set:"Rope attachment, pulley set at <b>upper-chest to eye height</b>. Grip the rope with an <b>overhand grip, thumbs pointing backwards</b> at you. Step back until there's tension with your arms fully extended, stagger your stance, lean back slightly to anchor yourself.",
+         run:"Pull the rope <b>toward your forehead</b>, pulling your hands apart as they travel so the rope ends up either side of your head. <b>Elbows stay high, at or above wrist height</b>, flaring wide. Squeeze for a full second at the end with your shoulder blades pulled together, then control it back out.",
+         miss:"Letting the elbows drop, which turns it into a high row and hands the work to the lats. If the pulley is too low or the weight too heavy, the elbows will drop automatically \u2014 fix both. This is a light, high-rep exercise; ego costs you the entire benefit."
+       }},
+      {key:"l1-cablerow", name:"Seated cable row", sets:"3\u00d710\u201312", rir:"1\u20132 RIR", rest:"90 sec", cls:"machine",
+       desc:"<b>Builds:</b> mid-back thickness \u2014 directly opposes the forward-rounded position.",
+       setup:{
+         set:"Feet planted on the platform, <b>knees softly bent, not locked</b>. Sit tall with a neutral spine and a slight forward reach at the start. Close-grip neutral handle for mid-back, or a wide bar if you want more rear delt. Set the seat so the cable runs <b>level to your torso</b>, not angled up or down.",
+         run:"Let the weight draw you into a stretch, allowing your shoulder blades to travel forward \u2014 then pull them back first and follow with the arms. Bring the handle to <b>your lower ribs or navel</b>, elbows close to your body, and squeeze for a beat. Control the return over two to three seconds.",
+         miss:"Swinging your torso back and forth like a rowing machine. Your torso should stay roughly vertical \u2014 a small amount of movement is fine, but if you're leaning back 30\u00b0 to finish reps, drop the weight. Second: shrugging at the top, which hands the work to the traps."
+       }},
+      {key:"l1-curl", name:"Dumbbell curl", sets:"3\u00d710\u201312", rir:"0\u20131 RIR", rest:"60 sec", cls:"iso",
+       desc:"Dumbbells rather than a barbell here \u2014 your left arm carries a little more lean mass than your right, and a bar lets the stronger side quietly take over. <b>Builds:</b> biceps.",
+       setup:{
+         set:"Standing or seated, dumbbells at your sides, <b>palms facing forward</b> (supinated) at the start. Elbows tucked against your ribs and staying there. Shoulders back and down.",
+         run:"Curl up without letting the elbow travel forward. <b>Squeeze at the top</b>, then take two to three seconds to lower all the way to a full stretch \u2014 not three-quarters. <b>Start each set with your weaker (right) arm and match its rep count on the left</b>, rather than pushing the strong side to failure.",
+         miss:"Swinging the torso and letting the elbows drift forward at the top, which lets the front delt lift the weight. If your shoulders are moving, go lighter."
+       }},
+      {key:"l1-revcurl", name:"Reverse curl", sets:"3\u00d712\u201315", rir:"0\u20131 RIR", rest:"45\u201360 sec", cls:"iso",
+       desc:"<b>Builds:</b> brachioradialis and forearm extensors \u2014 the muscle that thickens the top of the forearm and pushes the bicep up from underneath.",
+       setup:{
+         set:"EZ bar on the angled part, or dumbbells, <b>palms facing down</b> (pronated), grip about shoulder width. Elbows pinned to your sides, wrists straight and locked \u2014 don't let them bend back under load.",
+         run:"Curl up keeping the <b>knuckles pointing up</b> the whole way. The range is shorter than a normal curl and that's correct. Squeeze at the top, lower over two seconds.",
+         miss:"Loading it like a normal curl. Expect to use roughly <b>half</b> what you curl \u2014 the leverage is completely different and that's not a sign of weakness. Also: letting the wrists collapse backwards, which shifts the strain into the wrist joint instead of the muscle."
+       }},
+      {key:"l1-kneeraise", name:"Hanging knee raise", sets:"3\u00d710\u201312", rir:"0\u20131 RIR", rest:"60 sec", nolog:true,
+       desc:"<b>Builds:</b> lower abs \u2014 and with the right cue, it works the tilt rather than feeding it.",
+       setup:{
+         set:"Hang from a pull-up bar, hands shoulder width, <b>shoulders slightly engaged rather than fully passive</b> \u2014 think about pulling your shoulder blades down a little. Legs together, body still before the first rep.",
+         run:"Raise your knees toward your chest and, at the top, <b>curl your pelvis up toward your ribcage</b>. That final tuck is the whole exercise. Lower slowly and don't let yourself start swinging \u2014 pause at the bottom if you need to kill the momentum.",
+         miss:"Swinging the legs up with a flat pelvis. That mostly trains hip flexors, which are already short and pulling you into the tilt \u2014 so done wrong, this exercise makes your posture worse rather than better. Fewer reps with the pelvic tuck beats more without."
+       }}
     ]
   },
   {
@@ -490,20 +736,55 @@ var ROUTINE = [
        desc:"Half-kneeling, squeeze the back-leg glute and tuck your pelvis before leaning forward. <b>Why:</b> lengthens the hip flexors pulling your pelvis into the tilt."}
     ],
     ex:[
-      {key:"l2-pullup", name:"Pull-ups (weighted if possible)", sets:"4\u00d76\u201310", rir:"1\u20132 RIR",
-       desc:"Pull until your chin clears the bar, lower under control to a full stretch. Log added weight only \u2014 leave it at 0 for bodyweight. <b>Builds:</b> lat width and overall back strength."},
-      {key:"l2-reardelt", name:"Rear delt flyes or reverse pec-deck", sets:"3\u00d715", rir:"0\u20131 RIR",
-       desc:"Slight elbow bend held throughout, squeeze at the end of the range rather than swinging the weight up. <b>Builds:</b> rear delt \u2014 second dedicated exposure of the week."},
-      {key:"l2-csrow", name:"Chest-supported row", sets:"3\u00d710\u201312", rir:"1\u20132 RIR",
-       desc:"Chest braced against an incline bench or pad, row your elbows back and squeeze the shoulder blades, no torso momentum. <b>Builds:</b> back thickness with no lower-back strain, and the support forces good scapular position."},
-      {key:"l2-shrug", name:"Behind-the-back barbell shrugs", sets:"3\u00d712", rir:"1 RIR",
-       desc:"Bar behind you at arm's length, shrug straight up, pause, lower slowly. Three sets rather than four because the farmer's carries below load the traps heavily too. <b>Builds:</b> upper traps from a different angle than standard shrugs \u2014 the two shrug variations together are what thicken the neck-to-shoulder line."},
-      {key:"l2-hammer", name:"Hammer curls", sets:"3\u00d710\u201312", rir:"0\u20131 RIR",
-       desc:"Palms face each other throughout, elbows fixed at your sides. <b>Builds:</b> biceps plus the brachialis, which pushes the bicep up and makes the arm look thicker from the side."},
-      {key:"l2-carry", name:"Farmer's carry", sets:"3\u00d740 sec", rir:"grip failure",
-       desc:"Heavy dumbbells at your sides, walk with your ribs down and shoulders pulled back \u2014 don't let the weight round you forward. Log the dumbbell weight. <b>Builds:</b> grip and forearms, plus a heavy static load on the upper traps. Two of your priorities in one exercise, which is why it earns a slot on a tight hour."},
-      {key:"l2-pallof", name:"Pallof press", sets:"3\u00d712/side", rir:"0\u20131 RIR", nolog:true,
-       desc:"Stand side-on to a cable at chest height, hold the handle at your sternum, press it straight out and resist the pull that wants to rotate you. Ribs down, glutes lightly squeezed. <b>Builds:</b> anti-rotation core \u2014 the bracing pattern that holds your pelvis neutral when you're standing and walking, not just when you're on the floor."}
+      {key:"l2-pullup", name:"Pull-ups (weighted if possible)", sets:"4\u00d76\u201310", rir:"1\u20132 RIR", rest:"2\u20133 min", cls:"bodyweight",
+       desc:"Log added weight only \u2014 leave it at 0 for bodyweight. <b>Builds:</b> lat width and overall back strength.",
+       setup:{
+         set:"Overhand grip <b>just outside shoulder width</b>. Hang at full stretch, then set your shoulders by pulling the blades down and back before the first rep. Legs together and slightly in front, glutes and abs squeezed so you don't swing. Belt or dumbbell between the feet if adding weight.",
+         run:"<b>Lead with the elbows down toward your ribs</b> and think about driving them into your back pockets rather than pulling with the hands. Chin clears the bar, then lower over two to three seconds to a full hang \u2014 all the way, arms straight.",
+         miss:"Kipping and half reps. A partial pull-up mostly trains the strong middle of the range and skips the stretch where the lat grows most. If you can't get full range for six reps, use an assisted machine or bands rather than shortening the rep."
+       }},
+      {key:"l2-reardelt", name:"Rear delt flyes or reverse pec-deck", sets:"3\u00d715", rir:"0\u20131 RIR", rest:"45\u201360 sec", cls:"iso",
+       desc:"<b>Builds:</b> rear delt \u2014 second dedicated exposure of the week.",
+       setup:{
+         set:"Reverse pec-deck: set the <b>handles level with your shoulders</b>, chest against the pad, seat height so your arms are horizontal. Grip neutral (thumbs up) or overhand. Dumbbell version: chest-down on a 30\u00b0 incline bench.",
+         run:"Open your arms out and back in a wide arc with a <b>fixed slight elbow bend</b>, squeezing the shoulder blades at the end. Pause a beat at full stretch of the movement, then return slowly \u2014 don't let the weight snap back.",
+         miss:"Yanking the handles back with a shrug and a torso jerk. If the weight is right, this looks almost boring from the outside. Rear delts are small \u2014 they don't need much load, they need clean range and reps."
+       }},
+      {key:"l2-csrow", name:"Chest-supported row", sets:"3\u00d710\u201312", rir:"1\u20132 RIR", rest:"90 sec", cls:"machine",
+       desc:"<b>Builds:</b> back thickness with no lower-back strain, and the support forces good scapular position.",
+       setup:{
+         set:"Chest against an incline bench at <b>about 45\u00b0</b>, or a chest-supported row machine. Set the pad so your arms hang free and fully extended at the bottom. Feet planted, <b>chin off the pad</b>, neutral neck.",
+         run:"Let the shoulder blades travel forward at the bottom for a stretch, then <b>retract them first</b> and row your elbows back toward your hips. Squeeze for a beat at the top. Lower over two to three seconds without letting your chest lift off the pad.",
+         miss:"Pushing off the bench with your chest to help move the weight. The point of the chest support is that momentum is impossible \u2014 if you're finding a way to cheat, the weight is too heavy."
+       }},
+      {key:"l2-shrug", name:"Behind-the-back barbell shrugs", sets:"3\u00d712", rir:"1 RIR", rest:"90 sec", cls:"barbell",
+       desc:"Three sets rather than four because the farmer's carries below load the traps heavily too. <b>Builds:</b> upper traps from a different angle than standard shrugs.",
+       setup:{
+         set:"Set the bar on a rack at <b>just below hip height</b> and step forward so it rests behind your thighs \u2014 lifting it from the floor behind you is awkward and unnecessary. Overhand grip a little wider than your hips, arms straight, <b>chest up and shoulders back</b>. The bar rests against your glutes.",
+         run:"Shrug straight up, and because the bar is behind you this naturally pulls the shoulders <b>back as well as up</b>, which is why it hits the traps differently from a normal shrug. Hold the top for a full second, lower slowly to a stretch.",
+         miss:"Letting the bar drift away from your body, which pulls you forward and turns it into an awkward row. Keep it in contact with your glutes and hamstrings the whole way. If your shoulder mobility makes this uncomfortable, use dumbbells slightly behind the hips instead."
+       }},
+      {key:"l2-hammer", name:"Hammer curls", sets:"3\u00d710\u201312", rir:"0\u20131 RIR", rest:"60 sec", cls:"iso",
+       desc:"<b>Builds:</b> biceps plus the brachialis, which pushes the bicep up and makes the arm look thicker from the side.",
+       setup:{
+         set:"Dumbbells at your sides, <b>palms facing each other</b> (neutral) and staying that way. Elbows pinned to your ribs, shoulders back.",
+         run:"Curl straight up without rotating the wrist, squeeze, and lower over two to three seconds to a full stretch. <b>Start with your weaker arm</b> and match its rep count on the other side. Alternating or both at once are equally fine.",
+         miss:"Letting the elbows drift forward and swinging at the shoulder. Also: cutting the bottom of the range \u2014 the brachialis gets loaded most in the stretched position."
+       }},
+      {key:"l2-carry", name:"Farmer's carry", sets:"3\u00d740 sec", rir:"grip failure", rest:"90 sec", cls:"mid",
+       desc:"Log the dumbbell weight. <b>Builds:</b> grip and forearms, plus a heavy static load on the upper traps \u2014 two of your priorities in one exercise.",
+       setup:{
+         set:"Heavy dumbbells or trap-bar, picked up with a <b>hip hinge, not a back round</b>. Stand tall, <b>ribs down, shoulders pulled back and slightly depressed</b>, chin neutral. No straps \u2014 grip is the point.",
+         run:"Walk at a steady pace with short, controlled steps, breathing normally. Keep the weights from swinging into your legs. <b>Forty seconds or to grip failure</b>, whichever comes first. Set them down with a hinge, not a drop.",
+         miss:"Letting the weight round you forward, which turns a posture exercise into a posture problem. If your shoulders are being pulled down and in, go lighter and hold position. Also: shuffling instead of walking \u2014 take real steps."
+       }},
+      {key:"l2-pallof", name:"Pallof press", sets:"3\u00d712/side", rir:"0\u20131 RIR", rest:"45\u201360 sec", nolog:true,
+       desc:"<b>Builds:</b> anti-rotation core \u2014 the bracing pattern that holds your pelvis neutral when you're standing and walking, not just lying on the floor.",
+       setup:{
+         set:"Cable pulley at <b>chest height</b>, single handle. Stand side-on, step away until there's real tension, feet shoulder width, <b>knees soft and pelvis tucked slightly</b>. Hold the handle at your sternum with both hands, elbows in.",
+         run:"Press the handle straight out until your arms are extended, <b>resisting the cable's pull to rotate you</b>. Hold for two seconds at full extension, then bring it back to your chest. Hips and shoulders stay square the entire time \u2014 nothing should twist.",
+         miss:"Letting the torso rotate toward the cable, or leaning away from it to counterbalance. Both mean the weight is too heavy. This should look like almost nothing is happening, and feel like a lot is."
+       }}
     ]
   }
 ];
@@ -519,6 +800,24 @@ var REFERENCE = [
       "<p>Type weight and reps as you finish each set. It saves the moment you tap out of the field, so there's nothing to remember at the end.</p>" +
       "<p>When a weight beats what you did last time, a green chip appears next to it showing the jump. That chip is the whole point of the app: it answers \"am I actually progressing?\" without you doing arithmetic between sets.</p>" +
       "<p>Tap <b>Log session</b> when you're done. That stamps today's date and files your numbers as the baseline you'll see next time.</p>"
+  },
+  {
+    title:"What the coaching messages mean",
+    body:
+      "<p>The box under each exercise reads your logged sets against the target rep range and against the same exercise last session, then says one thing. It runs on your phone with no internet and no guesswork \u2014 the same numbers always produce the same advice.</p>" +
+      "<dl class='kv'>" +
+        "<dt>Add weight</dt><dd>Every set reached the top of the range. Go up next session and expect to land back near the bottom \u2014 that's the double progression working, not a step backwards.</dd>" +
+        "<dt>Too heavy</dt><dd>Two or more sets came in under the range. Sets below the target are mostly fatigue rather than stimulus. Drop back and rebuild.</dd>" +
+        "<dt>Jump too big</dt><dd>You added weight and the first set fell out of range. Halve the increase next time.</dd>" +
+        "<dt>Rest longer</dt><dd>Reps fell more than 40% from the first set to the last. That size of drop is nearly always recovery, not effort \u2014 take the full rest shown on the exercise.</dd>" +
+        "<dt>Stalled</dt><dd>Same weight as last session with no extra reps. Chase one more rep per set before adding load. Flat for three sessions running is a deload signal, not a motivation problem.</dd>" +
+        "<dt>Progress</dt><dd>Total volume (weight \u00d7 reps) is up on last session. Stay at this weight until every set reaches the top of the range.</dd>" +
+        "<dt>Baseline</dt><dd>Nothing logged for this exercise before. Today's numbers become the ones to beat.</dd>" +
+      "</dl>" +
+      "<p><b>The briefing before you start</b> runs the same rules against your last session and turns them into a target per exercise \u2014 a weight to go to, a weight to drop to, or the number to chase. It's collapsed by default; open it while you're warming up and you'll know your loads before you touch a bar.</p>" +
+      "<p>Fixed-rep targets like 4\u00d715 aren't treated as a minimum: dropping to 13, 12, 11 across a set is ordinary fatigue, not a sign the weight is too heavy. Only explicit ranges like 6\u20138 can be 'fallen under'.</p>" +
+      "<p><b>Where it can't help:</b> it only sees numbers. It can't tell whether your form held up, whether a set felt like 0 RIR or 4, or whether you slept three hours. If the message conflicts with what the session actually felt like, trust yourself \u2014 you have information it doesn't.</p>" +
+      "<p><b>The rest times</b> shown on each exercise are suggestions, not a timer. Heavy compounds want 2\u20133 minutes, mid-range work around 90 seconds, isolation 45\u201360. Cutting rest to save time mostly costs you reps on the next set, which is the thing you're trying to increase.</p>"
   },
   {
     title:"Reps in reserve (RIR)",
@@ -747,6 +1046,283 @@ function deltaFor(ex, i){
   return { cls:"same", text:"=" };
 }
 
+/* ============================================================
+   COACH — deterministic feedback on what you just logged.
+   No network, no model: it reads your target rep range, your
+   sets this session, and the same exercise last session.
+   ============================================================ */
+
+/* how much to add when you've earned it, by movement class */
+var INCREMENT = {
+  barbell:   "5\u201310 lb",
+  machine:   "10\u201320 lb",
+  mid:       "5\u201310 lb",
+  iso:       "2.5\u20135 lb",
+  bodyweight:"2.5\u20135 lb of added weight"
+};
+
+/* pull the low and high end out of strings like "4×8–12" or "3×15" */
+function repRange(setsStr){
+  var m = String(setsStr).replace(/\u2013|\u2014/g, "-").match(/\u00d7\s*(\d+)(?:\s*-\s*(\d+))?/);
+  if(!m) return null;
+  var lo = parseInt(m[1],10);
+  var hi = m[2] ? parseInt(m[2],10) : lo;
+  return { lo:lo, hi:hi };
+}
+
+/* "4×8–12" is a range; "4×15" is a single target. Only the first kind
+   can meaningfully be "fallen under" — dropping from 15 to 11 across four
+   sets is ordinary fatigue, not a weight that's too heavy. */
+function isRange(r){ return !!r && r.hi > r.lo; }
+
+function filledSets(arr){
+  if(!arr) return [];
+  return arr.filter(function(s){
+    return s && s.r !== "" && s.r != null && !isNaN(parseFloat(s.r));
+  });
+}
+function volume(arr){
+  return (arr||[]).reduce(function(a,s){
+    var w = parseFloat(s.w), r = parseFloat(s.r);
+    if(isNaN(w) || isNaN(r)) return a;
+    return a + w*r;
+  },0);
+}
+function topWeight(arr){
+  var ws = (arr||[]).map(function(s){ return parseFloat(s.w); }).filter(function(n){ return !isNaN(n); });
+  return ws.length ? Math.max.apply(null, ws) : null;
+}
+function totalReps(arr){
+  return (arr||[]).reduce(function(a,s){
+    var r = parseFloat(s.r);
+    return isNaN(r) ? a : a + r;
+  },0);
+}
+
+/* returns {tone, tag, text} or null */
+function coachFor(ex){
+  var e = log[ex.key];
+  if(!e) return null;
+  var range = repRange(ex.sets);
+  var now   = filledSets(e.sets);
+  if(!now.length) return null;
+
+  var prev  = filledSets(e.prev);
+  var inc   = INCREMENT[ex.cls] || "a small jump";
+
+  /* --- 1. a set fell below the target range --- */
+  if(isRange(range)){
+    var under = [];
+    now.forEach(function(s,i){
+      if(parseFloat(s.r) < range.lo) under.push(i+1);
+    });
+    if(under.length >= 2){
+      return { tone:"back", tag:"Too heavy",
+        text:"Sets " + under.join(" and ") + " came in under " + range.lo +
+             " reps. <b>Drop the weight next session</b> and rebuild \u2014 sets below the range are mostly fatigue, not stimulus." };
+    }
+  }
+
+  /* --- 2. weight jumped but reps collapsed --- */
+  if(prev.length && isRange(range)){
+    var tNow = topWeight(now), tPrev = topWeight(prev);
+    if(tNow != null && tPrev != null && tNow > tPrev){
+      var firstNow = parseFloat(now[0].r);
+      if(!isNaN(firstNow) && firstNow < range.lo){
+        return { tone:"warn", tag:"Jump too big",
+          text:"Weight went up but the first set fell to " + firstNow + " reps, under the " +
+               range.lo + "\u2013" + range.hi + " target. <b>Split the difference next time</b> \u2014 half the jump you just made." };
+      }
+    }
+  }
+
+  /* --- 3. sharp rep dropoff across sets --- */
+  if(now.length >= 3){
+    var first = parseFloat(now[0].r);
+    var last  = parseFloat(now[now.length-1].r);
+    if(!isNaN(first) && !isNaN(last) && first > 0){
+      var drop = (first - last) / first;
+      if(drop >= 0.4){
+        return { tone:"warn", tag:"Rest longer",
+          text:"Reps fell from " + first + " to " + last + " across the set" +
+               (ex.rest ? " \u2014 try taking the full <b>" + ex.rest + "</b> before the next one." :
+                          " \u2014 try resting longer between sets.") +
+               " A drop that steep is usually recovery, not effort." };
+      }
+    }
+  }
+
+  /* --- 4. every set at the top of the range: earned the weight --- */
+  if(range && now.length >= 2){
+    var allTop = now.every(function(s){ return parseFloat(s.r) >= range.hi; });
+    if(allTop){
+      return { tone:"good", tag:"Add weight",
+        text:"Every set hit " + range.hi + "+. <b>Go up " + inc +
+             " next session</b> and expect to land back near " + range.lo + " reps \u2014 that's progress, not a step back." };
+    }
+  }
+
+  /* --- 5. stalled: same top weight, no more reps than last time --- */
+  if(prev.length){
+    var wNow = topWeight(now), wPrev = topWeight(prev);
+    var rNow = totalReps(now),  rPrev = totalReps(prev);
+    if(wNow != null && wPrev != null && wNow === wPrev && rNow <= rPrev && rNow > 0){
+      return { tone:"warn", tag:"Stalled",
+        text:"Same weight and no extra reps on last session. <b>Chase one more rep per set</b> before adding load \u2014 if it's still flat in two more sessions, that's a deload signal, not a willpower one." };
+    }
+    /* --- 6. volume up --- */
+    var vNow = volume(now), vPrev = volume(prev);
+    if(vPrev > 0 && vNow > vPrev){
+      var pct = Math.round((vNow - vPrev) / vPrev * 100);
+      if(pct >= 2){
+        return { tone:"good", tag:"Progress",
+          text:"Volume up <b>" + pct + "%</b> on last session. Keep the weight here until every set reaches " +
+               (range ? range.hi : "the top of the range") + "." };
+      }
+    }
+  }
+
+  /* --- 7. mid-range, no comparison available --- */
+  if(range && !prev.length){
+    return { tone:"", tag:"Baseline",
+      text:"First time logging this. Whatever you do today becomes the number to beat \u2014 aim for the " +
+           range.lo + "\u2013" + range.hi + " range at " + (ex.rir || "your target RIR") + "." };
+  }
+  return null;
+}
+
+/* whole-session comparison shown at the top of a day */
+function sessionSummary(day){
+  var vNow = 0, vPrev = 0, logged = 0, compared = 0;
+  day.ex.forEach(function(x){
+    if(x.nolog) return;
+    var e = log[x.key];
+    if(!e) return;
+    var n = filledSets(e.sets);
+    if(n.length) logged++;
+    var p = filledSets(e.prev);
+    if(n.length && p.length){
+      vNow  += volume(n);
+      vPrev += volume(p);
+      compared++;
+    }
+  });
+  if(!logged) return null;
+  if(compared < 2 || vPrev <= 0){
+    return "<b>" + logged + " exercise" + (logged===1?"":"s") + " logged.</b> Finish the session and hit Log session to bank these numbers.";
+  }
+  var pct = Math.round((vNow - vPrev) / vPrev * 100);
+  if(pct > 1)  return "Session volume is <b>up " + pct + "%</b> on last time across the exercises you've logged so far.";
+  if(pct < -1) return "Session volume is <b>down " + Math.abs(pct) + "%</b> on last time. One off day means nothing \u2014 two in a row means look at sleep and food.";
+  return "Session volume is <b>level</b> with last time.";
+}
+
+/* ============================================================
+   BRIEFING — what to do today, read from last session.
+   Same rules as the in-set coach, run before you start.
+   ============================================================ */
+
+/* numeric increments, for suggesting an actual number to load */
+var INC_NUM = {
+  barbell:5, machine:10, mid:5, iso:2.5, bodyweight:2.5
+};
+
+function roundLoad(n, cls){
+  if(cls === "iso") return Math.round(n*2)/2;   /* nearest 2.5-ish */
+  return Math.round(n);
+}
+
+/* one short line per exercise: {tone, name, text} */
+function briefLine(ex){
+  if(ex.nolog) return null;
+  var e = log[ex.key];
+  var range = repRange(ex.sets);
+  var prev = e ? filledSets(e.prev) : [];
+  var inc = INC_NUM[ex.cls] || 5;
+
+  if(!prev.length){
+    return { tone:"", name:ex.name, text:"no history \u2014 set a baseline in the " +
+      (range ? range.lo + "\u2013" + range.hi : "target") + " range" };
+  }
+
+  var w = topWeight(prev);
+  var reps = prev.map(function(s){ return parseFloat(s.r); }).filter(function(n){ return !isNaN(n); });
+  var wTxt = (w == null || isNaN(w)) ? "same weight" : w + " lb";
+
+  /* was every set at the top of the range? -> load up */
+  if(range && reps.length && reps.every(function(r){ return r >= range.hi; }) && w != null){
+    var next = roundLoad(w + inc, ex.cls);
+    return { tone:"good", name:ex.name,
+      text:"<b>go to " + next + " lb</b> \u00b7 expect " + range.lo + "\u2013" + (range.lo+1) + " reps" };
+  }
+
+  /* did sets fall under the range? -> back off (ranges only) */
+  if(isRange(range) && reps.length){
+    var under = reps.filter(function(r){ return r < range.lo; }).length;
+    if(under >= 2 && w != null){
+      var back = roundLoad(w - inc, ex.cls);
+      return { tone:"back", name:ex.name,
+        text:"<b>drop to " + back + " lb</b> \u00b7 last time fell under " + range.lo + " reps" };
+    }
+  }
+
+  /* stalled two sessions at the same load */
+  if(e.stall && e.stall >= 2 && w != null){
+    return { tone:"warn", name:ex.name,
+      text:"<b>" + wTxt + "</b> \u00b7 stalled " + e.stall + " sessions \u2014 one more rep per set or back off 10%" };
+  }
+
+  /* default: hold the weight, chase the top of the range */
+  var best = reps.length ? Math.max.apply(null, reps) : null;
+  return { tone:"", name:ex.name,
+    text:"<b>" + wTxt + "</b> \u00b7 hit " + (reps.length ? reps.join("/") : "\u2014") +
+         (range ? " \u00b7 chase " + range.hi + " across all sets" : "") };
+}
+
+/* headline above the per-exercise lines */
+function briefHeadline(day){
+  var bits = [];
+  if(dates[day.id]){
+    var n = daysAgo(dates[day.id]);
+    if(n >= 10)      bits.push("Last did this <b>" + n + " days ago</b> \u2014 longer than usual, so treat the first set as a feeler.");
+    else if(n >= 1)  bits.push("Last did this <b>" + agoText(dates[day.id]) + "</b>.");
+    else             bits.push("You already logged this <b>today</b>.");
+  }else{
+    bits.push("<b>First time through this day.</b> Pick weights that leave you at the target RIR and let the numbers settle over a few sessions.");
+  }
+
+  var up = 0, down = 0, stalled = 0, fresh = 0;
+  day.ex.forEach(function(x){
+    var b = briefLine(x);
+    if(!b) return;
+    if(b.tone === "good") up++;
+    else if(b.tone === "back") down++;
+    else if(b.tone === "warn") stalled++;
+    else if(b.text.indexOf("no history") === 0) fresh++;
+  });
+
+  var parts = [];
+  if(up)      parts.push("<b>" + up + "</b> ready to go up");
+  if(stalled) parts.push("<b>" + stalled + "</b> stalled");
+  if(down)    parts.push("<b>" + down + "</b> to back off");
+  if(parts.length) bits.push(parts.join(", ") + ".");
+  else if(!fresh) bits.push("Nothing flagged \u2014 repeat last session's loads and add reps.");
+
+  return bits.join(" ");
+}
+
+function briefingHTML(day){
+  var lines = day.ex.map(function(x){
+    var b = briefLine(x);
+    if(!b) return "";
+    return '<div class="bl' + (b.tone ? " " + b.tone : "") + '">' +
+             '<span class="bl-name">' + b.name + '</span>' +
+             '<span class="bl-text">' + b.text + '</span>' +
+           '</div>';
+  }).join("");
+  return '<p class="brief-head">' + briefHeadline(day) + '</p>' + lines;
+}
+
 /* ============================ RENDER ============================ */
 function lastDoneHTML(id){
   if(!dates[id]) return '<span class="lastdone">never</span>';
@@ -803,6 +1379,15 @@ function buildSetBlock(ex, container, onChange){
     setTimeout(function(){ tick.classList.remove("show"); }, 900);
   }
 
+  function paintCoach(){
+    var box = container.querySelector(".coach");
+    if(!box) return;
+    var c = coachFor(ex);
+    if(!c){ box.className = "coach"; box.innerHTML = ""; return; }
+    box.className = "coach show" + (c.tone ? " " + c.tone : "");
+    box.innerHTML = '<span class="coach-tag">' + c.tag + '</span>' + c.text;
+  }
+
   function paintDelta(i){
     var chip = container.querySelector('.set-row[data-i="' + i + '"] .delta');
     if(!chip) return;
@@ -831,7 +1416,8 @@ function buildSetBlock(ex, container, onChange){
       '<div class="set-actions">' +
         '<button class="addset" type="button">+ Add set</button>' +
         '<span class="saved-tick">saved</span>' +
-      '</div>';
+      '</div>' +
+      '<div class="coach" role="status"></div>';
 
     var rowEls = container.querySelectorAll(".set-row");
     for(var k=0;k<rowEls.length;k++){
@@ -839,12 +1425,12 @@ function buildSetBlock(ex, container, onChange){
         var i = parseInt(row.getAttribute("data-i"), 10);
         row.querySelector(".w").addEventListener("change", function(e){
           entry.sets[i].w = e.target.value.trim();
-          writeJSON(LOG_KEY, log); flash(); paintDelta(i);
+          writeJSON(LOG_KEY, log); flash(); paintDelta(i); paintCoach();
           if(onChange) onChange();
         });
         row.querySelector(".r").addEventListener("change", function(e){
           entry.sets[i].r = e.target.value.trim();
-          writeJSON(LOG_KEY, log); flash();
+          writeJSON(LOG_KEY, log); flash(); paintCoach();
           if(onChange) onChange();
         });
         row.querySelector(".rm").addEventListener("click", function(){
@@ -857,6 +1443,7 @@ function buildSetBlock(ex, container, onChange){
       })(rowEls[k]);
       paintDelta(k);
     }
+    paintCoach();
 
     container.querySelector(".addset").addEventListener("click", function(){
       var last = entry.sets[entry.sets.length-1];
@@ -887,12 +1474,23 @@ function renderDays(){
     }).join("");
 
     var mainHTML = day.ex.map(function(x){
+      var setup = x.setup ? (
+        '<button class="howto" type="button" aria-expanded="false">' +
+          '<span class="tri" aria-hidden="true"></span>How to set it up' +
+        '</button>' +
+        '<div class="howto-body">' +
+          '<div class="ht s"><h5>Setup</h5><p>' + x.setup.set + '</p></div>' +
+          '<div class="ht r"><h5>Execution</h5><p>' + x.setup.run + '</p></div>' +
+          '<div class="ht m"><h5>Common mistake</h5><p>' + x.setup.miss + '</p></div>' +
+        '</div>') : '';
       return '<div class="ex" data-key="' + x.key + '">' +
         '<div class="ex-top"><span class="ex-name">' + x.name + '</span>' +
         '<span class="ex-meta">' + x.sets +
           (x.rir ? '<span class="rir">' + x.rir + '</span>' : '') +
         '</span></div>' +
         '<p class="ex-desc">' + x.desc + '</p>' +
+        (x.rest ? '<div style="margin-top:8px"><span class="rest-chip">rest ' + x.rest + '</span></div>' : '') +
+        setup +
         (x.nolog ? '' : '<div class="sets"></div>') +
       '</div>';
     }).join("");
@@ -918,6 +1516,12 @@ function renderDays(){
           '</span></div>' +
           '<div class="sb-row"><span class="msg" role="status"></span></div>' +
         '</div>' +
+        '<div class="summary" role="status"></div>' +
+        '<button class="brief-toggle" type="button" aria-expanded="false">' +
+          '<span class="tri" aria-hidden="true"></span>' +
+          '<span class="lbl">Before you start \u2014 today\'s targets</span>' +
+        '</button>' +
+        '<div class="brief-body"></div>' +
         '<div class="block-label">Prep \u00b7 posture and hips \u00b7 6\u20138 min</div>' +
         prepHTML +
         '<div class="block-label main">Main work</div>' +
@@ -932,7 +1536,39 @@ function renderDays(){
       head.setAttribute("aria-expanded", open ? "true" : "false");
     });
 
-    function refreshProgress(){ updateProgress(day, el); }
+    function refreshSummary(){
+      var box = el.querySelector(".summary");
+      if(!box) return;
+      var txt = sessionSummary(day);
+      if(txt){ box.className = "summary show"; box.innerHTML = txt; }
+      else { box.className = "summary"; box.innerHTML = ""; }
+    }
+    function refreshProgress(){ updateProgress(day, el); refreshSummary(); }
+
+    var briefBtn  = el.querySelector(".brief-toggle");
+    var briefBody = el.querySelector(".brief-body");
+    function refreshBrief(){
+      if(briefBody) briefBody.innerHTML = briefingHTML(day);
+    }
+    refreshBrief();
+    if(briefBtn){
+      briefBtn.addEventListener("click", function(e){
+        e.stopPropagation();
+        var open = briefBody.classList.toggle("open");
+        briefBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    }
+
+    var howtos = el.querySelectorAll(".howto");
+    for(var h=0; h<howtos.length; h++){
+      (function(btn){
+        btn.addEventListener("click", function(){
+          var body = btn.nextElementSibling;
+          var open = body.classList.toggle("open");
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+      })(howtos[h]);
+    }
 
     day.ex.forEach(function(x){
       if(x.nolog) return;
@@ -969,6 +1605,14 @@ function renderDays(){
         var e = log[x.key];
         if(!e) return;
         if(!e.sets.some(function(s){ return s.w !== "" || s.r !== ""; })) return;
+        var nowSets  = filledSets(e.sets);
+        var prevSets = filledSets(e.prev);
+        if(prevSets.length){
+          var wN = topWeight(nowSets), wP = topWeight(prevSets);
+          var rN = totalReps(nowSets),  rP = totalReps(prevSets);
+          if(wN != null && wP != null && wN === wP && rN <= rP) e.stall = (e.stall || 1) + 1;
+          else e.stall = 0;
+        }
         e.prev = e.sets.map(function(s){ return { w:s.w, r:s.r }; });
         e.prevDate = iso;
       });
@@ -980,7 +1624,7 @@ function renderDays(){
         var holder = el.querySelector('.ex[data-key="' + x.key + '"] .sets');
         if(holder) buildSetBlock(x, holder, refreshProgress);
       });
-      refreshProgress(); updateNext();
+      refreshProgress(); refreshBrief(); updateNext();
       setMsg(ok ? "Session logged \u2014 these are the numbers to beat." :
                   "Storage is blocked in this browser \u2014 nothing was saved.", ok);
     }
@@ -1167,6 +1811,16 @@ mobility = readJSON(MOB_KEY);
 renderDays();
 renderMobility();
 renderReference();
+
+(function(){
+  var btn  = document.getElementById("ref-toggle");
+  var body = document.getElementById("ref-body");
+  if(!btn || !body) return;
+  btn.addEventListener("click", function(){
+    var open = body.classList.toggle("open");
+    btn.setAttribute("aria-expanded", open ? "true" : "false");
+  });
+})();
 
 if("serviceWorker" in navigator){
   window.addEventListener("load", function(){
