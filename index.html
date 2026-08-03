@@ -381,6 +381,8 @@ var ROUTINE = [
        desc:"Elbows pinned to your sides the whole set, push down and let the rope split slightly at the bottom. <b>Builds:</b> triceps."},
       {key:"p2-ohtri", name:"Overhead triceps extension", sets:"3\u00d710\u201312", rir:"0\u20131 RIR",
        desc:"Dumbbell or rope overhead, lower behind your head bending only at the elbow, upper arms still, then extend. <b>Builds:</b> the long head of the triceps \u2014 the part that adds visible arm size, and the head the pushdown mostly misses."},
+      {key:"p1-wrist", name:"Wrist curls + reverse wrist curls", sets:"2\u00d715\u201320 each", rir:"0\u20131 RIR",
+       desc:"Forearms resting on a bench or your thighs. Palms up, curl the bar with your wrists only, full stretch at the bottom. Then flip to palms down for the reverse version. Light weight, high reps, burn is the point \u2014 log the palms-up weight. <b>Builds:</b> the wrist flexors and extensors that add forearm thickness directly. Takes about four minutes."},
       {key:"p1-deadbug", name:"Dead bug", sets:"3\u00d710/side", rir:"quality over reps", nolog:true,
        desc:"On your back, lower back pressed flat into the floor, extend opposite arm and leg slowly without letting your back arch off the ground. Stop the set when your back lifts \u2014 that's the real endpoint, not a rep count. <b>Builds:</b> deep core control for a neutral pelvis."}
     ]
@@ -432,6 +434,8 @@ var ROUTINE = [
        desc:"Back upright and straight, pull the handle to your torso, squeeze your shoulder blades, control the return. <b>Builds:</b> mid-back thickness \u2014 directly opposes the forward-rounded position."},
       {key:"l1-curl", name:"Barbell or dumbbell curl", sets:"3\u00d710\u201312", rir:"0\u20131 RIR",
        desc:"Elbows pinned to your sides, no torso swing, control the lowering. <b>Builds:</b> biceps."},
+      {key:"l1-revcurl", name:"Reverse curl", sets:"3\u00d712\u201315", rir:"0\u20131 RIR",
+       desc:"EZ bar or dumbbells, <b>palms facing down</b>, elbows at your sides, curl up without swinging. Use far less weight than a normal curl \u2014 that's expected, not a sign of weak arms. <b>Builds:</b> brachioradialis and forearm extensors \u2014 the muscle that thickens the top of the forearm and pushes the bicep up from underneath."},
       {key:"l1-kneeraise", name:"Hanging knee raise", sets:"3\u00d710\u201312", rir:"0\u20131 RIR", nolog:true,
        desc:"Hang from the bar and raise your knees, <b>curling your pelvis up at the top</b> rather than just lifting your thighs. That pelvic tuck is what makes it work for the tilt \u2014 swinging your legs up with a flat pelvis mostly trains hip flexors, which are already the problem. <b>Builds:</b> lower abs."}
     ]
@@ -454,10 +458,12 @@ var ROUTINE = [
        desc:"Slight elbow bend held throughout, squeeze at the end of the range rather than swinging the weight up. <b>Builds:</b> rear delt \u2014 second dedicated exposure of the week."},
       {key:"l2-csrow", name:"Chest-supported row", sets:"3\u00d710\u201312", rir:"1\u20132 RIR",
        desc:"Chest braced against an incline bench or pad, row your elbows back and squeeze the shoulder blades, no torso momentum. <b>Builds:</b> back thickness with no lower-back strain, and the support forces good scapular position."},
-      {key:"l2-shrug", name:"Behind-the-back barbell shrugs", sets:"4\u00d712", rir:"1 RIR",
-       desc:"Bar behind you at arm's length, shrug straight up, pause, lower slowly. <b>Builds:</b> upper traps from a different angle than standard shrugs \u2014 the two shrug variations together are what thicken the neck-to-shoulder line."},
+      {key:"l2-shrug", name:"Behind-the-back barbell shrugs", sets:"3\u00d712", rir:"1 RIR",
+       desc:"Bar behind you at arm's length, shrug straight up, pause, lower slowly. Three sets rather than four because the farmer's carries below load the traps heavily too. <b>Builds:</b> upper traps from a different angle than standard shrugs \u2014 the two shrug variations together are what thicken the neck-to-shoulder line."},
       {key:"l2-hammer", name:"Hammer curls", sets:"3\u00d710\u201312", rir:"0\u20131 RIR",
        desc:"Palms face each other throughout, elbows fixed at your sides. <b>Builds:</b> biceps plus the brachialis, which pushes the bicep up and makes the arm look thicker from the side."},
+      {key:"l2-carry", name:"Farmer's carry", sets:"3\u00d740 sec", rir:"grip failure",
+       desc:"Heavy dumbbells at your sides, walk with your ribs down and shoulders pulled back \u2014 don't let the weight round you forward. Log the dumbbell weight. <b>Builds:</b> grip and forearms, plus a heavy static load on the upper traps. Two of your priorities in one exercise, which is why it earns a slot on a tight hour."},
       {key:"l2-pallof", name:"Pallof press", sets:"3\u00d712/side", rir:"0\u20131 RIR", nolog:true,
        desc:"Stand side-on to a cable at chest height, hold the handle at your sternum, press it straight out and resist the pull that wants to rotate you. Ribs down, glutes lightly squeezed. <b>Builds:</b> anti-rotation core \u2014 the bracing pattern that holds your pelvis neutral when you're standing and walking, not just when you're on the floor."}
     ]
@@ -505,15 +511,25 @@ var REFERENCE = [
         "<dt>60–90 s</dt><dd>Rows, shrugs, close-grip bench, back extensions</dd>" +
         "<dt>45–60 s</dt><dd>Lateral raises, rear delt flyes, face pulls, curls, calves</dd>" +
       "</dl>" +
-      "<p>Resting less than this to save time mostly costs you reps on the next set, which is the thing you're trying to increase. If you're short on time, cut an exercise rather than the rest.</p><p><b>Sizing for an hour:</b> each day is 6–7 exercises, roughly 19–22 working sets, plus 6–8 minutes of prep. That lands near 55–60 minutes at the rest times above. The finisher is the buffer — do it when you have the time, drop it when you don't.</p>"
+      "<p>Resting less than this to save time mostly costs you reps on the next set, which is the thing you're trying to increase. If you're short on time, cut an exercise rather than the rest.</p><p><b>Sizing for an hour:</b> each day is 6–7 exercises, roughly 21–22 working sets, plus 6–8 minutes of prep. The forearm work costs very little — wrist curls, reverse curls and carries all run on short rests and take about four minutes each. The finisher is the buffer: do it when you have the time, drop it when you don't.</p>"
   },
   {
-    title:"Eating for this",
+    title:"Eating to build the size you want",
     body:
-      "<p>You're lean, and the shoulders and traps you want are built from added muscle — which needs material to build from. A <b>slight surplus</b>, roughly 200–300 calories above maintenance, is enough. Bigger surpluses mostly add fat, not speed.</p>" +
-      "<p><b>Protein: roughly 0.7–1 g per pound of bodyweight per day.</b> This is the single dietary variable that matters most for muscle gain, and the one most people under-hit.</p>" +
-      "<p>Rough expectations for someone past their first year of training: <b>0.25–0.5 lb of bodyweight per week</b>. Faster than that is mostly fat. If the scale hasn't moved in three weeks, add ~150 calories a day and reassess.</p>" +
-      "<p>You're already tracking calories, so this is a target change rather than a habit change.</p>"
+      "<p><b>This is the lever that matters most</b>, and it is not close. The programme is good now; without a surplus it will still produce very little. Muscle is built from material you have to supply.</p>" +
+      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>The numbers</h4>" +
+      "<dl class='kv'>" +
+        "<dt>+250\u2013350 kcal</dt><dd>Above maintenance, daily. Bigger surpluses add fat, not speed.</dd>" +
+        "<dt>0.7\u20131 g/lb</dt><dd>Protein per pound of bodyweight, daily. The most commonly under-hit target.</dd>" +
+        "<dt>0.25\u20130.5 lb</dt><dd>Bodyweight gain per week. Faster than 0.75/week is mostly fat.</dd>" +
+        "<dt>6\u20139 months</dt><dd>How long to hold it before judging the result.</dd>" +
+      "</dl>" +
+      "<p><b>Adjusting:</b> if the scale hasn't moved in three weeks, add 150 kcal a day. If it's climbing faster than 0.75 lb a week, take 150 back off. Weigh yourself the same time each morning and use the weekly average \u2014 daily readings swing several pounds on water alone and will make you chase noise.</p>" +
+      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>On gaining fat to cover the bone</h4>" +
+      "<p>It doesn't work the way it sounds like it should. Men store fat abdominally first, then lower back and chest. <b>The area over the collarbone and the trap\u2013delt junction is among the last places fat goes and the first it leaves</b> \u2014 you'd add an inch to your waist before a millimetre lands there.</p>" +
+      "<p>What covers that area is muscle: the delt and upper trap sit directly on top of it. Some fat gain will come along with the surplus and will soften the overall look a little, which is fine and normal. But it's a side effect of eating to grow, not the mechanism.</p>" +
+      "<h4 style='margin:14px 0 7px;font-size:13px;color:#E6E8EA;'>If eating more is the hard part</h4>" +
+      "<p>Lean people who struggle to gain almost always eat less than they think they do. Calorie density beats volume: olive oil on cooked food, whole milk instead of skim, nuts and nut butter, rice over lower-calorie sides, a shake with oats and peanut butter on days you're short. You have to eat past comfortable, at least at first.</p>"
   },
   {
     title:"Recovery, soccer and sleep",
@@ -545,10 +561,19 @@ var REFERENCE = [
   {
     title:"What this plan prioritises \u2014 and what it costs",
     body:
-      "<p>Weekly sets, aimed where you asked: <b>lateral delts 8, rear delts 10</b> (flyes plus face pulls), <b>traps 8</b> from two shrug angles, <b>back 13, abs 12, chest 7, arms 12</b> split between biceps and triceps. <b>Legs 6</b> \u2014 maintenance.</p>" +
+      "<p>Weekly sets, aimed where you asked: <b>lateral delts 8, rear delts 10</b> (flyes plus face pulls), <b>traps 8</b> from two shrug angles, <b>back 13, abs 12, chest 7, arms 15</b> across biceps, triceps and forearms. <b>Legs 6</b> \u2014 maintenance.</p>" +
       "<p><b>The honest trade:</b> one leg press and one RDL a week is enough to hold roughly what you have, not to build. Over a year your upper body will pull visibly ahead of your legs. That is a real aesthetic outcome, not a neutral one \u2014 worth knowing you chose it rather than discovering it later.</p>" +
       "<p><b>The two leg exercises that stayed are not negotiable for your goals.</b> Romanian deadlifts and the glute bridges in prep are the only glute and hamstring work left, and weak glutes with tight hip flexors are the usual engine of anterior pelvic tilt. Drop those and the tilt work becomes stretching alone, which rarely holds.</p>" +
       "<p>If you later want legs to grow rather than hold, the cheapest addition is a second leg press on Push 1 \u2014 it costs about eight minutes and nothing else has to move.</p>"
+  },
+  {
+    title:"Forearms",
+    body:
+      "<p>Three additions cover this: <b>reverse curls</b> on Pull 1, <b>farmer's carries</b> on Pull 2, and <b>wrist curls</b> on Push 1. That's forearm work three days a week, which they tolerate easily \u2014 forearms recover fast and respond to frequency more than to heavy single sessions.</p>" +
+      "<p><b>Stop using straps</b> on rows, shrugs and pull-ups unless grip is genuinely the only thing ending the set. Every set you hold without straps is free forearm volume you're otherwise paying an exercise to replace.</p>" +
+      "<p><b>Dead hangs</b> are a free extra: after your last pull-up set, just hang from the bar until you drop off. Thirty to sixty seconds, twice. Also decompresses the shoulders.</p>" +
+      "<p>Expect small weights and a lot of reps. Reverse curls with 30\u201340 lb will feel humbling after curling twice that \u2014 that's normal, the leverage is completely different, and loading them heavy just turns them into a swinging exercise that trains nothing.</p>" +
+      "<p><b>One honest limit:</b> forearm shape is heavily influenced by muscle-belly length and tendon insertion, which is genetic. You can add real size \u2014 most people who train them never do \u2014 but if you have long tendons and short bellies they'll stay comparatively slim regardless. Measure against your own before-photos, not against someone else's arms.</p>"
   },
   {
     title:"Changing exercises",
