@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Push / Pull Routine</title>
+<meta name="theme-color" content="#17181A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Push / Pull">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#17181A;
+    --surface:#1F2022;
+    --surface2:#25272A;
+    --line:#34363A;
+    --text:#EDEAE2;
+    --muted:#9A968D;
+    --accent:#B5502F;
+    --prep:#5D7A8C;
+    --next:#C89B4A;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:'Inter',sans-serif;padding:28px 16px 60px;
+  }
+  .wrap{max-width:880px;margin:0 auto;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin:0 0 6px;
+  }
+  h1{
+    font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,8vw,58px);
+    letter-spacing:0.02em;line-height:0.95;margin:0 0 8px;
+  }
+  .hint{color:var(--muted);font-size:13px;margin:0 0 20px;line-height:1.55;}
+
+  .upnext{
+    background:var(--surface);border:1px solid var(--line);
+    border-left:3px solid var(--next);border-radius:10px;
+    padding:14px 18px;margin-bottom:22px;
+  }
+  .upnext .lbl{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    letter-spacing:0.14em;text-transform:uppercase;color:var(--next);
+    display:block;margin-bottom:4px;
+  }
+  .upnext .val{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.03em;}
+  .upnext .sub{font-size:12.5px;color:var(--muted);margin-top:3px;}
+
+  .day{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:14px;margin-bottom:14px;overflow:hidden;
+  }
+  .day.is-next{border-color:rgba(200,155,74,0.5);}
+  .day-head{
+    width:100%;background:none;border:none;color:inherit;
+    padding:16px 20px;display:flex;justify-content:space-between;
+    align-items:center;gap:12px;cursor:pointer;text-align:left;font-family:inherit;
+  }
+  .day-head:hover{background:var(--surface2);}
+  .day-head:focus-visible{outline:2px solid var(--accent);outline-offset:-3px;}
+  .head-left{display:flex;flex-direction:column;gap:3px;}
+  .head-left h2{
+    font-family:'Bebas Neue',sans-serif;font-size:25px;
+    letter-spacing:0.03em;margin:0;line-height:1;
+  }
+  .day-tag{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;
+  }
+  .head-right{display:flex;align-items:center;gap:12px;flex:none;}
+  .lastdone{
+    font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--muted);text-align:right;line-height:1.35;
+  }
+  .lastdone .ago{color:var(--next);display:block;}
+  .chev{
+    flex:none;width:11px;height:11px;border-right:2px solid var(--muted);
+    border-bottom:2px solid var(--muted);transform:rotate(45deg);
+    transition:transform .22s ease;
+  }
+  .day.open .chev{transform:rotate(-135deg);}
+  .day-body{display:none;border-top:1px solid var(--line);}
+  .day.open .day-body{display:block;}
+
+  .datebar{
+    display:flex;flex-wrap:wrap;align-items:center;gap:9px;
+    padding:13px 20px;background:var(--surface2);
+    border-bottom:1px solid var(--line);
+  }
+  .datebar label{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);
+  }
+  .datebar input{
+    background:var(--bg);border:1px solid var(--line);color:var(--text);
+    border-radius:6px;padding:6px 9px;
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color-scheme:dark;
+  }
+  .datebar input:focus{outline:1.5px solid var(--accent);}
+  .datebar button{
+    border:none;border-radius:6px;padding:7px 12px;cursor:pointer;
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    letter-spacing:0.06em;text-transform:uppercase;
+  }
+  .btn-today{background:var(--accent);color:#fff;}
+  .btn-save{background:var(--surface);color:var(--text);border:1px solid var(--line);}
+  .datebar button:hover{filter:brightness(1.15);}
+  .datebar button:focus-visible{outline:2px solid var(--text);outline-offset:2px;}
+  .msg{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);width:100%;}
+
+  .block-label{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    letter-spacing:0.14em;text-transform:uppercase;
+    padding:13px 20px 4px;color:var(--prep);
+  }
+  .block-label.main{color:var(--accent);}
+  .block-sub{
+    font-family:'Inter',sans-serif;font-size:12px;color:var(--muted);
+    padding:0 20px 6px;letter-spacing:0;text-transform:none;line-height:1.5;
+  }
+
+  .ex{padding:12px 20px 14px;border-bottom:1px solid var(--line);}
+  .ex:last-of-type{border-bottom:none;}
+  .ex.prep{background:rgba(93,122,140,0.07);}
+  .ex-top{
+    display:flex;justify-content:space-between;align-items:baseline;
+    gap:12px;margin-bottom:5px;
+  }
+  .ex-name{font-size:15px;font-weight:600;}
+  .ex-meta{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;
+    color:var(--accent);white-space:nowrap;flex:none;text-align:right;
+  }
+  .ex-meta .rir{display:block;font-size:10.5px;color:var(--muted);margin-top:2px;}
+  .ex.prep .ex-meta{color:var(--prep);}
+  .ex-desc{font-size:13px;line-height:1.55;color:var(--muted);margin:0;}
+  .ex-desc b{color:var(--text);font-weight:600;}
+
+  .finisher{
+    padding:13px 20px 17px;border-top:1px solid var(--line);
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);
+  }
+  .finisher b{color:var(--text);font-weight:600;}
+
+  .note{
+    background:var(--surface);border:1px solid var(--line);
+    border-left:3px solid var(--prep);border-radius:10px;
+    padding:16px 18px;margin-top:24px;
+  }
+  .note h3{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:0.03em;margin:0 0 7px;}
+  .note p{font-size:13px;line-height:1.6;color:var(--muted);margin:0 0 8px;}
+  .note p:last-child{margin-bottom:0;}
+  @media (max-width:520px){ .lastdone{font-size:10px;} }
+  @media (prefers-reduced-motion:reduce){.chev{transition:none;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Training Split — 4 Day Rotation</p>
+  <h1>Push / Pull</h1>
+  <p class="hint">Tap a day to open it. Set the date you last did each one — whichever has gone longest shows up as next.</p>
+
+  <div class="upnext">
+    <span class="lbl">Up Next</span>
+    <div class="val" id="next-val">—</div>
+    <div class="sub" id="next-sub">Set your last-done dates to get a suggestion.</div>
+  </div>
+
+  <div id="days"></div>
+
+  <div class="note">
+    <h3>Reading the RIR numbers</h3>
+    <p><b>RIR = reps in reserve</b> — how many more reps you could have done when you racked the weight. <b>2 RIR</b> means you stopped with two clean reps left in the tank. <b>0 RIR</b> means you went to the point where another rep wasn't happening with good form.</p>
+    <p>Heavy compounds sit at 2 RIR: going to failure on overhead press or leg press costs a lot of recovery and adds injury risk for little extra growth. Isolation work — lateral raises, rear delt flyes, curls, calves — can safely run at 0–1 RIR, and that's where you should feel like you emptied the tank.</p>
+    <p>If you're consistently hitting the top of the rep range at your target RIR, add weight. If you're missing the bottom of the range, the weight's too heavy.</p>
+  </div>
+
+  <div class="note">
+    <h3>Progression</h3>
+    <p><b>Double progression:</b> stay at the same weight until you hit the top of the rep range on every set at target RIR, then add weight and start back at the bottom. Leg press might jump 10–20 lb; lateral raises will be 2.5–5 lb, and that's normal.</p>
+    <p><b>Deload every 6–8 weeks:</b> one week at roughly 60% of your usual weights. Joints and connective tissue recover slower than muscle.</p>
+    <p><b>Do the hip flexor stretch daily, not just on gym days.</b> Highest-leverage thing here for the tilt — twice a week won't outpace sitting the rest of the time.</p>
+  </div>
+</div>
+
+<script>
+const ROUTINE = [
+  {
+    id:"push1", name:"Push 1", tag:"Chest / Shoulders / Quads", finisher:"Sled Push",
+    prep:[
+      {name:"Band Pull-Aparts", sets:"2×20",
+       desc:"Band at chest height, arms straight, pull it apart until your hands are wide and your shoulder blades pinch. <b>Why:</b> wakes up the rear delts and mid-traps before pressing, countering the forward-rounded position."},
+      {name:"Doorway Pec Stretch", sets:"2×30 sec/side",
+       desc:"Forearm on a doorframe at shoulder height, step through gently until you feel a stretch across the front of the chest. <b>Why:</b> tight pecs pull the shoulders forward."},
+      {name:"Kneeling Hip Flexor Stretch", sets:"2×30 sec/side",
+       desc:"Half-kneeling, squeeze the back-leg glute and tuck your pelvis under before leaning forward. The glute squeeze is what makes it work. <b>Why:</b> tight hip flexors pull the pelvis into the forward tilt."}
+    ],
+    ex:[
+      {name:"Incline Barbell or Dumbbell Press", sets:"4×6–8", rir:"2 RIR",
+       desc:"Bench at 30–45°. Lower under control to upper chest, elbows around 45° from your torso, press back up. <b>Builds:</b> upper chest and front delt."},
+      {name:"Seated Dumbbell Shoulder Press", sets:"3×8–10", rir:"2 RIR",
+       desc:"Press dumbbells overhead from shoulder height, back flat against the pad so you're not arching to move the weight. <b>Builds:</b> front and side delts — second overhead exposure of the week."},
+      {name:"Lateral Raises", sets:"4×12–15", rir:"0–1 RIR",
+       desc:"Raise arms out to shoulder height leading with the elbows, slight bend held throughout, lower slowly rather than dropping. Take the last set to the point where form starts breaking. <b>Builds:</b> lateral delt — shoulder width and cap."},
+      {name:"Cable Fly", sets:"3×12–15", rir:"0–1 RIR",
+       desc:"Slight elbow bend locked in place, sweep hands together in an arc and squeeze at the center. <b>Builds:</b> chest isolation."},
+      {name:"Leg Press — quad setup", sets:"4×8–12", rir:"2 RIR",
+       desc:"Feet mid-platform, shoulder width. Lower until your knees reach roughly 90°, stopping before your hips curl off the seat. Drive through mid-foot, don't slam the knees straight at the top. Leave 2 reps in the tank — leg press to true failure is where people get pinned or round their back. <b>Builds:</b> quads primarily. This is the heavy day."},
+      {name:"Standing Calf Raise", sets:"3×12–15", rir:"0–1 RIR",
+       desc:"Full stretch at the bottom, pause a beat at the top rather than bouncing. <b>Builds:</b> calves."},
+      {name:"Rope Pushdown", sets:"3×12–15", rir:"0–1 RIR",
+       desc:"Elbows pinned to your sides the whole set, push down and let the rope split slightly at the bottom. <b>Builds:</b> triceps."},
+      {name:"Dead Bug", sets:"3×10/side", rir:"quality over reps",
+       desc:"On your back, lower back pressed flat into the floor, extend opposite arm and leg slowly without letting your back arch off the ground. Stop the set when your back lifts — that's the real endpoint, not a rep count. <b>Builds:</b> deep core control for a neutral pelvis."}
+    ]
+  },
+  {
+    id:"push2", name:"Push 2", tag:"Shoulders / Traps / Glutes", finisher:"Sled Push",
+    priority:"Delts lead today. Lateral raises and rear delt flyes come first so your target muscles get your freshest effort — overhead press will feel lighter than usual as a result, and that's the intended trade.",
+    prep:[
+      {name:"Band Pull-Aparts", sets:"2×20",
+       desc:"Arms straight, pull the band apart until your shoulder blades pinch. <b>Why:</b> primes the rear delts and mid-traps before shoulder work."},
+      {name:"Thoracic Extension over Foam Roller", sets:"2×8 reps",
+       desc:"Roller across your upper back, hands supporting your head, extend backward over it and hold briefly. Keep your ribs from flaring. <b>Why:</b> restores upper-back extension, usually stiff with rounded shoulders."},
+      {name:"Glute Bridge", sets:"2×15",
+       desc:"On your back, feet flat, drive through your heels and squeeze your glutes at the top without arching your lower back. <b>Why:</b> gets the glutes firing so they contribute during the session."}
+    ],
+    ex:[
+      {name:"Lateral Raises", sets:"4×12–15", rir:"0–1 RIR",
+       desc:"Lead with elbows, control the negative, stop at shoulder height. First movement of the day — this is where you should feel the most burn of the week. <b>Builds:</b> lateral delt — width and cap."},
+      {name:"Rear Delt Flyes", sets:"4×15", rir:"0–1 RIR",
+       desc:"Hinge forward at the hips or lie chest-down on an incline bench, raise dumbbells out to the sides and squeeze your shoulder blades at the top. <b>Builds:</b> rear delt — fills the groove behind the shoulder cap and pulls the shoulders back into line."},
+      {name:"Overhead Press", sets:"4×6–8", rir:"2 RIR",
+       desc:"Bar at collarbone height, press straight overhead without excessively arching your back — brace your abs and tuck your ribs down. Expect to use less weight than on a fresh day; match the rep range, not your old numbers. <b>Builds:</b> front and side delts."},
+      {name:"Dumbbell Shrugs", sets:"4×12", rir:"1 RIR",
+       desc:"Shrug straight up toward your ears (don't roll your shoulders), pause at the top, lower slowly. <b>Builds:</b> upper traps — neck-to-shoulder mass."},
+      {name:"Leg Press — glute setup", sets:"3×10–15", rir:"2 RIR",
+       desc:"Same machine, feet placed <b>high on the platform and slightly wider</b>, toes turned out a touch. Go as deep as you can without your hips curling off the seat, drive through your heels. Lighter than Push 1 — the point is the stretch and glute contraction, not maximum load. <b>Builds:</b> glutes and hamstrings."},
+      {name:"Close-Grip Bench or Dips", sets:"3×8–10", rir:"1–2 RIR",
+       desc:"Elbows tucked close to your torso throughout. <b>Builds:</b> triceps, secondary chest and front delt."},
+      {name:"Plank", sets:"3×30–45 sec", rir:"quality over time",
+       desc:"Forearms down, pelvis tucked slightly under so your lower back is flat, glutes squeezed. End the set when your hips start to sag, not at the clock. <b>Builds:</b> anti-extension core strength."}
+    ]
+  },
+  {
+    id:"pull1", name:"Pull 1", tag:"Back / Biceps / Hamstrings", finisher:"Rowing Machine",
+    prep:[
+      {name:"Band Pull-Aparts", sets:"2×20",
+       desc:"Pull apart until your shoulder blades pinch. <b>Why:</b> primes the rear delts and mid-traps."},
+      {name:"90/90 Hip Stretch", sets:"2×30 sec/side",
+       desc:"Seated with one leg bent in front at 90° and one behind at 90°, lean gently over the front leg. <b>Why:</b> opens the hips that pull the pelvis forward."},
+      {name:"Prone Y-Raise", sets:"2×12",
+       desc:"Face-down on a bench or the floor, arms overhead in a Y, lift them a few inches using only your upper back. Light or no weight. <b>Why:</b> strengthens lower traps, typically weak with rounded shoulders."}
+    ],
+    ex:[
+      {name:"Romanian Deadlift", sets:"4×8–10", rir:"2–3 RIR",
+       desc:"Bar close to your legs, push your hips back with a flat back until you feel a hamstring stretch, then drive your hips forward to stand and squeeze the glutes. Stop well short of failure — form degrades fast here and it's your lower back that pays. <b>Builds:</b> hamstrings and glutes; your main glute builder now, so don't skip it."},
+      {name:"Lat Pulldown", sets:"3×10–12", rir:"1–2 RIR",
+       desc:"Pull the bar to your upper chest leading with elbows down and back, don't lean back excessively to cheat the weight. <b>Builds:</b> lats — back width."},
+      {name:"Face Pulls", sets:"3×15–20", rir:"0–1 RIR",
+       desc:"Rope at upper chest or head height, pull toward your face flaring your elbows out wide, squeeze your shoulder blades at the end. <b>Builds:</b> rear delt and upper/mid traps — best single exercise for both the shoulder groove and rounded posture."},
+      {name:"Seated Cable Row", sets:"3×10–12", rir:"1–2 RIR",
+       desc:"Back upright and straight, pull the handle to your torso, squeeze your shoulder blades, control the return. <b>Builds:</b> mid-back thickness — directly opposes the forward-rounded position."},
+      {name:"Leg Curl", sets:"3×12", rir:"0–1 RIR",
+       desc:"Controlled through the full range, no jerking at the bottom. <b>Builds:</b> hamstrings, isolated from the hips."},
+      {name:"Barbell or Dumbbell Curl", sets:"3×10–12", rir:"0–1 RIR",
+       desc:"Elbows pinned to your sides, no torso swing, control the lowering. <b>Builds:</b> biceps."}
+    ]
+  },
+  {
+    id:"pull2", name:"Pull 2", tag:"Back / Traps / Posterior Chain", finisher:"Rowing Machine (swap in Ski Erg anytime)",
+    priority:"Rear delts move up today too — flyes come before shrugs and rows so they're not always last in line.",
+    prep:[
+      {name:"Band Pull-Aparts", sets:"2×20",
+       desc:"Pull apart until your shoulder blades pinch. <b>Why:</b> primes the rear delts and mid-traps."},
+      {name:"Thoracic Extension over Foam Roller", sets:"2×8 reps",
+       desc:"Extend backward over the roller placed across your upper back, ribs kept down. <b>Why:</b> restores upper-back mobility for the rounded shoulders."},
+      {name:"Kneeling Hip Flexor Stretch", sets:"2×30 sec/side",
+       desc:"Half-kneeling, squeeze the back-leg glute and tuck your pelvis before leaning forward. <b>Why:</b> lengthens the hip flexors pulling your pelvis into the tilt."}
+    ],
+    ex:[
+      {name:"Pull-ups (weighted if possible)", sets:"4×6–10", rir:"1–2 RIR",
+       desc:"Pull until your chin clears the bar, lower under control to a full stretch. <b>Builds:</b> lat width and overall back strength."},
+      {name:"Rear Delt Flyes or Reverse Pec-Deck", sets:"3×15", rir:"0–1 RIR",
+       desc:"Slight elbow bend held throughout, squeeze at the end of the range rather than swinging the weight up. Moved up the order so it gets real effort. <b>Builds:</b> rear delt — second dedicated exposure of the week."},
+      {name:"Chest-Supported Row", sets:"3×10–12", rir:"1–2 RIR",
+       desc:"Chest braced against an incline bench or pad, row your elbows back and squeeze the shoulder blades, no torso momentum. <b>Builds:</b> back thickness with no lower-back strain, and the support forces good scapular position."},
+      {name:"Behind-the-Back Barbell Shrugs", sets:"4×12", rir:"1 RIR",
+       desc:"Bar behind you at arm's length, shrug straight up, pause, lower slowly. <b>Builds:</b> upper traps from a different angle than standard shrugs."},
+      {name:"Back Extension (glute-focused)", sets:"3×12–15", rir:"2 RIR",
+       desc:"Round your upper back slightly and tuck your chin, then extend using your glutes rather than arching your lower back. Stop at a straight line — don't hyperextend. <b>Builds:</b> glutes and hamstrings without reinforcing the arch."},
+      {name:"Seated Calf Raise", sets:"3×15", rir:"0–1 RIR",
+       desc:"Full stretch at the bottom, pause at the top. Seated hits the soleus, which the standing version on Push 1 mostly misses. <b>Builds:</b> calves."},
+      {name:"Hammer Curls", sets:"3×10–12", rir:"0–1 RIR",
+       desc:"Palms face each other throughout, elbows fixed at your sides. <b>Builds:</b> biceps and brachialis."}
+    ]
+  }
+];
+
+const KEY = "pushpull-dates";
+let dates = {};
+
+function todayISO(){
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function parseLocal(iso){
+  const [y,m,d] = iso.split("-").map(Number);
+  return new Date(y, m-1, d);
+}
+function daysAgo(iso){
+  return Math.round((parseLocal(todayISO()) - parseLocal(iso))/86400000);
+}
+function agoText(iso){
+  const n = daysAgo(iso);
+  if(n === 0) return "today";
+  if(n === 1) return "yesterday";
+  if(n < 0) return "scheduled";
+  return `${n} days ago`;
+}
+function prettyDate(iso){
+  return parseLocal(iso).toLocaleDateString(undefined,{month:"short",day:"numeric"});
+}
+
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    dates = raw ? JSON.parse(raw) : {};
+  }catch(e){ dates = {}; }
+  render();
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(dates)); return true; }
+  catch(e){ return false; }
+}
+
+function updateNext(){
+  const done = ROUTINE.filter(d => dates[d.id]);
+  const valEl = document.getElementById("next-val");
+  const subEl = document.getElementById("next-sub");
+  document.querySelectorAll(".day").forEach(el => el.classList.remove("is-next"));
+
+  const never = ROUTINE.filter(d => !dates[d.id]);
+  let pick;
+  if(never.length){
+    pick = never[0];
+    valEl.textContent = pick.name;
+    subEl.textContent = "Not logged yet — start here.";
+  }else if(done.length){
+    pick = done.reduce((a,b) => daysAgo(dates[a.id]) >= daysAgo(dates[b.id]) ? a : b);
+    valEl.textContent = pick.name;
+    subEl.textContent = `Last done ${agoText(dates[pick.id])} — longest since your last session.`;
+  }else{
+    valEl.textContent = "—";
+    subEl.textContent = "Set your last-done dates to get a suggestion.";
+    return;
+  }
+  const el = document.querySelector(`.day[data-id="${pick.id}"]`);
+  if(el) el.classList.add("is-next");
+}
+
+function lastDoneHTML(id){
+  if(!dates[id]) return `<span class="lastdone">not logged</span>`;
+  return `<span class="lastdone">${prettyDate(dates[id])}<span class="ago">${agoText(dates[id])}</span></span>`;
+}
+
+function render(){
+  const root = document.getElementById("days");
+  root.innerHTML = "";
+  ROUTINE.forEach(day=>{
+    const el = document.createElement("section");
+    el.className = "day";
+    el.dataset.id = day.id;
+    const exHtml = (arr, isPrep) => arr.map(x=>`
+      <div class="ex${isPrep?" prep":""}">
+        <div class="ex-top">
+          <span class="ex-name">${x.name}</span>
+          <span class="ex-meta">${x.sets}${x.rir?`<span class="rir">${x.rir}</span>`:""}</span>
+        </div>
+        <p class="ex-desc">${x.desc}</p>
+      </div>`).join("");
+
+    el.innerHTML = `
+      <button class="day-head" aria-expanded="false">
+        <span class="head-left">
+          <h2>${day.name}</h2>
+          <span class="day-tag">${day.tag}</span>
+        </span>
+        <span class="head-right">
+          ${lastDoneHTML(day.id)}
+          <span class="chev"></span>
+        </span>
+      </button>
+      <div class="day-body">
+        <div class="datebar">
+          <label for="d-${day.id}">Last done</label>
+          <input id="d-${day.id}" type="date" value="${dates[day.id]||""}">
+          <button class="btn-save">Save</button>
+          <button class="btn-today">Did it today</button>
+          <span class="msg"></span>
+        </div>
+        <div class="block-label">Prep — Posture &amp; Hips · 6–8 min</div>
+        ${exHtml(day.prep, true)}
+        <div class="block-label main">Main Work</div>
+        ${day.priority?`<p class="block-sub">${day.priority}</p>`:""}
+        ${exHtml(day.ex, false)}
+        <div class="finisher">Finisher — <b>${day.finisher}</b></div>
+      </div>`;
+
+    const head = el.querySelector(".day-head");
+    head.addEventListener("click",()=>{
+      const open = el.classList.toggle("open");
+      head.setAttribute("aria-expanded", open);
+    });
+
+    const input = el.querySelector("input[type=date]");
+    const msg = el.querySelector(".msg");
+
+    function commit(iso){
+      if(!iso){ msg.textContent = "Pick a date first."; return; }
+      dates[day.id] = iso;
+      const ok = save();
+      msg.textContent = ok ? "Saved." : "Could not save - check browser storage settings.";
+      el.querySelector(".lastdone").outerHTML = lastDoneHTML(day.id);
+      updateNext();
+      setTimeout(()=>{ msg.textContent = ""; }, 1600);
+    }
+
+    el.querySelector(".btn-save").addEventListener("click", e=>{
+      e.stopPropagation(); commit(input.value);
+    });
+    el.querySelector(".btn-today").addEventListener("click", e=>{
+      e.stopPropagation(); input.value = todayISO(); commit(input.value);
+    });
+
+    root.appendChild(el);
+  });
+  updateNext();
+}
+
+load();
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  });
+}
+</script>
+</body>
+</html>

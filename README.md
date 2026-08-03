@@ -1,0 +1,54 @@
+# Push / Pull Routine
+
+A single-page workout reference: collapsible days, form cues, RIR targets, and last-done date tracking with a "what's next" suggestion.
+
+## Deploying to GitHub Pages
+
+1. Create a new repo on GitHub (public — Pages requires public on the free tier).
+2. Upload every file in this folder to the repo root:
+   - `index.html`
+   - `manifest.webmanifest`
+   - `sw.js`
+   - `icon-192.png`, `icon-512.png`, `apple-touch-icon.png`
+3. In the repo, go to **Settings → Pages**.
+4. Under **Source**, choose **Deploy from a branch**, pick `main` and the `/ (root)` folder, then Save.
+5. Wait a minute or two. Your URL will be:
+   `https://<your-username>.github.io/<repo-name>/`
+
+## Adding it to your phone's home screen
+
+**iPhone (Safari — must be Safari, not Chrome):**
+Open the URL → Share button → Add to Home Screen.
+
+**Android (Chrome):**
+Open the URL → menu (⋮) → Add to Home screen / Install app.
+
+It opens fullscreen with no browser bar, like a normal app.
+
+## Offline
+
+The service worker caches the page after the first visit, so it works without signal at the gym. It checks the network first, so when you push an update you get the new version as soon as you have a connection.
+
+## Updating the routine
+
+The workout data is the `ROUTINE` array near the top of the `<script>` block in `index.html`. Each day looks like:
+
+```js
+{
+  id:"push1",
+  name:"Push 1",
+  tag:"Chest / Shoulders / Quads",
+  finisher:"Sled Push",
+  priority:"optional note shown above the main work",
+  prep:[ {name, sets, desc}, ... ],
+  ex:[ {name, sets, rir, desc}, ... ]
+}
+```
+
+Edit, commit, push. The page updates on your next visit with signal.
+
+If you change `sw.js` or want to force a refresh for cached visitors, bump the `CACHE` version string (`pushpull-v1` → `pushpull-v2`).
+
+## Your logged dates
+
+Dates are stored in the browser's `localStorage` under the key `pushpull-dates`. They live on that specific device and browser — they are not synced across devices, and clearing site data will erase them. Nothing is uploaded anywhere.
