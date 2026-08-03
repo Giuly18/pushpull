@@ -269,6 +269,38 @@
   }
   .finisher b{color:var(--chalk);font-weight:500;}
 
+  /* ---------------- daily mobility ---------------- */
+  .daily{margin-top:34px;}
+  .day[data-kind="am"] .stripe{background:var(--yellow);}
+  .day[data-kind="pm"] .stripe{background:#7C6BA8;}
+  .done-badge{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;
+    padding:4px 8px;border-radius:100px;white-space:nowrap;
+    border:1px solid var(--hairline);color:var(--steel-dim);
+  }
+  .done-badge.on{
+    background:rgba(95,167,119,0.14);border-color:rgba(95,167,119,0.4);color:var(--green);
+  }
+  .streak{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--steel-dim);
+  }
+  .streak b{color:var(--yellow);font-weight:600;}
+  .mob-bar{
+    padding:14px var(--pad);background:var(--plate-2);
+    border-bottom:1px solid var(--hairline);
+    display:flex;flex-wrap:wrap;align-items:center;gap:10px;
+  }
+  .mob-note{
+    padding:14px var(--pad) 0;font-size:12.5px;color:var(--steel);line-height:1.6;margin:0;
+  }
+  .mob-note b{color:var(--chalk);}
+  .cue{
+    margin-top:9px;padding:9px 11px;background:var(--iron);
+    border-left:2px solid var(--yellow);border-radius:0 8px 8px 0;
+    font-size:12.5px;line-height:1.55;color:var(--steel);
+  }
+  .cue b{color:var(--chalk);font-weight:600;}
+
   /* ---------------- reference accordion ---------------- */
   .ref{margin-top:34px;}
   .ref-head{
@@ -342,13 +374,19 @@
 
   <div id="days"></div>
 
+  <section class="daily">
+    <h2 class="ref-head">Daily mobility</h2>
+    <p class="ref-intro">Every day, not just gym days. Tick each one off &mdash; the streak resets if you miss a day.</p>
+    <div id="mobility"></div>
+  </section>
+
   <section class="ref">
     <h2 class="ref-head">Reference</h2>
     <p class="ref-intro">Everything that isn't the workout itself. Open what you need.</p>
     <div id="cards"></div>
   </section>
 
-  <p class="footnote">Your sets and dates are stored on this device only — no account, nothing uploaded. Clearing browser data for this site erases them.</p>
+  <p class="footnote">Your sets, dates and mobility ticks are stored on this device only — no account, nothing uploaded. Clearing browser data for this site erases them.</p>
 </div>
 
 <script>
@@ -550,6 +588,19 @@ var REFERENCE = [
       "<p>Signs you're under-recovering rather than just tired: weights going backward for two sessions running, joints aching before you start, sleep getting worse, motivation dropping off a cliff. The answer is a deload week, not pushing harder.</p>"
   },
   {
+    title:"Why stretching alone won't fix the tilt",
+    body:
+      "<p>Anterior pelvic tilt is usually two problems at once: <b>hip flexors that are short</b> and <b>glutes, hamstrings and deep core that are weak</b>. Stretching only addresses the first half. That's why most people who try to stretch their way out of it get temporary relief and no lasting change \u2014 they lengthen the tissue, then spend the next eight hours letting it shorten again because nothing is holding the new position.</p>" +
+      "<p>You have both halves covered, which is the reason this should work where stretch-only attempts don't:</p>" +
+      "<ul>" +
+        "<li><b>Lengthening</b> \u2014 daily kneeling hip flexor stretch, 90/90, couch stretch. The evening block.</li>" +
+        "<li><b>Strengthening</b> \u2014 Romanian deadlifts and glute bridges for the posterior chain; dead bugs, planks and the Pallof press for the deep core that holds the pelvis neutral.</li>" +
+        "<li><b>Position awareness</b> \u2014 the morning block, and catching yourself standing hips-forward during the day.</li>" +
+      "</ul>" +
+      "<p><b>On timing:</b> don't do long static holds right before you lift. Twenty to thirty seconds is fine as part of a warm-up, but holds over a minute temporarily reduce force output. That's exactly why the long work sits in the evening block and the gym prep stays short.</p>" +
+      "<p><b>Timeline:</b> range of motion improves within weeks, but a genuine change in resting posture takes months and is usually partial. Some pelvic tilt is normal and healthy \u2014 the goal is moving out of the extreme, not achieving a perfectly neutral pelvis, which almost nobody has.</p>"
+  },
+  {
     title:"Posture outside the gym",
     body:
       "<p>The rounded shoulders and pelvic tilt are mostly built by the other 23 hours. Six minutes of prep work twice a week can't outrun a full day of the position that caused it.</p>" +
@@ -610,8 +661,10 @@ var REFERENCE = [
 /* ============================ STORAGE ============================ */
 var DATE_KEY = "pushpull-dates";
 var LOG_KEY  = "pushpull-log";
+var MOB_KEY  = "pushpull-mobility";
 var dates = {};
 var log   = {};
+var mobility = {};
 
 function readJSON(key){
   try{
@@ -967,10 +1020,152 @@ function renderReference(){
   });
 }
 
+/* ============================================================
+   DAILY MOBILITY — done every day, gym or not.
+   ============================================================ */
+var MOBILITY = [
+  {
+    id:"am", kind:"am", name:"Morning", tag:"5 minutes \u00b7 movement, not long holds",
+    note:"Cold tissue doesn't respond well to long holds, so the morning routine <b>moves through range rather than parking in it</b>. The job here isn't lengthening anything \u2014 it's setting the postural position you'll carry for the rest of the day, before a shift at work locks in the opposite one.",
+    ex:[
+      {name:"Cat\u2013cow", sets:"8 slow reps",
+       desc:"On hands and knees. Exhale as you round your spine and tuck your pelvis, inhale as you arch and let your chest drop. Move one vertebra at a time rather than hinging at one spot. <b>Why:</b> restores segment-by-segment control of the spine and gets you feeling the pelvic tuck that every other hip flexor stretch depends on."},
+      {name:"World's greatest stretch", sets:"5/side",
+       desc:"Step into a deep lunge, place both hands inside the front foot, then drop the back knee and sink the hips forward. From there, rotate your torso and reach the inside arm to the ceiling, following your hand with your eyes. Return and repeat. <b>Why:</b> hip flexor, hamstring and thoracic rotation in one movement \u2014 the most efficient thing you can do in a five-minute window."},
+      {name:"Wall slides", sets:"10 reps",
+       desc:"Stand with your back, head and hips against a wall, arms up in a goalpost with the backs of your hands and elbows touching the wall too. Slide your arms overhead, keeping every contact point. Lower slowly. <b>Why:</b> trains the exact shoulder position you want to hold all day. If your hands leave the wall or your lower back arches off it, that's the restriction you're working on \u2014 shorten the range rather than cheating it."},
+      {name:"Standing hip flexor stretch", sets:"20 sec/side",
+       desc:"Feet split, back leg straight. <b>Squeeze the back glute and tuck your pelvis under first</b>, then shift your weight gently forward. Light version only \u2014 the real one happens at night. <b>Why:</b> takes the overnight shortening out of the hip flexors before you spend the day standing on them."}
+    ],
+    cue:"<b>If you only do one:</b> wall slides. It's the one that changes how you carry yourself for the next eight hours."
+  },
+  {
+    id:"pm", kind:"pm", name:"Evening", tag:"8\u201310 minutes \u00b7 long holds",
+    note:"This is where the actual change happens. Tissue is warm from the day, you're not about to load it, and nothing is competing for your attention. <b>Holds of 30\u201360 seconds, two rounds each.</b> Under 20 seconds does very little for length.",
+    ex:[
+      {name:"Kneeling hip flexor stretch", sets:"2\u00d745 sec/side",
+       desc:"Half-kneeling, back foot flat or elevated on a couch for the harder version. <b>The sequence matters: squeeze the back-leg glute, tuck your pelvis under, and only then lean forward.</b> If you lean first, you arch your lower back and feel a stretch that isn't the one you want. Done right you'll feel it high in the front of the hip, and you won't need to move far. <b>Why:</b> the single highest-return two minutes in the whole plan for the anterior pelvic tilt."},
+      {name:"90/90 hip stretch", sets:"45 sec/side",
+       desc:"Sit with the front leg bent 90\u00b0 in front and the back leg bent 90\u00b0 out to the side. Sit tall first, then hinge forward over the front shin. Keep the front sit-bone down \u2014 if it lifts, you've gone too far. <b>Why:</b> opens hip rotation, which is usually restricted alongside the tilt and limits how deep you can hinge on RDLs."},
+      {name:"Doorway pec stretch", sets:"45 sec/side",
+       desc:"Forearm flat on the doorframe, elbow at roughly shoulder height, then step through and rotate your chest away. Do a second round with the elbow higher to catch the upper fibres. Keep your ribs down and don't let your lower back arch to fake more range. <b>Why:</b> tight pecs pull the shoulders forward \u2014 this is the direct opposite of the rounded position."},
+      {name:"Thread the needle", sets:"30 sec/side",
+       desc:"On hands and knees, slide one arm underneath your body and across, letting that shoulder and the side of your head rest on the floor. Reach the top arm overhead or up to the ceiling. <b>Why:</b> thoracic rotation, which stiffens up when the upper back is stuck in flexion. More range here means less compensating at the shoulder when you press."},
+      {name:"Child's pose with a lat reach", sets:"45 sec/side",
+       desc:"From child's pose, walk both hands to one side and press that palm into the floor while sinking the opposite hip back. You should feel it down the side of your ribcage. <b>Why:</b> lats attach to the pelvis and the upper arm at once, so tight lats pull the shoulder down and forward and can tug the pelvis into the arch. Two birds."}
+    ],
+    cue:"<b>The pelvic tuck is the whole technique.</b> On every hip stretch here, if you don't tuck first, you're stretching your lower back instead of your hip flexors and reinforcing the exact position you're trying to fix."
+  }
+];
+
+function todayKey(){ return todayISO(); }
+
+function mobStreak(id){
+  var rec = mobility[id] || {};
+  var n = 0;
+  var d = new Date();
+  // if today isn't ticked, start counting from yesterday so an unfinished
+  // day doesn't read as a broken streak until it's actually over
+  var iso = todayISO();
+  if(!rec[iso]) d.setDate(d.getDate() - 1);
+  for(var i=0;i<400;i++){
+    var k = d.getFullYear() + "-" +
+      String(d.getMonth()+1).padStart(2,"0") + "-" +
+      String(d.getDate()).padStart(2,"0");
+    if(rec[k]) { n++; d.setDate(d.getDate()-1); }
+    else break;
+  }
+  return n;
+}
+
+function renderMobility(){
+  var root = document.getElementById("mobility");
+  root.innerHTML = "";
+
+  MOBILITY.forEach(function(block){
+    var el = document.createElement("section");
+    el.className = "day";
+    el.setAttribute("data-id", block.id);
+    el.setAttribute("data-kind", block.kind);
+
+    var exHTML = block.ex.map(function(x){
+      return '<div class="ex">' +
+        '<div class="ex-top"><span class="ex-name">' + x.name + '</span>' +
+        '<span class="ex-meta">' + x.sets + '</span></div>' +
+        '<p class="ex-desc">' + x.desc + '</p></div>';
+    }).join("");
+
+    function badgeHTML(){
+      var on = mobility[block.id] && mobility[block.id][todayISO()];
+      return '<span class="done-badge' + (on ? " on" : "") + '">' +
+             (on ? "done today" : "not yet") + '</span>';
+    }
+    function streakHTML(){
+      var n = mobStreak(block.id);
+      return '<span class="streak">' + (n > 0 ? "<b>" + n + "</b> day streak" : "no streak yet") + '</span>';
+    }
+
+    el.innerHTML =
+      '<button class="day-head" type="button" aria-expanded="false">' +
+        '<span class="stripe" aria-hidden="true"></span>' +
+        '<span class="head-left"><h2>' + block.name + '</h2>' +
+          '<span class="day-tag">' + block.tag + '</span></span>' +
+        '<span class="head-right">' + badgeHTML() + '<span class="chev"></span></span>' +
+      '</button>' +
+      '<div class="day-body">' +
+        '<div class="mob-bar">' +
+          '<button class="btn btn-primary" type="button" data-act="tick">Mark done</button>' +
+          '<button class="btn btn-ghost" type="button" data-act="untick">Undo</button>' +
+          streakHTML() +
+          '<span class="msg" role="status"></span>' +
+        '</div>' +
+        '<p class="mob-note">' + block.note + '</p>' +
+        '<div class="block-label">Sequence</div>' +
+        exHTML +
+        '<div class="cue">' + block.cue + '</div>' +
+      '</div>';
+
+    var head = el.querySelector(".day-head");
+    head.addEventListener("click", function(){
+      var open = el.classList.toggle("open");
+      head.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+
+    var msg = el.querySelector(".msg");
+    function refresh(text){
+      el.querySelector(".done-badge").outerHTML = badgeHTML();
+      el.querySelector(".streak").outerHTML = streakHTML();
+      if(text){
+        msg.textContent = text;
+        msg.classList.add("ok");
+        setTimeout(function(){ msg.textContent=""; msg.classList.remove("ok"); }, 2000);
+      }
+    }
+
+    el.querySelector('[data-act="tick"]').addEventListener("click", function(e){
+      e.stopPropagation();
+      if(!mobility[block.id]) mobility[block.id] = {};
+      mobility[block.id][todayISO()] = 1;
+      var ok = writeJSON(MOB_KEY, mobility);
+      refresh(ok ? "Logged for today." : "Storage is blocked in this browser \u2014 nothing was saved.");
+    });
+    el.querySelector('[data-act="untick"]').addEventListener("click", function(e){
+      e.stopPropagation();
+      if(mobility[block.id]) delete mobility[block.id][todayISO()];
+      writeJSON(MOB_KEY, mobility);
+      refresh("Cleared.");
+    });
+
+    root.appendChild(el);
+  });
+}
+
 /* ============================ BOOT ============================ */
-dates = readJSON(DATE_KEY);
-log   = readJSON(LOG_KEY);
+dates    = readJSON(DATE_KEY);
+log      = readJSON(LOG_KEY);
+mobility = readJSON(MOB_KEY);
 renderDays();
+renderMobility();
 renderReference();
 
 if("serviceWorker" in navigator){

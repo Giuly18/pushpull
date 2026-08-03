@@ -58,6 +58,7 @@ If you change `sw.js` or want to force a refresh for cached visitors, bump the `
 - **Prep block** — posture and hip work, 6–8 minutes before the main lifts.
 - **Set logger** — weight and reps per set, with a green chip when you beat last session on that set.
 - **Session progress** — how many exercises you've logged so far today.
+- **Daily mobility** — separate morning and evening blocks with a done-today tick and a running streak.
 - **Reference** — collapsible notes at the bottom: RIR, progression, rest times, nutrition, recovery, posture, and when to see a professional.
 
 ## Logging sets
@@ -74,5 +75,6 @@ Two `localStorage` keys in your browser:
 
 - `pushpull-dates` — when you last did each day
 - `pushpull-log` — your sets, weights and reps
+- `pushpull-mobility` — which days you completed the morning and evening mobility blocks
 
 This is per-device and per-browser: it does not sync between your phone and laptop, and clearing site data for the domain erases it. Nothing is uploaded anywhere — no account, no server.
