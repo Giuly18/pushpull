@@ -193,19 +193,45 @@
   .block-label.main{color:var(--yellow);}
   .block-sub{font-size:12px;color:var(--steel);padding:6px var(--pad) 0;margin:0;}
 
-  .ex{padding:13px var(--pad) 15px;border-bottom:1px solid var(--hairline);}
+  .ex{border-bottom:1px solid var(--hairline);}
   .ex:last-of-type{border-bottom:0;}
   .ex.prep{background:rgba(75,140,184,0.055);}
-  .ex-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px;}
-  .ex-name{font-size:15px;font-weight:600;letter-spacing:-0.005em;}
-  .ex-meta{
-    font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
-    color:var(--yellow);white-space:nowrap;flex:none;text-align:right;
+
+  .ex-head{
+    width:100%;background:none;border:0;color:inherit;font-family:inherit;
+    display:flex;align-items:center;gap:11px;text-align:left;cursor:pointer;
+    padding:13px var(--pad);
   }
-  .ex.prep .ex-meta{color:var(--blue);}
-  .ex-meta .rir{
-    display:block;font-size:10px;font-weight:400;color:var(--steel-dim);margin-top:2px;
+  .ex-head:hover{background:rgba(255,255,255,0.02);}
+  .ex-head:focus-visible{outline:2px solid var(--yellow);outline-offset:-3px;}
+  .ex-chev{
+    width:8px;height:8px;flex:none;
+    border-right:2px solid var(--steel-dim);border-bottom:2px solid var(--steel-dim);
+    transform:rotate(-45deg);transition:transform .18s ease;
   }
+  .ex.ex-open > .ex-head .ex-chev{transform:rotate(45deg);}
+  .ex-head-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;}
+  .ex-name{font-size:15px;font-weight:600;letter-spacing:-0.005em;line-height:1.25;}
+  .ex-sub{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    color:var(--steel-dim);letter-spacing:0.01em;
+  }
+  .ex-flag{
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;flex:none;
+    color:var(--steel-dim);padding:3px 8px;border-radius:100px;
+  }
+  .ex-flag.on{
+    color:var(--green);background:rgba(95,167,119,0.13);
+    border:1px solid rgba(95,167,119,0.3);
+  }
+  .ex.prep .ex-head{padding-top:11px;padding-bottom:11px;}
+  .ex.prep .ex-meta{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    color:var(--blue);flex:none;
+  }
+
+  .ex-body{display:none;padding:0 var(--pad) 15px;}
+  .ex.ex-open > .ex-body{display:block;}
   .ex-desc{font-size:13px;line-height:1.6;color:var(--steel);margin:0;}
   .ex-desc b{color:var(--chalk);font-weight:600;}
 
@@ -1624,9 +1650,15 @@ function renderDays(){
 
     var prepHTML = day.prep.map(function(x){
       return '<div class="ex prep">' +
-        '<div class="ex-top"><span class="ex-name">' + x.name + '</span>' +
-        '<span class="ex-meta">' + x.sets + '</span></div>' +
-        '<p class="ex-desc">' + x.desc + '</p></div>';
+        '<button class="ex-head" type="button" aria-expanded="false">' +
+          '<span class="ex-chev" aria-hidden="true"></span>' +
+          '<span class="ex-name">' + x.name + '</span>' +
+          '<span class="ex-meta">' + x.sets + '</span>' +
+        '</button>' +
+        '<div class="ex-body">' +
+          '<p class="ex-desc">' + x.desc + '</p>' +
+        '</div>' +
+      '</div>';
     }).join("");
 
     var mainHTML = day.ex.map(function(x){
@@ -1640,14 +1672,22 @@ function renderDays(){
           '<div class="ht m"><h5>Common mistake</h5><p>' + x.setup.miss + '</p></div>' +
         '</div>') : '';
       return '<div class="ex" data-key="' + x.key + '">' +
-        '<div class="ex-top"><span class="ex-name">' + x.name + '</span>' +
-        '<span class="ex-meta">' + x.sets +
-          (x.rir ? '<span class="rir">' + x.rir + '</span>' : '') +
-        '</span></div>' +
-        '<p class="ex-desc">' + x.desc + '</p>' +
-        (x.rest ? '<div style="margin-top:8px"><span class="rest-chip">rest ' + x.rest + '</span></div>' : '') +
-        setup +
-        (x.nolog ? '' : '<div class="sets"></div>') +
+        '<button class="ex-head" type="button" aria-expanded="false">' +
+          '<span class="ex-chev" aria-hidden="true"></span>' +
+          '<span class="ex-head-main">' +
+            '<span class="ex-name">' + x.name + '</span>' +
+            '<span class="ex-sub">' + x.sets +
+              (x.rir ? ' \u00b7 ' + x.rir : '') +
+              (x.rest ? ' \u00b7 rest ' + x.rest : '') +
+            '</span>' +
+          '</span>' +
+          '<span class="ex-flag" aria-hidden="true"></span>' +
+        '</button>' +
+        '<div class="ex-body">' +
+          '<p class="ex-desc">' + x.desc + '</p>' +
+          setup +
+          (x.nolog ? '' : '<div class="sets"></div>') +
+        '</div>' +
       '</div>';
     }).join("");
 
@@ -1708,7 +1748,10 @@ function renderDays(){
       if(txt){ box.className = "summary show"; box.innerHTML = txt; }
       else { box.className = "summary"; box.innerHTML = ""; }
     }
-    function refreshProgress(){ updateProgress(day, el); refreshSummary(); }
+    function refreshProgress(){
+      updateProgress(day, el); refreshSummary();
+      if(typeof paintFlags === "function") paintFlags();
+    }
 
     var briefBtn  = el.querySelector(".brief-toggle");
     var briefBody = el.querySelector(".brief-body");
@@ -1722,6 +1765,32 @@ function renderDays(){
         var open = briefBody.classList.toggle("open");
         briefBtn.setAttribute("aria-expanded", open ? "true" : "false");
       });
+    }
+
+    /* every exercise starts collapsed; opening one doesn't close the others */
+    function paintFlags(){
+      day.ex.forEach(function(x){
+        if(x.nolog) return;
+        var node = el.querySelector('.ex[data-key="' + x.key + '"] .ex-flag');
+        if(!node) return;
+        var e = log[x.key];
+        var n = e ? filledSets(e.sets).length : 0;
+        node.textContent = n ? n + " set" + (n===1?"":"s") : "";
+        node.className = "ex-flag" + (n ? " on" : "");
+      });
+    }
+    paintFlags();
+
+    var exHeads = el.querySelectorAll(".ex-head");
+    for(var q=0; q<exHeads.length; q++){
+      (function(btn){
+        btn.addEventListener("click", function(e){
+          e.stopPropagation();
+          var wrap = btn.parentNode;
+          var open = wrap.classList.toggle("ex-open");
+          btn.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+      })(exHeads[q]);
     }
 
     var howtos = el.querySelectorAll(".howto");

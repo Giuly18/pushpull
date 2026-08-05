@@ -58,6 +58,7 @@ If you change `sw.js` or want to force a refresh for cached visitors, bump the `
 - **Up next** — the day you've gone longest without training.
 - **Day cards** — tap to expand. Red stripe for push days, blue for pull.
 - **Prep block** — posture and hip work, 6–8 minutes before the main lifts.
+- **Collapsible exercises** — each one starts closed showing name, sets, RIR and rest. Open the one you're on, close it, move to the next. A green badge on the header shows how many sets you've logged.
 - **Setup cues** — tap "How to set it up" on any exercise for setup, execution and the common mistake.
 - **Rest suggestion** — shown on every exercise. No timer, just the number.
 - **Set logger** — weight and reps per set, with a green chip when you beat last session on that set.
