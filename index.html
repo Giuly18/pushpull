@@ -458,6 +458,57 @@
   }
   .cue b{color:var(--chalk);font-weight:600;}
 
+  /* ---------------- consistency calendar ---------------- */
+  .hstats{display:flex;gap:9px;margin-bottom:15px;}
+  .hstat{
+    flex:1;background:var(--iron);border:1px solid var(--hairline);
+    border-radius:9px;padding:11px 10px;text-align:center;
+  }
+  .hs-n{
+    display:block;font-family:'Anton',sans-serif;font-size:25px;
+    line-height:1;color:var(--yellow);
+  }
+  .hs-l{
+    display:block;font-family:'IBM Plex Mono',monospace;font-size:9px;
+    letter-spacing:0.08em;text-transform:uppercase;color:var(--steel-dim);margin-top:5px;
+  }
+  .hgrid{display:flex;flex-direction:column;gap:4px;}
+  .hrow{display:flex;align-items:center;gap:9px;}
+  .hrow-l{
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;
+    color:var(--steel-dim);width:44px;flex:none;text-align:right;
+  }
+  .hrow-cells{display:flex;gap:4px;flex:1;}
+  .cell{
+    flex:1;aspect-ratio:1;max-width:26px;border-radius:3px;
+    background:var(--iron);border:1px solid var(--hairline);
+  }
+  .cell.push{background:var(--red);border-color:var(--red);}
+  .cell.pull{background:var(--blue);border-color:var(--blue);}
+  .cell.both{background:linear-gradient(135deg,var(--red) 50%,var(--blue) 50%);border-color:var(--blue);}
+  .cell.mob{background:rgba(139,148,158,0.35);border-color:var(--hairline);}
+  .cell.future{opacity:.35;}
+  .cell.today{box-shadow:0 0 0 1.5px var(--yellow);}
+  .hrow-n{
+    font-family:'IBM Plex Mono',monospace;font-size:10px;
+    width:16px;flex:none;text-align:center;color:var(--steel-dim);
+  }
+  .hrow-n.ok{color:var(--green);}
+  .hrow-n.low{color:var(--yellow);}
+  .hrow-n.zero{color:var(--red);}
+  .hlegend{
+    display:flex;flex-wrap:wrap;gap:13px;margin-top:14px;
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;
+    color:var(--steel-dim);text-transform:uppercase;letter-spacing:0.08em;
+  }
+  .hlegend span{display:flex;align-items:center;gap:6px;}
+  .hlegend i{width:10px;height:10px;border-radius:3px;flex:none;display:block;}
+  .hnote{
+    margin:14px 0 0;font-size:12.5px;line-height:1.6;color:var(--steel);
+    padding-top:12px;border-top:1px solid var(--hairline);
+  }
+  .hnote b{color:var(--chalk);font-weight:600;}
+
   /* ---------------- bodyweight ---------------- */
   .bw-entry{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:13px;}
   .bw-entry input{
@@ -603,6 +654,14 @@
   </section>
 
   <section class="daily">
+    <h2 class="ref-head">Consistency</h2>
+    <p class="ref-intro">Sessions land here when you tap Log session. Three a week is the floor.</p>
+    <div class="card" style="padding:0">
+      <div id="history" style="padding:16px 18px"></div>
+    </div>
+  </section>
+
+  <section class="daily">
     <h2 class="ref-head">Bodyweight</h2>
     <p class="ref-intro">Same time each morning. The weekly average is what you act on &mdash; daily readings swing pounds on water alone.</p>
     <div class="card" style="padding:0">
@@ -615,7 +674,7 @@
       <span class="tri" aria-hidden="true"></span>
       <span class="ref-toggle-text">
         <span class="ref-head">Reference &amp; tips</span>
-        <span class="ref-intro">Everything that isn't the workout itself &mdash; 15 topics</span>
+        <span class="ref-intro">Everything that isn't the workout itself &mdash; 17 topics</span>
       </span>
     </button>
     <div id="ref-body" class="ref-body">
@@ -635,7 +694,7 @@
     </div>
   </div>
 
-  <p class="footnote">Your sets, dates and mobility ticks are stored on this device only — no account, nothing uploaded. Clearing browser data for this site erases them.</p>
+  <p class="footnote">Your sets, dates, mobility ticks, bodyweight and session history are stored on this device only — no account, nothing uploaded. Clearing browser data for this site erases them.</p>
 </div>
 
 <script>
@@ -791,11 +850,11 @@ var ROUTINE = [
          miss:"Rowing it with the biceps and rocking backwards to move the weight. If your torso angle changes during a rep, it's too heavy. Also: pulling behind the neck \u2014 no benefit, and rough on the shoulder."
        }},
       {key:"l1-facepull", name:"Face pulls", sets:"3\u00d715\u201320", rir:"0\u20131 RIR", rest:"45\u201360 sec", cls:"iso",
-       desc:"<b>Builds:</b> rear delt and upper/mid traps \u2014 best single exercise for both the shoulder groove and the rounded posture.",
+       desc:"Finish with the hands <b>above</b> the elbows, forearms vertical \u2014 the external rotation is what makes this a posture exercise rather than a row. <b>Builds:</b> rear delt, upper/mid traps and the external rotators \u2014 best single exercise for both the shoulder groove and the rounded posture.",
        setup:{
          set:"Rope attachment, pulley set at <b>upper-chest to eye height</b>. Grip the rope with an <b>overhand grip, thumbs pointing backwards</b> at you. Step back until there's tension with your arms fully extended, stagger your stance, lean back slightly to anchor yourself.",
-         run:"Pull the rope <b>toward your forehead</b>, pulling your hands apart as they travel so the rope ends up either side of your head. <b>Elbows stay high, at or above wrist height</b>, flaring wide. Squeeze for a full second at the end with your shoulder blades pulled together, then control it back out.",
-         miss:"Letting the elbows drop, which turns it into a high row and hands the work to the lats. If the pulley is too low or the weight too heavy, the elbows will drop automatically \u2014 fix both. This is a light, high-rep exercise; ego costs you the entire benefit."
+         run:"Pull the rope <b>toward your forehead</b>, hands separating so it ends up either side of your head. Elbows flare wide and stay at about shoulder height \u2014 then keep rotating so your <b>hands finish above your elbows, forearms vertical</b>, like a double-biceps pose. That external rotation at the end is the part that fights the rounded-shoulder position; a pull that stops with the forearms horizontal is just a high row. Hold a beat, then control it back out.",
+         miss:"Letting the elbows drop, which turns it into a high row and hands the work to the lats. If the pulley is too low or the weight too heavy, the elbows drop automatically \u2014 fix both. Second: skipping the rotation and finishing with forearms flat. Go light enough that the hands can finish above the elbows; this is a high-rep exercise where ego costs you the entire benefit."
        }},
       {key:"l1-cablerow", name:"Seated cable row", sets:"3\u00d710\u201312", rir:"1\u20132 RIR", rest:"90 sec", cls:"machine",
        desc:"<b>Builds:</b> mid-back thickness \u2014 directly opposes the forward-rounded position.",
@@ -905,6 +964,15 @@ var REFERENCE = [
       "<p>Tap <b>Log session</b> when you're done. That stamps today's date and files your numbers as the baseline you'll see next time.</p>"
   },
   {
+    title:"Reading the consistency calendar",
+    body:
+      "<p>Every session you bank with <b>Log session</b> puts a square on the grid \u2014 red for push, blue for pull, split for both in one day, grey for a day where you only did mobility. The number on the right is that week's session count.</p>" +
+      "<p><b>Sessions per week</b> averages the last four <i>completed</i> weeks. The current week is excluded because a half-finished week always looks like a failure.</p>" +
+      "<p><b>Week streak</b> counts consecutive completed weeks at three or more sessions. Three is the threshold because that's roughly where the shoulder and trap volume still adds up to progress rather than maintenance.</p>" +
+      "<p>This is here for one reason: you've had training stop and restart before, and consistency matters more for your result than any programming detail we could argue about. A number you can see is harder to talk yourself past than a vague sense of how it's been going.</p>" +
+      "<p><b>One caveat:</b> it can only show sessions logged from the day you started using it. There's no way to reconstruct what came before.</p>"
+  },
+  {
     title:"Backing up, and how the day order works",
     body:
       "<h4 style='margin:0 0 7px;font-size:13px;color:#E6E8EA;'>Back this up</h4>" +
@@ -962,7 +1030,7 @@ var REFERENCE = [
       "<p>Isolation work doesn't need dedicated warm-ups; the compounds before it already did the job.</p>" +
       "<dl class='kv'>" +
         "<dt>2–3 min</dt><dd>Heavy compounds: overhead press, incline press, leg press, RDL, pull-ups</dd>" +
-        "<dt>60–90 s</dt><dd>Rows, shrugs, close-grip bench, back extensions</dd>" +
+        "<dt>60–90 s</dt><dd>Rows, shrugs, pull-ups, farmer's carries</dd>" +
         "<dt>45–60 s</dt><dd>Lateral raises, rear delt flyes, face pulls, curls, calves</dd>" +
       "</dl>" +
       "<p>Resting less than this to save time mostly costs you reps on the next set, which is the thing you're trying to increase. If you're short on time, cut an exercise rather than the rest.</p><p><b>Sizing for an hour:</b> each day is 6–7 exercises, roughly 21–22 working sets, plus 6–8 minutes of prep. The forearm work costs very little — wrist curls, reverse curls and carries all run on short rests and take about four minutes each. The finisher is the buffer: do it when you have the time, drop it when you don't.</p>"
@@ -1080,11 +1148,13 @@ var LOG_KEY  = "pushpull-log";
 var MOB_KEY  = "pushpull-mobility";
 var UNDO_KEY = "pushpull-undo";
 var BW_KEY   = "pushpull-bodyweight";
+var HIST_KEY = "pushpull-history";
 var dates = {};
 var log   = {};
 var mobility = {};
 var undoState = {};
 var bodyweight = {};
+var history = {};
 
 function readJSON(key){
   try{
@@ -1863,12 +1933,13 @@ function renderDays(){
         e.prev = e.sets.map(function(s){ return { w:s.w, r:s.r }; });
         e.prevDate = iso;
       });
+      recordSession(day.id, iso);
       var ok = writeJSON(DATE_KEY, dates) && writeJSON(LOG_KEY, log);
       writeJSON(UNDO_KEY, undoState);
       input.value = iso;
       refreshHead();
       redrawSets();
-      refreshProgress(); refreshBrief(); updateNext();
+      refreshProgress(); refreshBrief(); updateNext(); renderHistory();
       setMsg(ok ? "Session logged \u2014 these are the numbers to beat." :
                   "Storage is blocked in this browser \u2014 nothing was saved.", ok);
     }
@@ -1898,12 +1969,13 @@ function renderDays(){
         e.prevDate = rec.prevDate;
         e.stall    = rec.stall;
       });
+      unrecordSession(day.id, todayISO());
       delete undoState[day.id];
       writeJSON(DATE_KEY, dates);
       writeJSON(LOG_KEY, log);
       writeJSON(UNDO_KEY, undoState);
       input.value = dates[day.id] || "";
-      refreshHead(); refreshBrief(); redrawSets(); refreshProgress(); updateNext(); showUndo();
+      refreshHead(); refreshBrief(); redrawSets(); refreshProgress(); updateNext(); showUndo(); renderHistory();
       setMsg("Log undone \u2014 previous baseline restored.", true);
     }
 
@@ -2227,7 +2299,8 @@ function exportData(){
     dates: dates,
     log: log,
     mobility: mobility,
-    bodyweight: bodyweight
+    bodyweight: bodyweight,
+    history: history
   };
   var blob = new Blob([JSON.stringify(payload, null, 2)], { type:"application/json" });
   var url  = URL.createObjectURL(blob);
@@ -2250,10 +2323,12 @@ function importData(file, done){
       if(p.log)        log        = p.log;
       if(p.mobility)   mobility   = p.mobility;
       if(p.bodyweight) bodyweight = p.bodyweight;
+      if(p.history)    history    = p.history;
       writeJSON(DATE_KEY, dates);
       writeJSON(LOG_KEY, log);
       writeJSON(MOB_KEY, mobility);
       writeJSON(BW_KEY, bodyweight);
+      writeJSON(HIST_KEY, history);
       done(null, p.exported ? prettyDate(p.exported.slice(0,10)) : null);
     }catch(err){
       done(err);
@@ -2263,17 +2338,175 @@ function importData(file, done){
   reader.readAsText(file);
 }
 
+/* ============================================================
+   HISTORY — every logged session, kept as a list so the
+   calendar can show more than "the last time you did this".
+   history = { "YYYY-MM-DD": ["push1","pull2"], ... }
+   ============================================================ */
+
+function recordSession(dayId, iso){
+  if(!history[iso]) history[iso] = [];
+  if(history[iso].indexOf(dayId) === -1) history[iso].push(dayId);
+  writeJSON(HIST_KEY, history);
+}
+function unrecordSession(dayId, iso){
+  if(!history[iso]) return;
+  var i = history[iso].indexOf(dayId);
+  if(i > -1) history[iso].splice(i,1);
+  if(!history[iso].length) delete history[iso];
+  writeJSON(HIST_KEY, history);
+}
+
+function kindOfDay(id){
+  for(var i=0;i<ROUTINE.length;i++) if(ROUTINE[i].id === id) return ROUTINE[i].kind;
+  return null;
+}
+function nameOfDay(id){
+  for(var i=0;i<ROUTINE.length;i++) if(ROUTINE[i].id === id) return ROUTINE[i].name;
+  return id;
+}
+
+/* did any mobility block get ticked that day? */
+function mobilityOn(iso){
+  var ids = Object.keys(mobility);
+  for(var i=0;i<ids.length;i++){
+    if(mobility[ids[i]] && mobility[ids[i]][iso]) return true;
+  }
+  return false;
+}
+
+/* Monday of the week containing iso */
+function weekStart(iso){
+  var d = parseLocal(iso);
+  var dow = (d.getDay() + 6) % 7;      /* 0 = Monday */
+  d.setDate(d.getDate() - dow);
+  return d.getFullYear() + "-" +
+    String(d.getMonth()+1).padStart(2,"0") + "-" +
+    String(d.getDate()).padStart(2,"0");
+}
+
+function sessionsInRange(startIso, endIso){
+  var n = 0;
+  Object.keys(history).forEach(function(k){
+    if(k >= startIso && k <= endIso) n += history[k].length;
+  });
+  return n;
+}
+
+function historyStats(weeks){
+  var end = todayISO();
+  var thisWeek = weekStart(end);
+  var out = { weeks:[], perWeek:0, streak:0, total:0 };
+
+  for(var w = weeks-1; w >= 0; w--){
+    var ws = isoOffset(thisWeek, -7*w);
+    var we = isoOffset(ws, 6);
+    var n  = sessionsInRange(ws, we);
+    out.weeks.push({ start:ws, end:we, n:n, current:(w===0) });
+    out.total += n;
+  }
+
+  /* average over completed weeks only \u2014 this week isn't over yet */
+  var done = out.weeks.filter(function(x){ return !x.current; });
+  var last4 = done.slice(-4);
+  if(last4.length){
+    out.perWeek = last4.reduce(function(a,b){ return a + b.n; }, 0) / last4.length;
+  }
+
+  /* consecutive completed weeks with 3+ sessions, most recent first */
+  for(var i = done.length - 1; i >= 0; i--){
+    if(done[i].n >= 3) out.streak++;
+    else break;
+  }
+  return out;
+}
+
+function renderHistory(){
+  var root = document.getElementById("history");
+  if(!root) return;
+
+  var WEEKS = 10;
+  var st = historyStats(WEEKS);
+  var today = todayISO();
+
+  /* --- stat row --- */
+  var perWeekTxt = st.perWeek ? st.perWeek.toFixed(1) : "\u2014";
+  var stats =
+    '<div class="hstats">' +
+      '<div class="hstat"><span class="hs-n">' + perWeekTxt + '</span><span class="hs-l">sessions / week</span></div>' +
+      '<div class="hstat"><span class="hs-n">' + st.streak + '</span><span class="hs-l">week streak at 3+</span></div>' +
+      '<div class="hstat"><span class="hs-n">' + st.total + '</span><span class="hs-l">in ' + WEEKS + ' weeks</span></div>' +
+    '</div>';
+
+  /* --- week rows --- */
+  var rows = st.weeks.map(function(wk){
+    var cells = "";
+    for(var d=0; d<7; d++){
+      var iso = isoOffset(wk.start, d);
+      var ids = history[iso] || [];
+      var future = iso > today;
+      var cls = "cell";
+      var title = prettyDate(iso);
+      if(future) cls += " future";
+      else if(ids.length){
+        var kinds = ids.map(kindOfDay);
+        cls += kinds.indexOf("push") > -1 && kinds.indexOf("pull") > -1 ? " both"
+             : (kinds[0] === "push" ? " push" : " pull");
+        title += " \u2014 " + ids.map(nameOfDay).join(", ");
+      }else if(mobilityOn(iso)){
+        cls += " mob";
+        title += " \u2014 mobility only";
+      }
+      if(iso === today) cls += " today";
+      cells += '<span class="' + cls + '" title="' + title + '"></span>';
+    }
+    var label = prettyDate(wk.start);
+    var flag = wk.current ? "" : (wk.n >= 3 ? " ok" : (wk.n > 0 ? " low" : " zero"));
+    return '<div class="hrow">' +
+             '<span class="hrow-l">' + label + '</span>' +
+             '<span class="hrow-cells">' + cells + '</span>' +
+             '<span class="hrow-n' + flag + '">' + wk.n + '</span>' +
+           '</div>';
+  }).join("");
+
+  /* --- read on the numbers --- */
+  var note;
+  if(!st.total){
+    note = "Nothing logged yet. Every session you bank with <b>Log session</b> lands here.";
+  }else if(st.perWeek >= 3.5){
+    note = "You're averaging <b>" + perWeekTxt + " sessions a week</b>. That's the plan running as intended \u2014 the rest is time.";
+  }else if(st.perWeek >= 2.5){
+    note = "Averaging <b>" + perWeekTxt + " a week</b>. Slightly under the four-day rotation, which mostly just slows the timeline rather than breaking anything.";
+  }else if(st.perWeek > 0){
+    note = "Averaging <b>" + perWeekTxt + " a week</b>. At this rate you're maintaining rather than building. <b>Three sessions a week is the floor</b> for the shoulder work to add up \u2014 if the hour is the problem, cut the finisher and the last exercise rather than skipping the day.";
+  }else{
+    note = "No completed weeks logged yet.";
+  }
+
+  root.innerHTML = stats +
+    '<div class="hgrid">' + rows + '</div>' +
+    '<div class="hlegend">' +
+      '<span><i class="cell push"></i>push</span>' +
+      '<span><i class="cell pull"></i>pull</span>' +
+      '<span><i class="cell both"></i>both</span>' +
+      '<span><i class="cell mob"></i>mobility</span>' +
+    '</div>' +
+    '<p class="hnote">' + note + '</p>';
+}
+
 /* ============================ BOOT ============================ */
 dates    = readJSON(DATE_KEY);
 log      = readJSON(LOG_KEY);
 mobility   = readJSON(MOB_KEY);
 undoState  = readJSON(UNDO_KEY);
 bodyweight = readJSON(BW_KEY);
+history    = readJSON(HIST_KEY);
 renderDays();
 renderMobility();
 renderReference();
 
 renderBodyweight();
+renderHistory();
 
 (function(){
   var exp = document.getElementById("btn-export");
@@ -2295,7 +2528,7 @@ renderBodyweight();
     importData(f, function(err, when){
       imp.value = "";
       if(err){ say("Couldn't restore: " + err.message); return; }
-      renderDays(); renderMobility(); renderBodyweight();
+      renderDays(); renderMobility(); renderBodyweight(); renderHistory();
       say("Restored" + (when ? " from " + when : "") + ".", true);
     });
   });

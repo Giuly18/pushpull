@@ -1,4 +1,4 @@
-const CACHE = "pushpull-v11";
+const CACHE = "pushpull-v12";
 const ASSETS = [
   "./",
   "./index.html",
