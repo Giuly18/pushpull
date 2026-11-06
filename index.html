@@ -715,7 +715,7 @@ var ROUTINE = [
       {
         "key": "p1-incline-db",
         "name": "Incline dumbbell press",
-        "sets": "3×6–10",
+        "sets": "4×6–10",
         "rir": "1–2 RIR",
         "rest": "2 min",
         "cls": "mid",
@@ -794,6 +794,21 @@ var ROUTINE = [
           "set": "Rest forearms on your thighs or a bench, palms up and wrists just beyond the edge. Start light.",
           "run": "Keep forearms still; bend and extend wrists through a comfortable range with a secure grip.",
           "miss": "Do not force wrist extension, roll the weight out of your fingers, or train through wrist pain."
+        }
+      },
+      {
+        "key": "p1-fly",
+        "name": "Cable fly — optional",
+        "sets": "2×12–15",
+        "rir": "1–2 RIR",
+        "rest": "60–90 sec",
+        "cls": "iso",
+        "optional": true,
+        "desc": "Optional chest work at the end of Push A: only if you have time, feel recovered, and pressing performance is holding up. Eight base chest sets per rotation; ten with these two sets. Skipping this exercise still completes the regular session.",
+        "setup": {
+          "set": "Set both pulleys around shoulder height. Take a stable staggered stance with a small fixed bend in the elbows.",
+          "run": "Bring the arms together in a comfortable arc in front of your chest, then return under control. Let your shoulder blades move naturally.",
+          "miss": "Avoid turning it into a press, forcing a deep stretch, or using extra sets to push through chest or shoulder pain."
         }
       }
     ],
@@ -931,7 +946,7 @@ var ROUTINE = [
       {
         "key": "p2-flat-db",
         "name": "Flat dumbbell press",
-        "sets": "3×8–12",
+        "sets": "4×8–12",
         "rir": "1–2 RIR",
         "rest": "2 min",
         "cls": "mid",
@@ -1104,7 +1119,7 @@ var ROUTINE = [
    REFERENCE CARDS — collapsible notes below the workout.
    ============================================================ */
 var REFERENCE = [
-  {title:"Your simple rolling plan", body:"<p><b>Push A → Pull A → Push B → Pull B → repeat.</b> Train when available. Continue after a missed day; do not reset on Monday. Weekends are optional.</p><p><b>Progression:</b> keep about 1–2 clean reps available. When every planned set reaches the top of the range with this effort and good form, add the smallest available load. The automated coach only sees numbers: form and effort must also qualify.</p><p><b>Short on time:</b> do the first three exercises and log the session. Leave unperformed exercises unlogged; do not enter invented reps.</p><p><b>After a 1–2-week break:</b> use roughly two-thirds of the normal sets for the first rotation and choose loads leaving 3–4 reps available. Resume normal work as soreness and performance allow.</p><p><b>Soccer soreness:</b> if warm-up movement is normal, adjust load as needed. If soreness changes movement, skip that session's leg exercise. Sharp or localized pain warrants stopping; persistent pain or loss of function warrants professional assessment.</p><p><b>Post-workout mobility:</b> wall slides 1–2 × 8–12 and a comfortable doorway pec stretch 2 × 20–30 seconds per side. These are options for movement practice, not a diagnosis or guarantee of changing appearance. Do not hold your shoulders pinned back all day.</p><p><b>History:</b> old logs remain in browser storage and exports. New exercise variations start with new keys so incompatible weights are not compared. Existing draft set rows may differ from the new targets: use Add/Remove set to match today's plan.</p>"},
+  {title:"Your simple rolling plan", body:"<p><b>Push A → Pull A → Push B → Pull B → repeat.</b> Train when available. Continue after a missed day; do not reset on Monday. Weekends are optional.</p><p><b>Progression:</b> keep about 1–2 clean reps available. When every planned set reaches the top of the range with this effort and good form, add the smallest available load. The automated coach only sees numbers: form and effort must also qualify.</p><p><b>Chest:</b> four incline-press sets on Push A and four flat-press sets on Push B. The two cable-fly sets at the end of Push A are optional once per rotation. Skip them if time is tight, chest or shoulders are still sore, or pressing performance is dropping. Optional work is excluded from the session completion count.</p><p><b>Short on time:</b> do the first three exercises and log the session. Leave unperformed exercises unlogged; do not enter invented reps.</p><p><b>After a 1–2-week break:</b> use roughly two-thirds of the normal sets for the first rotation and choose loads leaving 3–4 reps available. Resume normal work as soreness and performance allow.</p><p><b>Soccer soreness:</b> if warm-up movement is normal, adjust load as needed. If soreness changes movement, skip that session's leg exercise. Sharp or localized pain warrants stopping; persistent pain or loss of function warrants professional assessment.</p><p><b>Post-workout mobility:</b> wall slides 1–2 × 8–12 and a comfortable doorway pec stretch 2 × 20–30 seconds per side. These are options for movement practice, not a diagnosis or guarantee of changing appearance. Do not hold your shoulders pinned back all day.</p><p><b>History:</b> old logs remain in browser storage and exports. New exercise variations start with new keys so incompatible weights are not compared. Existing draft set rows may differ from the new targets: use Add/Remove set to match today's plan.</p>"},
 
   {
     title:"How to log a session",
@@ -1726,7 +1741,7 @@ function updateNext(){
 }
 
 function updateProgress(day, el){
-  var loggable = day.ex.filter(function(x){ return !x.nolog; });
+  var loggable = day.ex.filter(function(x){ return !x.nolog && !x.optional; });
   var done = loggable.filter(function(x){ return hasLoggedSets(x.key); }).length;
   var pct = loggable.length ? Math.round(done / loggable.length * 100) : 0;
   var fill = el.querySelector(".fill");
