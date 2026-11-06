@@ -96,7 +96,9 @@ This is per-device and per-browser: it does not sync between your phone and lapt
 
 ## Rolling routine update
 
-Follow Push A → Pull A → Push B → Pull B whenever available; weekends are optional. Each session has five or six exercises and fits a roughly one-hour visit including warm-up. Side delts, rear delts, traps, upper arms and forearms remain explicit priorities. Leg volume starts modestly around soccer and physical work.
+Follow Push A → Pull A → Push B → Pull B whenever available; weekends are optional. Each session has five or six regular exercises and targets a roughly one-hour visit including warm-up. Side delts, rear delts, traps, upper arms and forearms remain explicit priorities. Leg volume starts modestly around soccer and physical work.
+
+Chest: four incline dumbbell press sets on Push A plus four flat dumbbell press sets on Push B give eight base sets per full rotation. At the end of Push A, two optional cable-fly sets (12–15 reps, 60–90 seconds rest, 1–2 reps in reserve) bring that to ten. Skip the flyes if time is tight, chest/shoulders are still sore, or pressing performance is dropping. Optional flyes are excluded from the session completion count.
 
 Rest about two minutes for compound movements and shrugs, and 60–90 seconds for isolation work. Keep 1–2 good reps available; increase the load only after all planned sets reach the upper rep target with that effort and sound technique. Short sessions contain the first three exercises. The in-app rolling-plan card explains return weeks, soccer adjustments and optional mobility.
 
