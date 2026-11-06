@@ -93,3 +93,15 @@ Two `localStorage` keys in your browser:
 Use the Export button to write all of these to a single JSON file. Restore replaces what's stored, so export before restoring if you're unsure.
 
 This is per-device and per-browser: it does not sync between your phone and laptop, and clearing site data for the domain erases it. Nothing is uploaded anywhere — no account, no server.
+
+## Rolling routine update
+
+Follow Push A → Pull A → Push B → Pull B whenever available; weekends are optional. Each session has five or six regular exercises and targets a roughly one-hour visit including warm-up. Side delts, rear delts, traps, upper arms and forearms remain explicit priorities. Leg volume starts modestly around soccer and physical work.
+
+Chest: four incline dumbbell press sets on Push A plus four flat dumbbell press sets on Push B give eight base sets per full rotation. At the end of Push A, two optional cable-fly sets (12–15 reps, 60–90 seconds rest, 1–2 reps in reserve) bring that to ten. Skip the flyes if time is tight, chest/shoulders are still sore, or pressing performance is dropping. Optional flyes are excluded from the session completion count.
+
+Rest about two minutes for compound movements and shrugs, and 60–90 seconds for isolation work. Keep 1–2 good reps available; increase the load only after all planned sets reach the upper rep target with that effort and sound technique. Short sessions contain the first three exercises. The in-app rolling-plan card explains return weeks, soccer adjustments and optional mobility.
+
+Stable day IDs preserve dates and calendar history. Unchanged exercise variations retain their keys, including dumbbell shrugs moved from Push B to Push A and knee raises moved to Pull B. Changed implements or variations have new keys so old barbell and dumbbell weights are not compared. Old log entries are not deleted, and remain in exported backups. Existing draft set counts remain user-controlled: adjust them with Add/Remove set to match new targets. Export a backup before updating.
+
+The numeric coach cannot assess form, effort, soreness or sleep; its suggestions are advisory. The existing daily mobility and nutrition features remain available; nutrition targets have not been personalized in this update.
